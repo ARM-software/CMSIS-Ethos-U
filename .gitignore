@@ -1,0 +1,14 @@
+*.junit
+**/__pycache__
+documentation/html
+documentation/Doxygen/**/*.dxy
+*.cbuild-idx.yml
+*.uvguix.*
+*.uvmpw.uvgui.*
+*.zip
+*.bak
+build
+output
+linkchecker-out.csv
+.DS_STORE
+*.tmp

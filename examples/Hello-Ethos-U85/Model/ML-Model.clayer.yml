@@ -1,0 +1,50 @@
+layer:
+  type: ML-Model
+  description: TensorFlow Lite Micro with Ethos-U kernels, plus the models and their Vela builds
+
+  packs:
+    # The Ethos-U TFLM kernel variant compiles the kernels/cmsis_nn/*.cpp sources
+    # and defines CMSIS_NN, but -- unlike the CMSIS-NN variant -- its pack
+    # condition does not pull in CMSIS:NN Lib. Without these two lines the build
+    # fails on a missing arm_nnfunctions.h.
+    - pack: ARM::CMSIS-NN@^7.0.0
+    - pack: tensorflow::flatbuffers
+    - pack: tensorflow::gemmlowp
+    - pack: tensorflow::kissfft
+    - pack: tensorflow::ruy
+    - pack: tensorflow::tensorflow-lite-micro
+
+  components:
+    - component: ARM::CMSIS:NN Lib
+
+    - component: tensorflow::Data Exchange:Serialization:flatbuffers
+    - component: tensorflow::Data Processing:Math:gemmlowp fixed-point
+    
+    - component: tensorflow::Data Processing:Math:kissfft
+    - component: tensorflow::Data Processing:Math:ruy
+
+    # Ethos-U variant: provides the "ethos-u" custom operator that executes a
+    # Vela-compiled command stream, and keeps the CMSIS-NN kernels so the same
+    # binary can also run the unmodified model on the CPU.
+    - component: tensorflow::Machine Learning:TensorFlow:Kernel&Ethos-U
+    - component: tensorflow::Machine Learning:TensorFlow:Kernel Utils
+
+  # TF_LITE_STATIC_MEMORY is set by the kernel component's Pre_Include_Global_h;
+  # defining it again here would only produce a macro-redefinition warning.
+
+  add-path:
+    - .
+
+  groups:
+    - group: Model
+      files:
+        - file: ./model_data.h
+        - file: ./arena.c
+
+    - group: Model/hello_world
+      files:
+        - file: ./hello_world/hello_world_model.c
+
+    - group: Model/tiny_cnn
+      files:
+        - file: ./tiny_cnn/tiny_cnn_model.c

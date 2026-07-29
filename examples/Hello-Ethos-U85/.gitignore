@@ -1,0 +1,20 @@
+out/
+tmp/
+__pycache__/
+.cmsis/
+
+*.cbuild.yml
+*.cbuild-idx.yml
+*.cbuild-set.yml
+*.cbuild-run.yml
+
+# Note: *.cbuild-pack.yml is deliberately NOT ignored. It records the resolved
+# pack versions, which is what makes a rebuild reproducible.
+
+# Generated per build context (RTE_Components.h, Pre_Include_Global.h).
+# The RTE *config* files, and their .base@<version> siblings, stay tracked.
+RTE/_*
+
+# Vela scratch output and the operator-support report it drops in the CWD
+Model/gen/build/
+SUPPORTED_OPS.md

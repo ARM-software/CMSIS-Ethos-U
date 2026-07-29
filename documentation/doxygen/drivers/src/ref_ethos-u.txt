@@ -1,0 +1,434 @@
+/**
+\defgroup ethosu_driver_structs Structures
+@{
+*/
+
+/**
+  \struct ethosu_driver
+  \brief Driver handle.
+  \details
+  Caller-allocated driver handle. Initialize it to zero before first use and do
+  not modify its members.
+*/
+
+/**
+  \struct ethosu_driver_version
+  \brief Driver version.
+  \details
+  This structure holds Ethos-U driver implementation version:
+
+  \code{.c}
+    struct ethosu_driver_version
+    {
+      uint8_t major;
+      uint8_t minor;
+      uint8_t patch;
+    };
+  \endcode
+*/
+
+/**
+  \struct ethosu_job
+  \brief Driver job state.
+  \details
+  Internal job state. Applications must not modify it.
+*/
+
+/**
+  \struct ethosu_id
+  \brief Hardware Identification Information.
+  \details
+  This structure holds hardware ID:
+
+  \code{.c}
+  struct ethosu_id
+  {
+    uint32_t version_status; ///< Version status
+    uint32_t version_minor;  ///< Version minor
+    uint32_t version_major;  ///< Version major
+    uint32_t product_major;  ///< Product major
+    uint32_t arch_patch_rev; ///< Architecture version patch
+    uint32_t arch_minor_rev; ///< Architecture version minor
+    uint32_t arch_major_rev; ///< Architecture version major
+  };
+  \endcode
+*/
+
+/**
+  \struct ethosu_config
+  \brief Hardware Configuration Information.
+  \details
+  This structure holds configuration information:
+
+  \code{.c}
+    struct ethosu_config
+    {
+      uint32_t macs_per_cc;        ///< MACs per clock cycle
+      uint32_t cmd_stream_version; ///< NPU command stream version
+      uint32_t custom_dma;         ///< Custom DMA enabled
+    };
+  \endcode
+
+  The \c macs_per_cc member contains the encoded hardware field, not the literal
+  number of MACs. The number of MACs per clock cycle is (\c 1U \c << \c macs_per_cc).
+*/
+
+/**
+  \struct ethosu_hw_info
+  \brief Hardware Information.
+  \details
+  This structure holds Ethos-U hardware information:
+
+  \code{.c}
+    struct ethosu_hw_info
+    {
+      struct ethosu_id version;
+      struct ethosu_config cfg;
+    };
+  \endcode
+*/
+
+/**
+@}
+*/
+
+
+/**
+\defgroup ethosu_public_api Functions
+@{
+*/
+
+/**
+  \fn int ethosu_init(struct ethosu_driver *drv, void *const base_address, const void *fast_memory, const size_t fast_memory_size, uint32_t secure_enable, uint32_t privilege_enable)
+  \details
+  Initializes and registers driver instance for one NPU.
+  Fast memory is used for Ethos-U65/U85 spilling.
+
+  When the platform overrides the weak mutex or semaphore hooks, the hooks must
+  be able to create synchronization objects during this call.
+
+  Initialized handle must not be copied, moved or initialized more than once
+  without an intervening call to ethosu_deinit().
+
+  \note
+  Before the first inference, route and enable the NPU interrupt so that the
+  target interrupt handler calls ethosu_irq_handler().
+*/
+
+/**
+  \fn void ethosu_deinit(struct ethosu_driver *drv)
+  \details
+  Deregisters the driver and destroys allocated resources. The driver must
+  be idle. Do not call this function while the handle is reserved by another
+  task or while an asynchronous job is running or waiting to be finalized.
+  Storage for the handle must remain valid until ethosu_deinit() completes.
+*/
+
+/**
+  \fn int ethosu_soft_reset(struct ethosu_driver *drv)
+  \details
+  Resets the NPU, restores its configuration, and reapplies power and clock settings.
+*/
+
+/**
+  \fn int ethosu_request_power(struct ethosu_driver *drv)
+  \details Adds a reference-counted request that disables Q-channel clock and
+  power gating. The first request soft-resets the NPU.
+*/
+
+/**
+  \fn void ethosu_release_power(struct ethosu_driver *drv)
+  \details Releases one request and enables Q-channel clock and power gating
+  when the count reaches zero.
+*/
+
+/**
+  \fn void ethosu_get_driver_version(struct ethosu_driver_version *ver)
+  \details
+  Retrieves the driver version.
+
+  After function return, structure \ref ethosu_driver_version members hold
+  driver version. Member
+  - \b major: contains the value of ETHOSU_DRIVER_VERSION_MAJOR
+  - \b minor: contains the value of ETHOSU_DRIVER_VERSION_MINOR
+  - \b patch: contains the value of ETHOSU_DRIVER_VERSION_PATCH
+*/
+
+/**
+  \fn void ethosu_get_hw_info(struct ethosu_driver *drv, struct ethosu_hw_info *hw)
+  \details
+  Retrieves the NPU hardware information.
+
+  Example:
+  \code{.c}
+    static struct ethosu_driver EthosDriver;
+    struct ethosu_hw_info       hw_info;
+
+    ethosu_get_hw_info(&EthosDriver, &hw_info);
+
+    printf("Ethos-U version info:\n");
+    printf("\tArch:       v%u.%u.%u\n", hw_info.version.arch_major_rev,
+                                        hw_info.version.arch_minor_rev,
+                                        hw_info.version.arch_patch_rev);
+    printf("\tMACs/cc:    %u\n", (uint32_t)(1 << hw_info.cfg.macs_per_cc));
+    printf("\tCmd stream: v%u\n", hw_info.cfg.cmd_stream_version);
+  \endcode
+*/
+
+/**
+  \fn int ethosu_invoke_v3(struct ethosu_driver *drv, const void *custom_data_ptr, const int custom_data_size, uint64_t *const base_addr, const size_t *base_addr_size, const int num_base_addr, void *user_arg)
+  \details
+  Blocks until inference completes.
+
+  custom_data_ptr must contain a trusted Vela Custom Operator Payload 1. The
+  driver verifies the payload identifier, word alignment, optimizer
+  compatibility, and supported driver actions, but it is not a parser for
+  untrusted or arbitrarily malformed input.
+
+  base_addr and base_addr_size must have matching entries for at most eight
+  16-byte-aligned base addresses. num_base_addr must be in the range 0 through
+  8. The command stream must also be 16-byte aligned.
+
+  The sizes are used for cache maintenance and fast-memory validation. They do
+  not create hardware bounds around NPU accesses and do not prove that offsets
+  in the command stream stay within a supplied region.
+
+  When fast memory is configured and base-address index 2 exists, the
+  driver validates its size and replaces base_addr[2] with the fast-memory
+  address. base_addr is mutable for this reason.
+
+  user_arg is passed to the inference callbacks. Synchronous and
+  asynchronous invocation may be mixed sequentially; a driver supports one
+  outstanding job.
+*/
+
+/**
+  \fn int ethosu_invoke_async(struct ethosu_driver *drv, const void *custom_data_ptr, const int custom_data_size, uint64_t *const base_addr, const size_t *base_addr_size, const int num_base_addr, void *user_arg)
+
+  \param drv              Pointer to driver handle.
+  \param custom_data_ptr  Pointer to the command stream payload.
+  \param custom_data_size Size in bytes of the command stream payload.
+  \param base_addr        Array of base address pointers for tensor arenas and weight buffers.
+  \param base_addr_size   Array of sizes in bytes, one entry per base address.
+  \param num_base_addr    Number of entries in base_addr and base_addr_size.
+  \param user_arg         User argument passed to ethosu_inference_begin() and ethosu_inference_end().
+  \return 0 on success, else negative error code.
+
+  \details
+  Starts one job and returns before inference completion.
+
+  After a successful call, keep the payload and both base-address arrays valid
+  until ethosu_wait() returns 0 or -1. Complete the job with polling or
+  blocking calls to ethosu_wait(). The memory referenced by the base-address
+  array must also remain allocated and under NPU ownership for that interval.
+*/
+
+/**
+  \fn int ethosu_wait(struct ethosu_driver *drv, bool block)
+  \details
+  Finalizes a job started by ethosu_invoke_async(). When block=true, waits for
+  completion; when block=false, returns 1 while the job is running.
+
+  The timeout value used by a blocking inference wait is
+  ETHOSU_SEMAPHORE_WAIT_INFERENCE. Its unit and timeout behavior are defined by
+  the platform implementation of ethosu_semaphore_take(); the default value
+  requests an indefinite wait.
+
+  Finalizing a completed or timed-out job invalidates the configured cache
+  regions, calls ethosu_inference_end(), releases the inference power request,
+  and resets the internal job state.
+
+  If called from another thread concurrently with ethosu_invoke_async(), caller
+  ordering must guarantee wait is entered only after successful async invoke
+  completion.
+*/
+
+/**
+  \fn struct ethosu_driver *ethosu_reserve_driver(void)
+  \details
+  In multi-NPU usage, this call is serialized with mutex operations and may
+  block on a semaphore when no driver instance is free.
+
+  Waiting for an available driver instance uses the global driver semaphore
+  with forever-wait semantics. At least one driver must have been successfully
+  initialized and registered before this function is called.
+*/
+
+/**
+  \fn void ethosu_release_driver(struct ethosu_driver *drv)
+  \details
+  Marks the driver available and wakes a task waiting for a driver.
+  Complete an asynchronous job with ethosu_wait() before release; releasing a
+  running job may reset the NPU without calling ethosu_inference_end().
+*/
+
+/**
+  \fn void ethosu_irq_handler(struct ethosu_driver *drv)
+  \details
+  This function must be called from the target NPU interrupt handler.
+
+  It acknowledges the interrupt, records the job result, and unblocks tasks
+  waiting for the job completion.
+*/
+
+/**
+@}
+*/
+
+/**
+\defgroup ethosu_callback_api Platform hooks
+@{
+*/
+
+/**
+  \fn void ethosu_flush_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr)
+  \details
+  This callback hook is called before inference for the supplied base-address
+  regions. The command-stream region is not included. The default weak
+  implementation is a no-op.
+
+  Reimplement this function when CPU-cached memory is shared with the NPU to
+  ensure that the data written by CPU is visible to NPU.
+
+  The invocation API requires 16-byte base-address alignment. A cache
+  implementation may require stricter cache-line alignment, commonly 32 bytes,
+  and must handle non-cache-line-sized regions without affecting unrelated
+  data.
+*/
+
+/**
+  \fn void ethosu_invalidate_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr)
+  \details
+  This callback hook is called when finalizing inference for the supplied
+  base-address regions. The default weak implementation is a no-op.
+  
+  Reimplement this function when CPU-cached memory is shared with the NPU to
+  ensure that the data written by NPU is visible to CPU.
+
+  From the cache clean before inference until this invalidation completes, the
+  CPU must not write memory owned by the NPU. Cleaning stale dirty CPU cache
+  lines after the NPU has written the same memory can overwrite NPU results.
+  The platform implementation must define and enforce this ownership rule,
+  including for asynchronous invocation.
+*/
+
+/**
+  \fn void *ethosu_mutex_create(void)
+  \details
+  Driver provides the default weak implementation that is effectively a no-op.
+
+  Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
+  multithreaded application or when multiple CPU cores can access the driver.
+*/
+
+/**
+  \fn void ethosu_mutex_destroy(void *mutex)
+  \details
+  Driver provides the default weak implementation that is effectively a no-op.
+
+  Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
+  multithreaded application or when multiple CPU cores can access the driver.
+*/
+
+/**
+  \fn void *ethosu_semaphore_create(void)
+  \details
+  Driver provides the default weak implementation that allocates a minimal
+  bare-metal semaphore.
+
+  Re-implement this function and create an RTOS semaphore with an initial
+  count of zero in multithreaded application.
+*/
+
+/**
+  \fn void ethosu_semaphore_destroy(void *sem)
+  \details
+  Driver provides the default weak implementation that frees the storage
+  allocated by ethosu_semaphore_create().
+
+  Re-implement this function in multithreaded application to destroy
+  semaphore created and returned by \ref ethosu_semaphore_create.
+*/
+
+/**
+  \fn int ethosu_mutex_lock(void *mutex)
+  \details
+  Driver provides the default weak implementation that is effectively a no-op.
+
+  Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
+  multithreaded application or when multiple CPU cores can access the driver.
+*/
+
+/**
+  \fn int ethosu_mutex_unlock(void *mutex)
+  \details
+  Driver provides the default weak implementation that is effectively a no-op.
+
+  Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
+  multithreaded application or when multiple CPU cores can access the driver.
+*/
+
+/**
+  \fn int ethosu_semaphore_take(void *sem, uint64_t timeout)
+  \details
+  Driver provides the default weak implementation that ignores the timeout and
+  waits with WFE.
+
+  Re-implement this function in multithreaded application to use the semaphore
+  created and returned by \ref ethosu_semaphore_create.
+
+  - ETHOSU_SEMAPHORE_WAIT_FOREVER is used to request an indefinite wait.
+  - ETHOSU_SEMAPHORE_WAIT_INFERENCE is used to wait until inference completes.
+*/
+
+/**
+  \fn int ethosu_semaphore_give(void *sem)
+  \details
+  Driver provides the default weak implementation that signals an event with SEV.
+
+  Re-implement this function in multithreaded application to use the semaphore
+  created and returned by \ref ethosu_semaphore_create. The implementation must
+  be callable from NPU interrupt context.
+*/
+
+/**
+  \fn void ethosu_inference_begin(struct ethosu_driver *drv, void *user_arg)
+  \details
+  Called immediately before starting the command stream. The default weak
+  implementation is a no-op.
+*/
+
+/**
+  \fn void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg)
+  \details
+  Called by ethosu_wait() when finalizing a started job, including error and
+  timeout paths. It is not guaranteed if a running driver is released. The
+  default weak implementation is a no-op.
+*/
+
+/**
+  \fn uint64_t ethosu_address_remap(uint64_t address, int index)
+  \details
+  This callback hook is called by the driver to convert a CPU-visible address
+  to the address used by the NPU. Index -1 identifies the command stream;
+  indexes 0 through 7 identify base pointers.
+
+  Re-implement this function when the CPU and NPU use different addresses for
+  the same memory.
+*/
+
+/**
+  \fn unsigned int ethosu_config_select(uint64_t address, int index)
+  \details
+  This callback hook selects the NPU memory configuration for the command
+  stream (index -1) or a base pointer (indexes 0 through 7). Driver provides the
+  default weak implementation based on the \em ethosu_config_u*.h configuration
+  file.
+
+  Reimplement this function if the application requires an alternative
+  configuration mechanism.
+*/
+
+/**
+@}
+*/

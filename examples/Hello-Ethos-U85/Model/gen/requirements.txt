@@ -1,0 +1,4 @@
+# Note: Vela output is not bit-stable across releases
+tensorflow>=2.20.0
+ethos-u-vela>=5.0.0
+numpy
