@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/github/license/arm-software/CMSIS-Ethos-U?label]=License)](./LICENSE)
+[![License](https://img.shields.io/github/license/ARM-software/CMSIS-Ethos-U?label=License)](./LICENSE)
 [![Pack](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/pack.yml?logo=arm&logoColor=0091bd&label=Build%20pack)](./.github/workflows/pack.yml)
 [![GH Pages](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/gh-pages.yml?logo=arm&logoColor=0091bd&label=Deploy%20content)](./.github/workflows/gh-pages.yml)
 
