@@ -1,4 +1,4 @@
-# Zephyr {#mainpage}
+# Zephyr
 
 This chapter explains how to configure and build a Zephyr application that
 uses an Arm Ethos-U NPU. It covers the Zephyr module, devicetree, Kconfig,

@@ -1,0 +1,135 @@
+/**
+\defgroup ethosu_pmu_api Performance Monitoring Unit API
+\brief Control the Ethos-U Performance Monitoring Unit (PMU).
+\details
+The PMU provides a 64-bit cycle counter and programmable event counters.
+Use the symbolic values from `enum ethosu_pmu_event_type` to select events.
+See \ref pmu-example for a complete measurement example.
+*/
+
+/**
+\addtogroup ethosu_pmu_api
+@{
+*/
+
+/**
+\fn void ETHOSU_PMU_Enable(struct ethosu_driver *drv)
+\details Enables the PMU and requests NPU power.
+*/
+
+/**
+\fn void ETHOSU_PMU_Disable(struct ethosu_driver *drv)
+\details Disables the PMU and releases its NPU power request.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_EVTYPER(struct ethosu_driver *drv, uint32_t num, enum ethosu_pmu_event_type type)
+\details Selects the event counted by an event counter.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_NumEventCounters(void)
+\details Returns the number of event counters implemented by the configured NPU.
+*/
+
+/**
+\fn enum ethosu_pmu_event_type ETHOSU_PMU_Get_EVTYPER(struct ethosu_driver *drv, uint32_t num)
+\details Returns the event selected for an event counter.
+*/
+
+/**
+\fn void ETHOSU_PMU_CYCCNT_Reset(struct ethosu_driver *drv)
+\details Resets the cycle counter to zero.
+*/
+
+/**
+\fn void ETHOSU_PMU_EVCNTR_ALL_Reset(struct ethosu_driver *drv)
+\details Resets all programmable event counters to zero.
+*/
+
+/**
+\fn void ETHOSU_PMU_CNTR_Enable(struct ethosu_driver *drv, uint32_t mask)
+\details Enables the counters selected by `mask`.
+*/
+
+/**
+\fn void ETHOSU_PMU_CNTR_Disable(struct ethosu_driver *drv, uint32_t mask)
+\details Disables the counters selected by `mask`.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_CNTR_Status(struct ethosu_driver *drv)
+\details Returns the enabled state of the cycle and event counters.
+*/
+
+/**
+\fn uint64_t ETHOSU_PMU_Get_CCNTR(struct ethosu_driver *drv)
+\details Returns a consistent 64-bit cycle-counter value.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_CCNTR(struct ethosu_driver *drv, uint64_t val)
+\details Sets the 64-bit cycle-counter value.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_EVCNTR(struct ethosu_driver *drv, uint32_t num)
+\details Returns the value of an event counter.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_EVCNTR(struct ethosu_driver *drv, uint32_t num, uint32_t val)
+\details Sets the value of an event counter.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_CNTR_OVS(struct ethosu_driver *drv)
+\details Returns the counter-overflow status bits.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_CNTR_OVS(struct ethosu_driver *drv, uint32_t mask)
+\details Clears the counter-overflow status bits selected by `mask`.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_CNTR_IRQ_Enable(struct ethosu_driver *drv, uint32_t mask)
+\details Enables overflow interrupt requests for the counters selected by `mask`.
+*/
+
+/**
+\fn void ETHOSU_PMU_Set_CNTR_IRQ_Disable(struct ethosu_driver *drv, uint32_t mask)
+\details Disables overflow interrupt requests for the counters selected by `mask`.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_IRQ_Enable(struct ethosu_driver *drv)
+\details Returns the counter-overflow interrupt enable bits.
+*/
+
+/**
+\fn void ETHOSU_PMU_CNTR_Increment(struct ethosu_driver *drv, uint32_t mask)
+\details Increments the event counters selected by `mask` in software.
+*/
+
+/**
+\fn void ETHOSU_PMU_PMCCNTR_CFG_Set_Start_Event(struct ethosu_driver *drv, enum ethosu_pmu_event_type start_event)
+\details Selects the event that starts the cycle counter.
+*/
+
+/**
+\fn void ETHOSU_PMU_PMCCNTR_CFG_Set_Stop_Event(struct ethosu_driver *drv, enum ethosu_pmu_event_type stop_event)
+\details Selects the event that stops the cycle counter.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_QREAD(struct ethosu_driver *drv)
+\details Returns the PMU QREAD register value.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_STATUS(struct ethosu_driver *drv)
+\details Returns the PMU status register value.
+*/
+
+/** @} */

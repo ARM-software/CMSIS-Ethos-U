@@ -5,7 +5,7 @@
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)
-# - doxygen 1.13.2
+# - doxygen 1.17.0
 
 set -o pipefail
 
@@ -14,7 +14,7 @@ REQUIRED_GEN_PACK_LIB="0.14.0"
 
 DIRNAME=$(dirname $(readlink -f $0))
 GENDIR=../html
-REQ_DXY_VERSION="1.13.2"
+REQ_DXY_VERSION="1.17.0"
 
 function usage() {
   echo "Usage: $(basename "$0") [-h] [-s] [-c <comp>]"
@@ -98,8 +98,6 @@ function generate() {
 
   mkdir -p "${DIRNAME}/${GENDIR}/$1/search/"
   cp -f "${DIRNAME}/style_template/search.css" "${DIRNAME}/${GENDIR}/$1/search/"
-  cp -f "${DIRNAME}/style_template/navtree.js" "${DIRNAME}/${GENDIR}/$1/"
-  cp -f "${DIRNAME}/style_template/resize.js" "${DIRNAME}/${GENDIR}/$1/"
 
   sed -e "s/{datetime}/${datetime}/" "${DIRNAME}/style_template/footer.js.in" \
     | sed -e "s/{year}/${year}/" \
@@ -114,7 +112,7 @@ function generate() {
 echo "Generating documentation ..."
 generate "general" "${VERSION_FULL}"
 generate "vela"
-generate "drivers"
+generate "driver"
 generate "integration"
 generate "zephyr"
 

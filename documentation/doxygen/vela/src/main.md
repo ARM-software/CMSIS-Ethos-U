@@ -1,4 +1,4 @@
-# Vela {#mainpage}
+# Vela
 
 Arm Vela is an ahead-of-time (AOT) neural network model compiler for the
 [Ethos-U55](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55),
@@ -37,19 +37,13 @@ set. Cascading feeds each region directly through a sequence of compatible
 operations, allowing Vela to use rolling buffers instead of storing complete
 intermediate feature maps.
 
-The normal deployment flow is:
-
-```text
-quantized model -> Vela compiler + target/memory description -> optimized model
-                                                       |
-                                                       v
-                         ML inference runtime + Ethos-U driver -> NPU
-```
+For the normal deployment flow, see the
+<a href="../general/index.html#system-overview">system overview</a>.
 
 For TFLite output, supported regions become Ethos-U custom operators containing
 the NPU command stream and related data. Unsupported TFLite operators remain in
 the model for CPU execution, commonly using TensorFlow Lite Micro reference or
-[CMSIS-NN](https://www.keil.arm.com/packs/cmsis-nn-arm/overview/) kernels.
+[CMSIS-NN](https://www.keil.arm.com/packs/cmsis-nn-arm) kernels.
 Always review compiler warnings and `--show-cpu-operations`;
 a successful compilation does not imply that every operation runs on the NPU.
 
@@ -126,13 +120,16 @@ through its
 [MLOps information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
 
 When the DFP does not provide this information, create the equivalent configuration
-manually as described in \ref vela_create_configuration "Create device-specific `vela.ini` file".
+manually as described in [Create device-specific `vela.ini` file](#create-device-specific-velaini-file).
 
-## Basic invocation
+## Invocation
 
 ```console
-vela [OPTIONS] NETWORK
+vela [Options] NETWORK
 ```
+
+- `Options` are described in the tables below and can precede or follow `NETWORK`. Use `vela --help` for the exact `Options` provided by the installed version.
+- `NETWORK` is the path to the `.tflite` or `.tosa` ML model input file.
 
 Only the input ML model file and accelerator configuration are needed for a basic
 build:
@@ -153,16 +150,10 @@ vela my_network.tflite \
   --optimise Performance
 ```
 
-Options can precede or follow `NETWORK`. Use `vela --help` for the exact options
-provided by the installed version.
+### Options for input, output, and discovery
 
-## Invocation parameters
-
-### Input, output, and discovery
-
-| Parameter | Purpose |
+| Option | Description |
 |---|---|
-| `NETWORK` | Path to the `.tflite` or `.tosa` ML model input file. |
 | `-h`, `--help` | Show command help and exit. |
 | `--version` | Show the installed Vela version and exit. |
 | `--api-version` | Show the deprecated external-API version. Planned for removal. |
@@ -180,15 +171,15 @@ Raw output holds command streams, weight data, and tensor quantization metadata
 for Ethos-U regions. It omits CPU regions and therefore is not a general
 TFLite-to-TOSA conversion format.
 
-### Target and scheduling
+### Options for Ethos-U target and scheduling
 
-| Parameter | Purpose and values |
+| Option | Description and values |
 |---|---|
-| `--accelerator-config TARGET` | Select the hardware: `ethos-u55-{32,64,128,256}`, `ethos-u65-{256,512}`, or `ethos-u85-{128,256,512,1024,2048}`. The suffix is the MACs-per-cycle configuration. |
+| `--accelerator-config TARGET` | Select Ethos-U hardware target: `ethos-u55-{32,64,128,256}`, `ethos-u65-{256,512}`, or `ethos-u85-{128,256,512,1024,2048}`. The suffix is the MACs-per-cycle configuration. |
 | `--system-config NAME` | Select `[System_Config.NAME]` from the configuration files. The internal default provides functional defaults, but a platform-specific definition gives useful scheduling estimates. |
 | `--memory-mode NAME` | Select `[Memory_Mode.NAME]`, which maps constants, arena, and cache to the system's memory areas. |
 | `--tensor-allocator {LinearAlloc,Greedy,HillClimb}` | Choose the tensor allocator; defaults to `HillClimb`. |
-| `--max-block-dependency {0,1,2,3}` | Limit the dependency distance between NPU kernel operations; defaults to `3`. Smaller values can improve interrupt latency at a possible performance cost. |
+| `--max-block-dependency {0,1,2,3}` | Limit the dependency distance between NPU kernel operations; defaults to `3`. Smaller values can improve interrupt latency at a possible performance cost. ?ToDo: don't understand this? |
 | `--optimise {Performance,Size}` | `Performance` is the default and minimizes inference time; `Size` minimizes peak SRAM and ignores the arena-cache size. |
 | `--arena-cache-size BYTES` | Override the selected memory mode's cache capacity for `Performance` optimization. This is a byte count, not KiB. |
 | `--cpu-tensor-alignment BYTES` | Alignment for CPU tensors, including custom-operator inputs and outputs; defaults to `16`. Keep it consistent with the ML inference runtime allocation. |
@@ -198,9 +189,9 @@ TFLite-to-TOSA conversion format.
 | `--separate-io-regions` | Place custom-operator inputs and outputs into separate logical regions. Requires `--cop-format COP2`. |
 | `--ignore-ops OP[,OP...]` | Force named TFLite builtin operator types, such as `ADD,ARGMAX`, onto the CPU. Repeatable and ignored for TOSA. |
 
-### Reporting and diagnostics
+### Options for reporting and diagnostics
 
-| Parameter | Purpose |
+| Option | Description |
 |---|---|
 | `--show-cpu-operations` | List TFLite operations that were not placed on the NPU. |
 | `--show-subgraph-io-summary` | Summarize every subgraph and its inputs and outputs. |
@@ -221,13 +212,13 @@ TFLite-to-TOSA conversion format.
 | `--verbose-cycle-estimate` | Show cycle-estimation details. |
 | `--verbose-progress` | Show compilation progress. |
 
-## Use the Ethos-U configuration {#vela_use_configuration}
+## Use the Ethos-U configuration
 
 Compiling an ML model requires three selections from the Ethos-U configuration:
 
-| Setting | Describes |
+| Option | Describes |
 |---|---|
-| `--accelerator-config` | NPU architecture and MAC configuration. The generated command stream is target-specific. |
+| `--accelerator-config` | NPU architecture and MAC configuration. The generated command stream is Ethos-U target-specific. |
 | `--system-config` | Core clock, AXI port mapping, memory clock ratios, burst lengths, latencies, and outstanding transactions used by the cost model. |
 | `--memory-mode` | Placement of constant, arena, and cache memory areas on the AXI-connected memories. |
 
@@ -262,11 +253,11 @@ The generic `Arm/vela.ini` reference file includes these system configurations:
   `Ethos_U85_SYS_DRAM_Low`, `Ethos_U85_SYS_DRAM_Mid`,
   `Ethos_U85_SYS_DRAM_High`.
 
-### Select a memory mode {#vela_select_memory_mode}
+### Select a memory mode
 
 The reference configuration defines typically memory modes as shown below.
 
-| Memory Mode       | `const`<br/>`_mem_area` | `arena`<br/>`_mem_area` | `cache`<br/>`_mem_area` | Content |
+| Memory Mode       | const<br/>_mem_area     | arena<br/>_mem_area     | cache<br/>_mem_area     | Content |
 |-------------------|:-----------------------:|:-----------------------:|:-----------------------:|---------|
 | `Sram_Only`       | `Axi0`                  | `Axi0`                  | `Axi0`                  | All model storage uses the memory type selected for `Axi0`. |
 | `Shared_Sram`     | `Axi1`                  | `Axi0`                  | `Axi0`                  | Constants remain in the memory selected for `Axi1`; arena and cache share the `Axi0` memory. |
@@ -286,7 +277,7 @@ The `vela.ini` file, device interconnect, linker placement, MPU/SAU attributes,
 cache policy, driver region indices, and ML inference runtime tensor arena must
 agree. The Vela compiler cannot validate the complete firmware memory map.
 
-### Understand arena cache and spilling {#vela_arena_cache_size}
+### Understand arena cache and spilling
 
 `cache_mem_area` does not always create a separate cache allocation. When it
 resolves to the same memory type as `arena_mem_area`, the fast-scratch memory region is
@@ -299,7 +290,7 @@ feature-map arena would be placed on that interface. Do not infer the same
 read-only restriction for the logical `Axi1` alias in `vela.ini` on every
 Ethos-U target.
 
-## Create device-specific vela.ini file {#vela_create_configuration}
+## Create device-specific vela.ini file
 
 To support a device manually, create a device-specific `vela.ini` file.
 Application developers normally obtain this file from the silicon vendor,
@@ -348,7 +339,7 @@ ToDo: verify this
   `Ethos_U55`. The Vela compiler uses this prefix when selecting the U55 AXI
   bandwidth width while translating memory-performance values.
 
-### System configuration parameters {#vela_system_configuration}
+### System configuration parameters
 
 The system configuration maps the two logical aliases in `vela.ini` to memory
 types and supplies the performance model. `axi0_port` and `axi1_port` connect
@@ -394,7 +385,7 @@ The values in `vela.ini` are used by the Vela compiler to optimize the ML model 
 The can alter scheduling, buffering, DMA insertion, allocation sizes, and the generated
 command stream. `core_clock` is primarily used to convert cycle estimates to time.
 
-### Memory mode parameters {#vela_memory_mode}
+### Memory mode parameters
 
 | Parameter | Type or values | Description |
 |---|---|---|
@@ -413,7 +404,7 @@ the arena-cache size. With `--optimise Performance`, it uses the configured or
 command-line arena-cache size. If neither is supplied, the compiler uses the
 maximum addressable size for the selected Ethos-U target.
 
-### Create the linker script {#vela_create_linker_script}
+### Create the linker script
 
 The linker script places the generated model artifacts and runtime buffers in
 the physical memories represented by the selected `System_Config` and
@@ -452,7 +443,7 @@ Validate a new linker configuration by checking:
 - the optimized model runs correctly and meets its memory and performance goals
   on the device.
 
-### Match the driver configuration {#vela_match_driver_configuration}
+### Match the driver configuration
 
 The driver configuration must select NPU access paths that match the physical
 placement established by `vela.ini` and the linker script. For the common
@@ -532,11 +523,9 @@ vela model.tflite --config My_vela.ini \
   --verbose-config
 ```
 
-### Publish Ethos-U configuration in a DFP {#vela_publish_configuration}
+### Publish Ethos-U configuration in a DFP
 
-A DFP can publish the NPU capabilities, `vela.ini` file, and matching linker
-scripts in its DFP description. CMSIS-Toolbox can then select these resources
-for the device, processor, and toolchain used by a project.
+A CMSIS Device Family Pack (DFP) can publish the NPU capabilities, `vela.ini` file, and matching linker scripts in its DFP description. The CMSIS-Toolbox can then select these resources for the device, processor, and toolchain used by a project.
 
 Declare each integrated NPU with a device `feature`. The `n` attribute identifies
 the Ethos-U variant, `m` identifies its MAC configuration, and `Pname` associates
@@ -551,7 +540,7 @@ Publish the device-specific Vela configuration through the `VELA` environment:
 
 ```xml
 <environment name="VELA">
-  <file name="Device/scripts/vela/My_vela.ini" type="ini"/>
+  <file name="Device/scripts/vela/device_vela.ini" type="ini"/>
 </environment>
 ```
 
@@ -576,7 +565,7 @@ For the complete pack structure and element rules, see:
 
 ## Examples
 
-### Compile for an Ethos-U reference system {#vela_compile_reference_system}
+### Compile for an Ethos-U reference system
 
 ```console
 vela person_detect.tflite \
@@ -663,6 +652,8 @@ the compiled command stream.
 
 ## ExecuTorch Arm example flow
 
+?ToDo: update this?
+
 The
 [ExecuTorch Arm examples](https://github.com/pytorch/executorch/tree/main/examples/arm)
 demonstrate an integrated PyTorch-to-Ethos-U workflow. The setup script installs
@@ -684,7 +675,7 @@ source examples/arm/arm-scratch/setup_path.sh
   --target=ethos-u85-128
 ```
 
-The helper runs the AOT compiler, builds the matching ML inference runtime, and
+The `run.sh` script runs the AOT compiler, builds the matching ML inference runtime, and
 starts the target simulator unless build-only mode is selected. Other examples
 include a minimal Ethos-U notebook, a quantizer tutorial, a pruning example, an
 image-classification application, and Zephyr and

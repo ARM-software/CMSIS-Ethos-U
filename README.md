@@ -1,6 +1,6 @@
-[![License](https://img.shields.io/github/license/ARM-software/CMSIS-Ethos-U?label=License)](./LICENSE)
-[![Pack](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/pack.yml?logo=arm&logoColor=0091bd&label=Build%20pack)](./.github/workflows/pack.yml)
-[![GH Pages](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/gh-pages.yml?logo=arm&logoColor=0091bd&label=Deploy%20content)](./.github/workflows/gh-pages.yml)
+[![License](https://img.shields.io/github/license/VladimirUmek/Ethos-U?label=License)](./LICENSE)
+[![Pack](https://img.shields.io/github/actions/workflow/status/VladimirUmek/Ethos-U/pack.yml?logo=arm&logoColor=0091bd&label=Build%20pack)](./.github/workflows/pack.yml)
+[![GH Pages](https://img.shields.io/github/actions/workflow/status/VladimirUmek/Ethos-U/gh-pages.yml?logo=arm&logoColor=0091bd&label=Deploy%20content)](./.github/workflows/gh-pages.yml)
 
 # Arm CMSIS Ethos-U
 
@@ -26,7 +26,7 @@ The documentation is organized into five sections:
 
 - [General](https://arm-software.github.io/CMSIS-Ethos-U/main/general/index.html) introduces the architecture, terminology, memory modes, and deployment lifecycle.
 - [Vela](https://arm-software.github.io/CMSIS-Ethos-U/main/vela/index.html) covers compiler installation, model compilation, configuration, memory placement, and diagnostics.
-- [Drivers](https://arm-software.github.io/CMSIS-Ethos-U/main/drivers/index.html) describes the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
+- [Driver](https://arm-software.github.io/CMSIS-Ethos-U/main/driver/index.html) describes the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
 - [Integration](https://arm-software.github.io/CMSIS-Ethos-U/main/integration/index.html) connects Vela output to linker placement, memory attributes, cache policy, driver configuration, and system memory budgeting.
 - [Zephyr](https://arm-software.github.io/CMSIS-Ethos-U/main/zephyr/index.html) explains how to configure, build, and run Ethos-U-accelerated Zephyr applications.
 
