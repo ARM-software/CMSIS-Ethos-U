@@ -1,0 +1,121 @@
+/**
+\defgroup ethosu_log_api Logging
+\brief Compile-time logging controls and macros from \c ethosu_log.h.
+\details
+The driver uses printf-style macros that write to the C library \c stdout and
+\c stderr streams. Logging is configured at compile time; it does not provide a
+runtime callback or logging backend. Embedded targets that enable logging must
+retarget the required streams to an available output.
+
+Use \ref ETHOSU_LOG_ENABLE as the master switch and
+\ref ETHOSU_LOG_SEVERITY to select the most verbose severity compiled into the
+driver. Severity filtering does not apply to \ref LOG. See
+<a href="index.html#logging">Logging</a> for configuration and usage guidance.
+
+\ingroup ethosu_driver_api
+@{
+*/
+
+/**
+  \def ETHOSU_LOG_ERR
+  \brief Error severity level.
+  \details
+  Select this value for \ref ETHOSU_LOG_SEVERITY to include only
+  \ref LOG_ERR messages. Its numeric value is 0.
+*/
+
+/**
+  \def ETHOSU_LOG_WARN
+  \brief Warning severity level.
+  \details
+  Select this value for \ref ETHOSU_LOG_SEVERITY to include error and warning
+  messages. Its numeric value is 1 and it is the default severity.
+*/
+
+/**
+  \def ETHOSU_LOG_INFO
+  \brief Informational severity level.
+  \details
+  Select this value for \ref ETHOSU_LOG_SEVERITY to include error, warning, and
+  informational messages. Its numeric value is 2.
+*/
+
+/**
+  \def ETHOSU_LOG_DEBUG
+  \brief Debug severity level.
+  \details
+  Select this value for \ref ETHOSU_LOG_SEVERITY to include all severity-based
+  messages. Its numeric value is 3.
+*/
+
+/**
+  \def ETHOSU_LOG_ENABLE
+  \brief Master compile-time switch for driver logging.
+  \details
+  The default value is 1. Set it to 0 to compile out all logging, including
+  \ref LOG. Arguments to disabled logging macros are not evaluated at runtime.
+  The CMake option with the same name accepts \c ON or \c OFF.
+*/
+
+/**
+  \def ETHOSU_LOG_SEVERITY
+  \brief Most verbose severity compiled into the driver.
+  \details
+  The default value is \ref ETHOSU_LOG_WARN. Set it to one of
+  \ref ETHOSU_LOG_ERR, \ref ETHOSU_LOG_WARN, \ref ETHOSU_LOG_INFO, or
+  \ref ETHOSU_LOG_DEBUG. The corresponding CMake option accepts \c err,
+  \c warning, \c info, or \c debug. This setting does not filter \ref LOG.
+*/
+
+/**
+  \def LOG(f, ...)
+  \brief Write an unprefixed message to \c stdout.
+  \details
+  The arguments follow \c fprintf formatting rules. No newline is appended.
+  Output is controlled by \ref ETHOSU_LOG_ENABLE but not by
+  \ref ETHOSU_LOG_SEVERITY.
+*/
+
+/**
+  \def LOG_ERR(f, ...)
+  \brief Write an error message to \c stderr.
+  \details
+  The arguments follow \c fprintf formatting rules. The macro prefixes the
+  message with \c E:, the source file name, and the source line, and appends a
+  newline. It is enabled when \ref ETHOSU_LOG_ENABLE is nonzero and
+  \ref ETHOSU_LOG_SEVERITY is at least \ref ETHOSU_LOG_ERR.
+*/
+
+/**
+  \def LOG_WARN(f, ...)
+  \brief Write a warning message to \c stdout.
+  \details
+  The arguments follow \c fprintf formatting rules. The macro prefixes the
+  message with \c W: and appends a newline. It is enabled when
+  \ref ETHOSU_LOG_ENABLE is nonzero and \ref ETHOSU_LOG_SEVERITY is at least
+  \ref ETHOSU_LOG_WARN.
+*/
+
+/**
+  \def LOG_INFO(f, ...)
+  \brief Write an informational message to \c stdout.
+  \details
+  The arguments follow \c fprintf formatting rules. The macro prefixes the
+  message with \c I: and appends a newline. It is enabled when
+  \ref ETHOSU_LOG_ENABLE is nonzero and \ref ETHOSU_LOG_SEVERITY is at least
+  \ref ETHOSU_LOG_INFO.
+*/
+
+/**
+  \def LOG_DEBUG(f, ...)
+  \brief Write a debug message to \c stdout.
+  \details
+  The arguments follow \c fprintf formatting rules. The macro prefixes the
+  message with \c D: and the current function name, and appends a newline. It
+  is enabled when \ref ETHOSU_LOG_ENABLE is nonzero and
+  \ref ETHOSU_LOG_SEVERITY is at least \ref ETHOSU_LOG_DEBUG.
+*/
+
+/**
+@}
+*/

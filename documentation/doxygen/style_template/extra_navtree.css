@@ -24,6 +24,10 @@
   padding:0px;
 }
 
+#nav-tree .item {
+  height:30px;
+}
+
 #nav-tree .plus {
   margin:0px;
 }
@@ -32,8 +36,8 @@
   background-image: none;
   background-repeat:no-repeat;
   text-shadow: none;
-  border: 1.5px solid var(--arm_blue);
-  border-left-width: 5px;
+  border:0;
+  box-shadow:inset 5px 0 var(--arm_blue), inset 0 0 0 1.5px var(--arm_blue);
   margin-left:-10px; /*correction to place selection border on the edge screen edge */
 }
 
@@ -56,7 +60,7 @@
 #nav-tree .label {
   margin:0px;
   padding:0px;
-  font: 15px  Lato, Calibri, sans-serif;
+  font:15px/30px Lato, Calibri, sans-serif;
 }
 
 #nav-tree .label:hover {
@@ -65,7 +69,7 @@
 
 #nav-tree .label a {
   padding-left:6px;
-  line-height: 30px;
+  line-height:inherit;
 }
 
 #nav-tree .selected a {
@@ -97,7 +101,7 @@
 }
 
 #side-nav {
-  padding:0 2px 0 0;
+  padding:0 6px 0 0;
   margin: 0px;
   display:block;
   position: absolute;
@@ -110,14 +114,14 @@
 }
 
 .ui-resizable-e {
-  background-color: var(--nav-splitbar-color);
-  background-repeat:repeat-y;
-  background-attachment: scroll;
-  cursor:ew-resize;
-  height:100%;
-  right:0;
-  top:0;
-  width:1px;
+  background-color:transparent;
+  cursor:col-resize;
+  width:12px;
+}
+
+.ui-resizable-e::after {
+  left:auto;
+  right:1px;
 }
 
 .ui-resizable-handle {
@@ -161,4 +165,3 @@
   #nav-tree { display: none; }
   div.ui-resizable-handle { display: none; position: relative; }
 }
-

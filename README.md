@@ -26,7 +26,7 @@ The documentation is organized into five sections:
 
 - [General](https://arm-software.github.io/CMSIS-Ethos-U/main/general/index.html) introduces the architecture, terminology, memory modes, and deployment lifecycle.
 - [Vela](https://arm-software.github.io/CMSIS-Ethos-U/main/vela/index.html) covers compiler installation, model compilation, configuration, memory placement, and diagnostics.
-- [Drivers](https://arm-software.github.io/CMSIS-Ethos-U/main/drivers/index.html) describes the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
+- [Driver](https://arm-software.github.io/CMSIS-Ethos-U/main/driver/index.html) describes the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
 - [Integration](https://arm-software.github.io/CMSIS-Ethos-U/main/integration/index.html) connects Vela output to linker placement, memory attributes, cache policy, driver configuration, and system memory budgeting.
 - [Zephyr](https://arm-software.github.io/CMSIS-Ethos-U/main/zephyr/index.html) explains how to configure, build, and run Ethos-U-accelerated Zephyr applications.
 

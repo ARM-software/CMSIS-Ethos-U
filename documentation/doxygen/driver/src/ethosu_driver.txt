@@ -1,5 +1,38 @@
 /**
+\defgroup ethosu_driver_defines Defines
+\brief Compile-time definitions in \c ethosu_driver.h
+\ingroup ethosu_driver_api
+@{
+*/
+
+/**
+  \def ETHOSU_SEMAPHORE_WAIT_INFERENCE
+  \brief Timeout used while waiting for inference completion.
+  \details
+  This value is passed to \ref ethosu_semaphore_take when \ref ethosu_wait
+  blocks for inference completion. Its unit and interpretation are defined by
+  the platform semaphore implementation. Define it at compile time to select a finite timeout. It
+  defaults to \ref ETHOSU_SEMAPHORE_WAIT_FOREVER.
+*/
+
+/**
+  \def ETHOSU_SEMAPHORE_WAIT_FOREVER
+  \brief Value used to request an indefinite semaphore wait.
+  \details
+  This value is defined as \c UINT64_MAX. A platform implementation of
+  \ref ethosu_semaphore_take must interpret it as no timeout. The driver also
+  uses this value while waiting for an NPU driver instance to become available.
+*/
+
+/**
+@}
+*/
+
+
+/**
 \defgroup ethosu_driver_structs Structures
+\brief struct definitions in \c ethosu_driver.h
+\ingroup ethosu_driver_api
 @{
 */
 
@@ -95,6 +128,12 @@
 
 /**
 \defgroup ethosu_public_api Functions
+\brief Public API functions in \c ethosu_driver.h
+\details
+These functions manage driver instances and run inference jobs. See
+<a href="index.html#driver-usage">Driver Usage</a> for synchronous and
+asynchronous invocation examples.
+\ingroup ethosu_driver_api
 @{
 */
 
@@ -276,7 +315,13 @@
 */
 
 /**
-\defgroup ethosu_callback_api Platform hooks
+\defgroup ethosu_callback_api Platform-specific functions
+\brief Functions may be overwritten for specific driver and use cases
+\details
+The driver provides weak default implementations for these functions. See
+<a href="index.html#platform-specific-functions">Platform-specific functions</a> for
+guidance on when a platform-specific implementation is required.
+\ingroup ethosu_driver_api
 @{
 */
 
@@ -294,6 +339,9 @@
   implementation may require stricter cache-line alignment, commonly 32 bytes,
   and must handle non-cache-line-sized regions without affecting unrelated
   data.
+
+  See <a href="index.html#data-caching">Data caching</a> for cache-coherency
+  requirements and an implementation example.
 */
 
 /**
@@ -310,6 +358,9 @@
   lines after the NPU has written the same memory can overwrite NPU results.
   The platform implementation must define and enforce this ownership rule,
   including for asynchronous invocation.
+
+  See <a href="index.html#data-caching">Data caching</a> for cache-coherency
+  requirements and an implementation example.
 */
 
 /**
@@ -319,6 +370,9 @@
 
   Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
   multithreaded application or when multiple CPU cores can access the driver.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -328,6 +382,9 @@
 
   Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
   multithreaded application or when multiple CPU cores can access the driver.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -338,6 +395,9 @@
 
   Re-implement this function and create an RTOS semaphore with an initial
   count of zero in multithreaded application.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -348,6 +408,9 @@
 
   Re-implement this function in multithreaded application to destroy
   semaphore created and returned by \ref ethosu_semaphore_create.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -357,6 +420,9 @@
 
   Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
   multithreaded application or when multiple CPU cores can access the driver.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -366,6 +432,9 @@
 
   Re-implement this function and use an RTOS mutex when Ethos-U NPU is used in
   multithreaded application or when multiple CPU cores can access the driver.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -379,6 +448,9 @@
 
   - ETHOSU_SEMAPHORE_WAIT_FOREVER is used to request an indefinite wait.
   - ETHOSU_SEMAPHORE_WAIT_INFERENCE is used to wait until inference completes.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -389,6 +461,9 @@
   Re-implement this function in multithreaded application to use the semaphore
   created and returned by \ref ethosu_semaphore_create. The implementation must
   be callable from NPU interrupt context.
+
+  See <a href="index.html#mutex-and-semaphores">Mutex and semaphores</a> for
+  RTOS integration requirements.
 */
 
 /**
@@ -396,6 +471,9 @@
   \details
   Called immediately before starting the command stream. The default weak
   implementation is a no-op.
+
+  See <a href="index.html#beginend-inference-callbacks">Begin/End inference
+  callbacks</a> for usage and lifecycle requirements.
 */
 
 /**
@@ -404,6 +482,9 @@
   Called by ethosu_wait() when finalizing a started job, including error and
   timeout paths. It is not guaranteed if a running driver is released. The
   default weak implementation is a no-op.
+
+  See <a href="index.html#beginend-inference-callbacks">Begin/End inference
+  callbacks</a> for usage and lifecycle requirements.
 */
 
 /**

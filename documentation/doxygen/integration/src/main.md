@@ -1,4 +1,4 @@
-# Integration {#mainpage}
+# Integration
 
 This chapter explains how to integrate a pretrained, quantized ML model into an
 Edge AI MCU based on Cortex-M and Ethos-U. Model training, quantization, and
@@ -10,9 +10,9 @@ The starting point is a pretrained, quantized ML model that meets the
 application's functional requirements. Before selecting a specific Edge AI MCU,
 compile the model with Vela for one or more Ethos-U reference systems as
 described in
-[Compile for an Ethos-U reference system](../vela/index.html#vela_compile_reference_system).
+<a href="../vela/index.html#compile-for-an-ethos-u-reference-system">Compile for an Ethos-U reference system</a>.
 
-The Vela outputs estimates of NPU cycles, memory bandwidth, and
+Vela provides estimates of NPU cycles, memory bandwidth, and
 model memory requirements. Vela also identifies which operations are assigned to
 the NPU and which remain on the CPU. Use these results to compare Ethos-U
 configurations and memory modes and to identify Edge AI MCUs with suitable NPU
@@ -25,19 +25,33 @@ the candidate device before using those results.
 
 ### Determine the memory budget
 
-Most embedded applications are resource constraint and therefore the memory budget is an important aspect. Use this three-step approach to estimate the total memory requirements of the application:
+Most embedded applications are resource-constrained and therefore the memory budget is an important aspect. Use this three-step approach to estimate the total memory requirements of the application:
 
-- **Establish the ML model floor.** Compile the ML model and with
+- **Evaluate the ML model memory requirement.** Compile the ML model with
   `--optimise Size` and record the reported memory
-  areas. See [Vela memory mode parameters](../vela/index.html#vela_memory_mode).
+  areas. See <a href="../vela/index.html#memory-mode-parameters">Vela memory mode parameters</a>.
 - **Build the system budget.** Add runtime and application data, stacks, heaps,
   alignment, padding, and a safety margin.
-- **Tune and optimize.** Use the remaining memory budget for performance gains. Use different Vela system configurations and memory modes combined with `--arena-cache-size` as described in [Understand arena cache and spilling](../vela/index.html#vela_arena_cache_size).
+- **Tune and optimize.** Use the remaining memory budget for performance gains.
+  Keep the Vela system configuration for the selected target fixed. Evaluate
+  compatible memory modes and NPU cache-size variants, such as
+  `Dedicated_Sram_256KB`, or tune the cache size with `--arena-cache-size` as
+  described in <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a>.
 
 ## Integration workflow
 
-Complete the following steps in order because later steps depend on earlier
-decisions and measurements.
+The diagram summarizes the integration workflow and its iteration loop. Follow
+the detailed steps in order because later steps depend on earlier decisions and
+measurements.
+
+```mermaid
+flowchart LR
+    setup["Select MCU and DFP<br/>Check DFP resources<br/>Create CMSIS-Toolbox project"] --> compile["Compile ML model<br/>for device"]
+    compile --> configure["Configure memory placement and linker script"]
+    configure --> integrate["Complete application integration"]
+    integrate --> validate["Validate and tune"]
+    validate -. Iterate .-> compile
+```
 
 1. **Select the Edge AI MCU and DFP.** Compare the reference results with the
    device's NPU configuration and memory capacity and with the application's
@@ -45,44 +59,80 @@ decisions and measurements.
    [www.keil.arm.com/packs](https://www.keil.arm.com/packs).
 2. **Check the DFP resources.** Determine whether the DFP provides a
    device-specific `vela.ini` file, matching linker scripts, and other required
-   resources. If it does not, contact the device or SoC vendor or
-   [create a device-specific `vela.ini` file](../vela/index.html#vela_create_configuration).
-3. **[Create the CMSIS-Toolbox project](#integration_create_csolution).** Select the device and build context, and specify the Vela system configuration and memory mode.
+   resources. Creating a reliable, optimized `vela.ini` file requires detailed
+   information about the device memory and interconnect. If the DFP does not
+   provide this configuration, contact the device or SoC vendor. See
+   <a href="../vela/index.html#create-device-specific-velaini-file">create a device-specific <code>vela.ini</code> file</a>,
+   or contact the Arm CMSIS support team at
+   [CMSIS@arm.com](mailto:CMSIS@arm.com) for assistance.
+3. <a href="#create-the-csolution-project"><strong>Create the CMSIS-Toolbox project.</strong></a> Select the device and build context, and specify the Vela system configuration and memory mode.
    Use the generated [MLOps information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information)
    to obtain the Vela parameters and resources supplied by the DFP.
-4. **[Compile the ML model for the device](#integration_compile_model).** Run Vela with the device-specific
+4. <a href="#compile-the-ml-model-for-the-device"><strong>Compile the ML model for the device.</strong></a> Run Vela with the device-specific
    parameters and confirm that its performance and memory estimates meet the
-   application requirements. Treat the performance figures as model-based
-   estimates and retain sufficient margin.
-5. **[Configure memory placement and the linker script](#integration_configure_memory).** Keep the Vela memory
+   application requirements. Treat the performance figures as first-order,
+   model-dependent estimates. As initial guidance, budget for the cycle count
+   or latency to be 30% higher than the Vela estimate, and refine this margin
+   after the first target benchmarks.
+5. <a href="#configure-memory-placement-and-the-linker-script"><strong>Configure memory placement and the linker script.</strong></a> Keep the Vela memory
    mode, linker placement, and driver region configuration consistent. Account
    for the ML inference runtime, stacks, heaps, application data, alignment, and
-   a safety margin. Build the system and review the compiler and linker reports.
-6. **[Complete application integration](#integration_complete_application).** Add any application-specific RTOS,
+   a safety margin. Build the system and inspect the linker map. Ensure that the
+   model constants, tensor arena, and any separate scratch-fast buffer are in
+   the expected physical memories, fit within their allocated regions, and are
+   accessible to the runtime and NPU. The examples use the linker sections
+   `ethos_model`, `ethos_arena`, and `ethos_cache`, respectively.
+6. <a href="#complete-application-integration"><strong>Complete application integration.</strong></a> Add any application-specific RTOS,
    power, timeout, cache, and fault handling.
-7. **[Validate and tune](#integration_validate_tune).** Verify correctness, memory allocation, ML model performance,
+7. <a href="#validate-and-tune"><strong>Validate and tune.</strong></a> Verify correctness, memory allocation, ML model performance,
    bandwidth, latency, and concurrency on the actual target system.
 
-A change to a memory mode, linker section, cache attribute, or driver region
-value requires a review of the other descriptions of that memory region.
+Treat memory placement as a system-wide property. Reflect every placement change
+consistently in the Vela memory mode, linker script, MPU/SAU and cache
+attributes, driver region configuration, and any cache or address-remapping
+hooks.
 
 ### General integration guidance
 
 - Keep the `vela.ini`, `System_Config`, selected `Memory_Mode`, linker sections,
   MPU/SAU attributes, and driver build definitions consistent.
 - Apply `arena_cache_size` according to the selected memory mode as described in
-  [Understand arena cache and spilling](../vela/index.html#vela_arena_cache_size).
+  <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a>.
 - Place model constants, activations, and any separate scratch-fast storage as
   described in
-  [Create the linker script](../vela/index.html#vela_create_linker_script).
+  <a href="../vela/index.html#create-the-linker-script">Create the linker script</a>.
 - Override the driver weak hooks when the default integration assumptions do not
   match the platform, especially for data cache maintenance, address remapping,
   and RTOS synchronization.
-- Ensure the NPU completion interrupt is eventually serviced. Very low jitter is
-  usually not required for inference workloads, but completion handling must not
-  be postponed indefinitely.
+- Route the NPU completion and fault interrupt to \ref ethosu_irq_handler
+  "ethosu_irq_handler()" and ensure that it remains serviceable. Very low jitter
+  is usually not required for inference workloads, but completion handling must
+  not be postponed indefinitely.
 - During bring-up, use timeouts, fault reporting, and a minimal known-good model
   before moving to full application graphs.
+
+#### Example: Move the tensor arena from SRAM to external DRAM
+
+Assume that the selected target provides NPU-accessible external DRAM and that
+the tensor arena currently resides in SRAM. Moving it to DRAM requires these
+coordinated changes:
+
+- **Vela:** Select a compatible `Memory_Mode` in which `arena_mem_area` resolves
+  to the target's external DRAM access path. Keep the target's `System_Config`
+  fixed.
+- **Linker:** Move the `ethos_arena` section to the DRAM memory region, preserve
+  its required alignment, and use the linker map to confirm that it fits.
+- **MPU/SAU and cache policy:** Configure the DRAM attributes so that the
+  runtime and NPU have the required access and the CPU cache policy is explicit.
+- **Driver:** Set `NPU_REGIONCFG_1`, which represents `arena_mem_area`, to the
+  target-specific external-memory access path. Override
+  `ethosu_address_remap()` if the CPU and NPU use different DRAM addresses.
+- **Cache hooks:** If the CPU mapping is cacheable and is not coherent with the
+  NPU, implement `ethosu_flush_dcache()` before NPU reads and
+  `ethosu_invalidate_dcache()` after NPU writes. Cache maintenance is not needed
+  for a non-cacheable or hardware-coherent mapping.
+- **Validation:** Rebuild and verify the linker-map placement, NPU access, model
+  correctness, memory use, and performance on the target.
 
 ### Add ML model and configuration to version control
 
@@ -92,13 +142,13 @@ CMSIS-Toolbox already records the selected packs and `vela.ini` configuration
 file in the *csolution project* files and in the metafiles `*.cbuild-pack.yml` and `*.cbuild-mlops.yml`.
 Keep these files along with the input ML model under version control.
 
-## Create the *csolution project* {#integration_create_csolution}
+## Create the *csolution project*
 
 CMSIS-Toolbox simplifies MLOps by combining device and DFP data with project
 settings into machine-readable
 [MLOps information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information)
-that tools can use to generate the ML model and test it on hardware or a
-simulator.
+that tools can use to compile the pretrained ML model for the selected target
+and test the resulting artifacts on hardware or a simulator.
 
 ### Use a project example and add device
 
@@ -152,7 +202,7 @@ and set `model.clayer` to the layer that contains the model. The example omits
 `vela.ini`, so CMSIS-Toolbox uses the configuration supplied by the device or
 DFP.
 
-## Compile the ML model for the device {#integration_compile_model}
+## Compile the ML model for the device
 
 CMSIS-Toolbox combines DFP information with the csolution project configuration
 and generates the MLOps information file `*.cbuild-mlops.yml`. The `vela:` node provides the `ini:` configuration file and `options:` that can be used to invoke Vela.
@@ -161,11 +211,23 @@ and generates the MLOps information file `*.cbuild-mlops.yml`. The `vela:` node 
 vela --config <vela.ini> <vela.options> ml-model.tflite
 ```
 
-## Configure memory placement and the linker script {#integration_configure_memory}
+## Configure memory placement and the linker script
+
+The diagram summarizes the settings that must describe a consistent mapping to
+physical memory.
+
+```mermaid
+flowchart LR
+    mode["Vela memory mode"] --> regions["Command-stream<br/>regions"]
+    regions --> linker["Linker placement"]
+    linker --> memory["Physical memory"]
+    attributes["MPU/SAU and<br/>cache attributes"] --> memory
+    driver["Driver<br/>region settings"] --> memory
+```
 
 The common relationship between compiler memory areas and driver regions is
 described in
-[Match the driver configuration](../vela/index.html#vela_match_driver_configuration).
+<a href="../vela/index.html#match-the-driver-configuration">Match the driver configuration</a>.
 The generated command stream uses numeric NPU regions, also
 called base pointer indices; it does not use the `Axi0` or `Axi1` aliases.
 
@@ -179,17 +241,49 @@ that must agree with this placement.
 
 Create the physical sections for model constants, the tensor arena, and any
 separate scratch-fast storage as described in
-[Create the linker script](../vela/index.html#vela_create_linker_script). Use the
+<a href="../vela/index.html#create-the-linker-script">Create the linker script</a>. Use the
 linker map to verify that their addresses and sizes match the selected memory
 mode and that every generated NPU region is accessible through the driver
 configuration.
 
-## Complete application integration {#integration_complete_application}
+## Complete application integration
 
 Validate interrupt wiring alongside Vela, linker, MPU/SAU, cache, and driver settings.
 
+### Troubleshoot an inference that does not complete
 
-## Validate and tune {#integration_validate_tune}
+During bring-up, provide a watchdog or RTOS timeout so that a missing completion
+interrupt does not block the application indefinitely. If an inference times
+out, capture the driver logs and NPU state before resetting the NPU. Check the
+following areas:
+
+- **Interrupt delivery:** Verify the NPU interrupt number, enable state,
+  priority, security routing, and vector-table entry. Confirm that the ISR calls
+  \ref ethosu_irq_handler "ethosu_irq_handler()" with the correct driver
+  instance. If the NPU `STATUS` register reports command completion or a fault
+  while the application remains blocked, inspect the interrupt path and the
+  RTOS semaphore implementation.
+- **NPU status and progress:** Enable driver logging and record `STATUS` and
+  `QREAD`. Fault status indicates a command-stream, memory-access, security, or
+  hardware error. If `QREAD` does not advance, check the NPU clock and power,
+  command-stream address and size, address remapping, and command-stream cache
+  cleaning.
+- **Memory access:** If `QREAD` advances and then stops, verify all base-pointer
+  addresses and sizes, `NPU_REGIONCFG_x` values, physical memory placement,
+  MPU/SAU and interconnect permissions, and cache maintenance. Confirm that the
+  command stream, constants, tensor arena, and any scratch-fast buffer are all
+  accessible to the NPU.
+- **Synchronization:** For asynchronous invocation, call `ethosu_wait()` only
+  after `ethosu_invoke_async()` succeeds. For an RTOS integration, verify that
+  the semaphore hooks wake the waiting task and that timeout units have the
+  expected meaning.
+- **Recovery and isolation:** Preserve fault information, then use
+  \ref ethosu_soft_reset "ethosu_soft_reset()" before another submission. Retry
+  with a minimal known-good model to separate platform integration faults from
+  model-specific failures.
+
+
+## Validate and tune
 
 ----
 
@@ -198,9 +292,9 @@ Validate interrupt wiring alongside Vela, linker, MPU/SAU, cache, and driver set
 The Vela guide explains how to select an existing configuration and how to
 create one for a device:
 
-- See [use the Ethos-U configuration](../vela/index.html#vela_use_configuration)
+- See <a href="../vela/index.html#use-the-ethos-u-configuration">use the Ethos-U configuration</a>
   to inspect the resolved `System_Config` and `Memory_Mode`; and
-- See [create device-specific `vela.ini` file](../vela/index.html#vela_create_configuration)
+- See <a href="../vela/index.html#create-device-specific-velaini-file">create device-specific <code>vela.ini</code> file</a>
   for `vela.ini` syntax, memory modes, performance parameters, arena-cache
   behavior, and spilling. The constraints for parsing `vela.ini` can differ
   between Ethos-U cores, so follow the requirements for the selected core.
@@ -303,18 +397,18 @@ access path to use for the command stream and for each base pointer region:
 | `NPU_REGIONCFG_1` | base pointer region 1 | `arena_mem_area` |
 | `NPU_REGIONCFG_2` | base pointer region 2 | `cache_mem_area`, when the generated model uses scratch-fast storage |
 
-Additional `NPU_REGIONCFG_3` to `NPU_REGIONCFG_7` definitions exist for command
-streams used by other platform configurations. For example, the experimental
-Ethos-U85 Direct Drive flow on Linux uses region 3 for input tensors and region
-4 for output tensors. Cortex-M integrations use regions 0 to 2 and do not need
-to configure these additional regions.
+The remaining `NPU_REGIONCFG_3` to `NPU_REGIONCFG_7` definitions are not used
+for Cortex-M integrations.
 
-For the default driver configuration, the practical mapping is:
+The value in the following table is the value assigned to the `NPU_QCONFIG` or
+`NPU_REGIONCFG_x` driver define.
 
-| Value | Ethos-U55/U65 meaning | Ethos-U85 meaning with the default `NPU_MEM_ATTR_0` to `NPU_MEM_ATTR_3` |
+| Value | Ethos-U55/U65 meaning | Ethos-U85 meaning |
 | --- | --- | --- |
-| `0` or `1` | use AXI0 | use AXI_SRAM |
-| `2` or `3` | use AXI1 | use AXI_EXT |
+| `0` | AXI0, `AXI_LIMIT0` | Use AXI_SRAM, `NPU_MEM_ATTR_0` |
+| `1` | AXI0, `AXI_LIMIT1` | Use AXI_SRAM, `NPU_MEM_ATTR_1` |
+| `2` | AXI1, `AXI_LIMIT2` | Use AXI_EXT, `NPU_MEM_ATTR_2` |
+| `3` | AXI1, `AXI_LIMIT3` | Use AXI_EXT, `NPU_MEM_ATTR_3` |
 
 This lets the same region values give the same intended behavior across
 Ethos-U55, Ethos-U65, and Ethos-U85: use `0` or `1` for base pointer regions
@@ -376,12 +470,25 @@ value is a MEM_ATTR index; the driver defaults make MEM_ATTR0 and MEM_ATTR1 use
 AXI_SRAM, and MEM_ATTR2 and MEM_ATTR3 use AXI_EXT. Change `NPU_MEM_ATTR_0` through
 `NPU_MEM_ATTR_3` only when the platform needs different U85 memory attributes.
 
-The AXI limit values are separate platform-tuning settings. Simplified,
-`AXI_LIMIT0` and `AXI_LIMIT1` on Ethos-U55 and Ethos-U65 correspond to the
-AXI0-side configuration, while `AXI_LIMIT2` and `AXI_LIMIT3` correspond to the
-AXI1-side configuration. On Ethos-U85, the equivalent limit settings are grouped
-under AXI_SRAM and AXI_EXT. The exact outstanding transaction and burst settings
-depend on the SoC interconnect and memory system.
+Todo: clean this section
+`AXI_LIMIT` is NPU AXI bus configuration, not part of the Ethos-U performance
+monitoring unit (PMU). An outstanding transaction is a read or write request
+issued by the NPU for which the transfer has not yet completed. On Ethos-U55 and
+Ethos-U65, `AXI_LIMIT0` to `AXI_LIMIT3` configure the maximum numbers of
+outstanding reads and writes, the burst-split alignment, and the AXI memory
+attributes for the corresponding port and counter shown in the table. The
+driver programs these registers from the `AXI_LIMITx_*` build definitions.
+
+On Ethos-U85, the `AXI_SRAM` and `AXI_EXT` settings provide the corresponding
+outstanding-transaction and burst controls, while `NPU_MEM_ATTR_0` to
+`NPU_MEM_ATTR_3` define the memory attributes and select the AXI interface. The
+limits must match the capabilities of the SoC interconnect and memory system.
+Larger limits can allow more transactions to proceed concurrently; smaller
+limits constrain the traffic generated by the NPU.
+
+The PMU is separate, but it can count AXI traffic and read or write stalls caused
+by reaching an AXI limit. These events help determine whether the configured
+limits are restricting NPU performance; the PMU does not set the limits.
 
 Keep these definitions synchronized with the `Memory_Mode` used to compile the
 model with the Vela compiler and with the linker sections used by the

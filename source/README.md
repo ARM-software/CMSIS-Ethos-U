@@ -60,7 +60,7 @@ A typical usage of the driver can be the following:
 ```[C]
 // reserve a driver to be used (this call could block until a driver is available)
 struct ethosu_driver *drv = ethosu_reserve_driver();
-...
+// ...
 // run one or more inferences
 int result = ethosu_invoke(drv,
                            custom_data_ptr,
@@ -68,7 +68,7 @@ int result = ethosu_invoke(drv,
                            base_addr,
                            base_addr_size,
                            num_base_addr);
-...
+// ...
 // release the driver for others to use
 ethosu_release_driver(drv);
 ```
@@ -80,7 +80,7 @@ A typical usage of the driver can be the following:
 ```[C]
 // reserve a driver to be used (this call could block until a driver is available)
 struct ethosu_driver *drv = ethosu_reserve_driver();
-...
+// ...
 // run one or more inferences
 int result = ethosu_invoke_async(drv,
                                  custom_data_ptr,
@@ -89,16 +89,16 @@ int result = ethosu_invoke_async(drv,
                                  base_addr_size,
                                  num_base_addr,
                                  user_arg);
-...
+// ...
 // do some other work
-...
+// ...
 int ret;
 do {
     // true = blocking, false = non-blocking
     // ret > 0 means inference not completed (only for non-blocking mode)
     ret = ethosu_wait(drv, <true|false>);
 } while(ret > 0);
-...
+// ...
 // release the driver for others to use
 ethosu_release_driver(drv);
 ```
@@ -153,7 +153,6 @@ A simple example implementation for the weak functions, using CMSIS primitives
 could look like below:
 
 ```[C++]
-extern "C" {
 void ethosu_flush_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr)
 {
     for (int i = 0; i < num_base_addr; i++)
@@ -165,7 +164,6 @@ void ethosu_invalidate_dcache(const uint64_t *base_addr, const size_t *base_addr
     for (int i = 0; i < num_base_addr; i++)
         SCB_InvalidateDCache_by_Addr((uint32_t *)(uintptr_t)base_addr[i], base_addr_size[i]);
 }
-} // extern "C"
 ```
 
 The NPU contain memory attributes that should be set to match the settings used
@@ -239,7 +237,7 @@ pointer passed to the begin() and end() callbacks. For example:
 
 ```[C]
 void my_function() {
-    ...
+    // ...
     struct my_data data = {...};
     int result = int ethosu_invoke_v3(drv,
                                   custom_data_ptr,
@@ -248,7 +246,7 @@ void my_function() {
                                   base_addr_size,
                                   num_base_addr,
                                   (void *)&data);
-    ....
+    // ...
 }
 
 void ethosu_inference_begin(struct ethosu_driver *drv, void *user_arg) {
