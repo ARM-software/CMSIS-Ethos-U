@@ -1,34 +1,75 @@
-<!-- HTML header for doxygen 1.9.6-->
+<!-- HTML header for doxygen 1.17.0-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Integration: Integration</title>
-<link href="doxygen.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="dynsections.js"></script>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
 <script type="text/javascript" src="tabs.js?v=5"></script>
 <script type="text/javascript" src="footer.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript">
-  DoxygenAwesomeInteractiveToc.init()
-</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-  $(function() { init_search(); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded', init_search);
 </script>
 <script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="text/javascript" src="theme_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 <link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
 <link href="extra_search.css" rel="stylesheet" type="text/css"/>
@@ -42,20 +83,20 @@
  <tbody>
  <tr id="projectrow" style="height: 55px;">
   <td id="projectlogo" style="padding: 1em;"><img alt="Logo" src="arm.png"/></td>
-  <td style="padding-left: 2em; padding-bottom: 1em;padding-top: 1em;">
-  <div id="projectname">Ethos-U Integration for Cortex-M
+  <td id="projectalign" style="padding-left: 2em; padding-bottom: 1em; padding-top: 1em;">
+   <div id="projectname">Ethos-U Integration for Cortex-M
    </div>
    <div id="projectbrief">Integrate ML model</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
           <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
                onfocus="searchBox.OnSearchFieldFocus(true)" 
                onblur="searchBox.OnSearchFieldFocus(false)" 
                onkeyup="searchBox.OnSearchFieldChange(event)"/>
           </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
           </span>
         </div>
 </td>
@@ -65,24 +106,18 @@
 </div>
 <!-- end header part -->
 <div id="Compnav" class="tabs1">
-    <ul class="tablist">
-      <script type="text/javascript">
-		<!--
-		writeComponentTabs.call(this);
-		//-->
-      </script>
-	  </ul>
+  <ul class="tablist">
+    <script type="text/javascript">
+      writeComponentTabs.call(this);
+    </script>
+  </ul>
 </div>
-<!-- Generated by Doxygen 1.13.2 -->
+<!-- Generated by Doxygen 1.17.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+let searchBox = new SearchBox("searchBox", "search/",'.html');
 </script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() { codefold.init(0); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded', codefold.init);
 </script>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -96,10 +131,9 @@ $(function() { codefold.init(0); });
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('index.html',''); initResizable(true); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html','',''); });
 </script>
+<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -126,64 +160,84 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Integration </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="mainpage"></a></p>
+<div class="textblock"><p><a class="anchor" id="md_src_2main"></a></p>
 <p>This chapter explains how to integrate a pretrained, quantized ML model into an Edge AI MCU based on Cortex-M and Ethos-U. Model training, quantization, and functional accuracy validation are outside the scope of this integration flow.</p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<h1 class="doxsection"><a class="anchor" id="starting-point"></a>
 Starting point</h1>
-<p>The starting point is a pretrained, quantized ML model that meets the application's functional requirements. Before selecting a specific Edge AI MCU, compile the model with Vela for one or more Ethos-U reference systems as described in <a href="../vela/index.html#vela_compile_reference_system">Compile for an Ethos-U reference system</a>.</p>
-<p>The Vela outputs estimates of NPU cycles, memory bandwidth, and model memory requirements. Vela also identifies which operations are assigned to the NPU and which remain on the CPU. Use these results to compare Ethos-U configurations and memory modes and to identify Edge AI MCUs with suitable NPU performance and memory capacity. The Vela estimates support device selection; they do not replace a device-specific compile or measurements on the final target.</p>
+<p>The starting point is a pretrained, quantized ML model that meets the application's functional requirements. Before selecting a specific Edge AI MCU, compile the model with Vela for one or more Ethos-U reference systems as described in <a href="../vela/index.html#compile-for-an-ethos-u-reference-system">Compile for an Ethos-U reference system</a>.</p>
+<p>Vela provides estimates of NPU cycles, memory bandwidth, and model memory requirements. Vela also identifies which operations are assigned to the NPU and which remain on the CPU. Use these results to compare Ethos-U configurations and memory modes and to identify Edge AI MCUs with suitable NPU performance and memory capacity. The Vela estimates support device selection; they do not replace a device-specific compile or measurements on the final target.</p>
 <p>Some model zoos already provide corresponding performance and memory data for Ethos-U-based systems. Confirm that the published configuration is relevant to the candidate device before using those results.</p>
-<h2><a class="anchor" id="autotoc_md1"></a>
+<h2 class="doxsection"><a class="anchor" id="determine-the-memory-budget"></a>
 Determine the memory budget</h2>
-<p>Most embedded applications are resource constraint and therefore the memory budget is an important aspect. Use this three-step approach to estimate the total memory requirements of the application:</p>
+<p>Most embedded applications are resource-constrained and therefore the memory budget is an important aspect. Use this three-step approach to estimate the total memory requirements of the application:</p>
 <ul>
-<li><b>Establish the ML model floor.</b> Compile the ML model and with <code>--optimise Size</code> and record the reported memory areas. See <a href="../vela/index.html#vela_memory_mode">Vela memory mode parameters</a>.</li>
+<li><b>Evaluate the ML model memory requirement.</b> Compile the ML model with <span class="tt">--optimise Size</span> and record the reported memory areas. See <a href="../vela/index.html#memory-mode-parameters">Vela memory mode parameters</a>.</li>
 <li><b>Build the system budget.</b> Add runtime and application data, stacks, heaps, alignment, padding, and a safety margin.</li>
-<li><b>Tune and optimize.</b> Use the remaining memory budget for performance gains. Use different Vela system configurations and memory modes combined with <code>--arena-cache-size</code> as described in <a href="../vela/index.html#vela_arena_cache_size">Understand arena cache and spilling</a>.</li>
+<li><b>Tune and optimize.</b> Use the remaining memory budget for performance gains. Keep the Vela system configuration for the selected target fixed. Evaluate compatible memory modes and NPU cache-size variants, such as <span class="tt">Dedicated_Sram_256KB</span>, or tune the cache size with <span class="tt">--arena-cache-size</span> as described in <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a>.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md2"></a>
+<h1 class="doxsection"><a class="anchor" id="integration-workflow"></a>
 Integration workflow</h1>
-<p>Complete the following steps in order because later steps depend on earlier decisions and measurements.</p>
+<p>The diagram summarizes the integration workflow and its iteration loop. Follow the detailed steps in order because later steps depend on earlier decisions and measurements.</p>
+<div class="mermaidgraph">
+<pre class="mermaid">
+flowchart LR
+    setup[&quot;Select MCU and DFP&lt;br/&gt;Check DFP resources&lt;br/&gt;Create CMSIS-Toolbox project&quot;] --&gt; compile[&quot;Compile ML model&lt;br/&gt;for device&quot;]
+    compile --&gt; configure[&quot;Configure memory placement and linker script&quot;]
+    configure --&gt; integrate[&quot;Complete application integration&quot;]
+    integrate --&gt; validate[&quot;Validate and tune&quot;]
+    validate -. Iterate .-&gt; compile</pre>
+</div>
 <ol type="1">
 <li><b>Select the Edge AI MCU and DFP.</b> Compare the reference results with the device's NPU configuration and memory capacity and with the application's performance requirements. Obtain the matching Device Family Pack (DFP) from <a href="https://www.keil.arm.com/packs">www.keil.arm.com/packs</a>.</li>
-<li><b>Check the DFP resources.</b> Determine whether the DFP provides a device-specific <code>vela.ini</code> file, matching linker scripts, and other required resources. If it does not, contact the device or SoC vendor or <a href="../vela/index.html#vela_create_configuration">create a device-specific <code>vela.ini</code> file</a>.</li>
-<li><b><a class="el" href="#integration_create_csolution">Create the CMSIS-Toolbox project</a>.</b> Select the device and build context, and specify the Vela system configuration and memory mode. Use the generated <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a> to obtain the Vela parameters and resources supplied by the DFP.</li>
-<li><b><a class="el" href="#integration_compile_model">Compile the ML model for the device</a>.</b> Run Vela with the device-specific parameters and confirm that its performance and memory estimates meet the application requirements. Treat the performance figures as model-based estimates and retain sufficient margin.</li>
-<li><b><a class="el" href="#integration_configure_memory">Configure memory placement and the linker script</a>.</b> Keep the Vela memory mode, linker placement, and driver region configuration consistent. Account for the ML inference runtime, stacks, heaps, application data, alignment, and a safety margin. Build the system and review the compiler and linker reports.</li>
-<li><b><a class="el" href="#integration_complete_application">Complete application integration</a>.</b> Add any application-specific RTOS, power, timeout, cache, and fault handling.</li>
-<li><b><a class="el" href="#integration_validate_tune">Validate and tune</a>.</b> Verify correctness, memory allocation, ML model performance, bandwidth, latency, and concurrency on the actual target system.</li>
+<li><b>Check the DFP resources.</b> Determine whether the DFP provides a device-specific <span class="tt">vela.ini</span> file, matching linker scripts, and other required resources. Creating a reliable, optimized <span class="tt">vela.ini</span> file requires detailed information about the device memory and interconnect. If the DFP does not provide this configuration, contact the device or SoC vendor. See <a href="../vela/index.html#create-device-specific-velaini-file">create a device-specific <code>vela.ini</code> file</a>, or contact the Arm CMSIS support team at <a href="#" onclick="location.href='mai'+'lto:'+'CMS'+'IS'+'@ar'+'m.'+'com'; return false;">CMSIS@arm.com</a> for assistance.</li>
+<li><a href="#create-the-csolution-project"><b>Create the CMSIS-Toolbox project.</b></a> Select the device and build context, and specify the Vela system configuration and memory mode. Use the generated <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a> to obtain the Vela parameters and resources supplied by the DFP.</li>
+<li><a href="#compile-the-ml-model-for-the-device"><b>Compile the ML model for the device.</b></a> Run Vela with the device-specific parameters and confirm that its performance and memory estimates meet the application requirements. Treat the performance figures as first-order, model-dependent estimates. As initial guidance, budget for the cycle count or latency to be 30% higher than the Vela estimate, and refine this margin after the first target benchmarks.</li>
+<li><a href="#configure-memory-placement-and-the-linker-script"><b>Configure memory placement and the linker script.</b></a> Keep the Vela memory mode, linker placement, and driver region configuration consistent. Account for the ML inference runtime, stacks, heaps, application data, alignment, and a safety margin. Build the system and inspect the linker map. Ensure that the model constants, tensor arena, and any separate scratch-fast buffer are in the expected physical memories, fit within their allocated regions, and are accessible to the runtime and NPU. The examples use the linker sections <span class="tt">ethos_model</span>, <span class="tt">ethos_arena</span>, and <span class="tt">ethos_cache</span>, respectively.</li>
+<li><a href="#complete-application-integration"><b>Complete application integration.</b></a> Add any application-specific RTOS, power, timeout, cache, and fault handling.</li>
+<li><a href="#validate-and-tune"><b>Validate and tune.</b></a> Verify correctness, memory allocation, ML model performance, bandwidth, latency, and concurrency on the actual target system.</li>
 </ol>
-<p>A change to a memory mode, linker section, cache attribute, or driver region value requires a review of the other descriptions of that memory region.</p>
-<h2><a class="anchor" id="autotoc_md3"></a>
+<p>Treat memory placement as a system-wide property. Reflect every placement change consistently in the Vela memory mode, linker script, MPU/SAU and cache attributes, driver region configuration, and any cache or address-remapping hooks.</p>
+<h2 class="doxsection"><a class="anchor" id="general-integration-guidance"></a>
 General integration guidance</h2>
 <ul>
-<li>Keep the <code>vela.ini</code>, <code>System_Config</code>, selected <code>Memory_Mode</code>, linker sections, MPU/SAU attributes, and driver build definitions consistent.</li>
-<li>Apply <code>arena_cache_size</code> according to the selected memory mode as described in <a href="../vela/index.html#vela_arena_cache_size">Understand arena cache and spilling</a>.</li>
-<li>Place model constants, activations, and any separate scratch-fast storage as described in <a href="../vela/index.html#vela_create_linker_script">Create the linker script</a>.</li>
+<li>Keep the <span class="tt">vela.ini</span>, <span class="tt">System_Config</span>, selected <span class="tt">Memory_Mode</span>, linker sections, MPU/SAU attributes, and driver build definitions consistent.</li>
+<li>Apply <span class="tt">arena_cache_size</span> according to the selected memory mode as described in <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a>.</li>
+<li>Place model constants, activations, and any separate scratch-fast storage as described in <a href="../vela/index.html#create-the-linker-script">Create the linker script</a>.</li>
 <li>Override the driver weak hooks when the default integration assumptions do not match the platform, especially for data cache maintenance, address remapping, and RTOS synchronization.</li>
-<li>Ensure the NPU completion interrupt is eventually serviced. Very low jitter is usually not required for inference workloads, but completion handling must not be postponed indefinitely.</li>
+<li>Route the NPU completion and fault interrupt to <a class="elRef" href="../driver/group__ethosu__public__api.html#ga55fec2a7ca5b5b51dc7c3d18914a3f03" title="ethosu_irq_handler">ethosu_irq_handler()</a> and ensure that it remains serviceable. Very low jitter is usually not required for inference workloads, but completion handling must not be postponed indefinitely.</li>
 <li>During bring-up, use timeouts, fault reporting, and a minimal known-good model before moving to full application graphs.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h3 class="doxsection"><a class="anchor" id="example-move-the-tensor-arena-from-sram-to-external-dram"></a>
+Example: Move the tensor arena from SRAM to external DRAM</h3>
+<p>Assume that the selected target provides NPU-accessible external DRAM and that the tensor arena currently resides in SRAM. Moving it to DRAM requires these coordinated changes:</p>
+<ul>
+<li><b>Vela:</b> Select a compatible <span class="tt">Memory_Mode</span> in which <span class="tt">arena_mem_area</span> resolves to the target's external DRAM access path. Keep the target's <span class="tt">System_Config</span> fixed.</li>
+<li><b>Linker:</b> Move the <span class="tt">ethos_arena</span> section to the DRAM memory region, preserve its required alignment, and use the linker map to confirm that it fits.</li>
+<li><b>MPU/SAU and cache policy:</b> Configure the DRAM attributes so that the runtime and NPU have the required access and the CPU cache policy is explicit.</li>
+<li><b>Driver:</b> Set <span class="tt">NPU_REGIONCFG_1</span>, which represents <span class="tt">arena_mem_area</span>, to the target-specific external-memory access path. Override <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a">ethosu_address_remap()</a></span> if the CPU and NPU use different DRAM addresses.</li>
+<li><b>Cache hooks:</b> If the CPU mapping is cacheable and is not coherent with the NPU, implement <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a">ethosu_flush_dcache()</a></span> before NPU reads and <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66">ethosu_invalidate_dcache()</a></span> after NPU writes. Cache maintenance is not needed for a non-cacheable or hardware-coherent mapping.</li>
+<li><b>Validation:</b> Rebuild and verify the linker-map placement, NPU access, model correctness, memory use, and performance on the target.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="add-ml-model-and-configuration-to-version-control"></a>
 Add ML model and configuration to version control</h2>
-<p>It is good practice to document the handoff boundary between model, platform, and application engineers. This also gives automated tools enough context to check consistency. CMSIS-Toolbox already records the selected packs and <code>vela.ini</code> configuration file in the <em>csolution project</em> files and in the metafiles <code>*.cbuild-pack.yml</code> and <code>*.cbuild-mlops.yml</code>. Keep these files along with the input ML model under version control.</p>
-<h1><a class="anchor" id="integration_create_csolution"></a>
+<p>It is good practice to document the handoff boundary between model, platform, and application engineers. This also gives automated tools enough context to check consistency. CMSIS-Toolbox already records the selected packs and <span class="tt">vela.ini</span> configuration file in the <em>csolution project</em> files and in the metafiles <span class="tt">*.cbuild-pack.yml</span> and <span class="tt">*.cbuild-mlops.yml</span>. Keep these files along with the input ML model under version control.</p>
+<h1 class="doxsection"><a class="anchor" id="create-the-csolution-project"></a>
 Create the <em>csolution project</em></h1>
-<p>CMSIS-Toolbox simplifies MLOps by combining device and DFP data with project settings into machine-readable <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a> that tools can use to generate the ML model and test it on hardware or a simulator.</p>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<p>CMSIS-Toolbox simplifies MLOps by combining device and DFP data with project settings into machine-readable <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a> that tools can use to compile the pretrained ML model for the selected target and test the resulting artifacts on hardware or a simulator.</p>
+<h2 class="doxsection"><a class="anchor" id="use-a-project-example-and-add-device"></a>
 Use a project example and add device</h2>
 <p>This pack includes <a href="https://mdk-packs.github.io/vscode-cmsis-solution-docs/create_app.html">examples</a> for FVP simulation models that show the Ethos-U NPU integration in a Cortex-M target. These projects are <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications">reference applications</a> that can be deployed to other boards that provide a board layer with an <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#connections">STDOUT connection</a>.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadLeft">Target Board (FVP Simulator)   </th><th class="markdownTableHeadLeft">NPU   </th><th class="markdownTableHeadLeft">Example project    </th></tr>
+<th class="markdownTableHeadLeft">Target Board (FVP Simulator)  </th><th class="markdownTableHeadLeft">NPU  </th><th class="markdownTableHeadLeft">Example project  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP   </td><td class="markdownTableBodyLeft">Ethos-U55   </td><td class="markdownTableBodyLeft"><code>Hello-Ethos-U55.csolution.yml</code>    </td></tr>
+<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP  </td><td class="markdownTableBodyLeft">Ethos-U55  </td><td class="markdownTableBodyLeft"><span class="tt">Hello-Ethos-U55.csolution.yml</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP   </td><td class="markdownTableBodyLeft">Ethos-U65   </td><td class="markdownTableBodyLeft"><code>Hello-Ethos-U65.csolution.yml</code>    </td></tr>
+<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP  </td><td class="markdownTableBodyLeft">Ethos-U65  </td><td class="markdownTableBodyLeft"><span class="tt">Hello-Ethos-U65.csolution.yml</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">SSE-320   </td><td class="markdownTableBodyLeft">Ethos-U85   </td><td class="markdownTableBodyLeft"><code>Hello-Ethos-U85.csolution.yml</code>   </td></tr>
+<td class="markdownTableBodyLeft">SSE-320  </td><td class="markdownTableBodyLeft">Ethos-U85  </td><td class="markdownTableBodyLeft"><span class="tt">Hello-Ethos-U85.csolution.yml</span>  </td></tr>
 </table>
-<p>A hardware target can be added in the <code>*.csolution.yml</code> file as shown below:</p>
+<p>A hardware target can be added in the <span class="tt">*.csolution.yml</span> file as shown below:</p>
 <div class="fragment"><div class="line">  packs:</div>
 <div class="line">    - pack: AlifSemiconductor::Ensemble      # Add DFP and optional BSP</div>
 <div class="line"> </div>
@@ -193,9 +247,9 @@ Use a project example and add device</h2>
 <div class="line">      board: AppKit-E7-AIML</div>
 <div class="line">// todo</div>
 <div class="line">    - type: SSE-300-U55</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="add-mlops-information"></a>
 Add MLOps information</h2>
-<p>The <code>mlops:</code> node in the <code>*.csolution.yml</code> file configures <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#mlops-management">MLOps Management</a>. CMSIS-Toolbox combines this information with the selected device and DFP and generates the <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#cbuild-mlopsyml"><code>*.cbuild-mlops.yml</code></a> file for the MLOps workflow.</p>
+<p>The <span class="tt">mlops:</span> node in the <span class="tt">*.csolution.yml</span> file configures <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#mlops-management">MLOps Management</a>. CMSIS-Toolbox combines this information with the selected device and DFP and generates the <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-CBuild-Format/#cbuild-mlopsyml"><span class="tt">*.cbuild-mlops.yml</span></a> file for the MLOps workflow.</p>
 <p>The following example selects an Ethos-U55 configuration and identifies the software layer that contains the ML model:</p>
 <div class="fragment"><div class="line">solution:</div>
 <div class="line">  mlops:</div>
@@ -208,43 +262,63 @@ Add MLOps information</h2>
 <div class="line">      memory: Shared_Sram</div>
 <div class="line">    model:</div>
 <div class="line">      clayer: $ML-Layer$      # this can also be an absolute path</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="add-ml-model-layer"></a>
 Add ML model layer</h2>
-<p>Replace the NPU and Vela selectors with values supported by the selected device and set <code>model.clayer</code> to the layer that contains the model. The example omits <code>vela.ini</code>, so CMSIS-Toolbox uses the configuration supplied by the device or DFP.</p>
-<h1><a class="anchor" id="integration_compile_model"></a>
+<p>Replace the NPU and Vela selectors with values supported by the selected device and set <span class="tt">model.clayer</span> to the layer that contains the model. The example omits <span class="tt">vela.ini</span>, so CMSIS-Toolbox uses the configuration supplied by the device or DFP.</p>
+<h1 class="doxsection"><a class="anchor" id="compile-the-ml-model-for-the-device"></a>
 Compile the ML model for the device</h1>
-<p>CMSIS-Toolbox combines DFP information with the csolution project configuration and generates the MLOps information file <code>*.cbuild-mlops.yml</code>. The <code>vela:</code> node provides the <code>ini:</code> configuration file and <code>options:</code> that can be used to invoke Vela.</p>
+<p>CMSIS-Toolbox combines DFP information with the csolution project configuration and generates the MLOps information file <span class="tt">*.cbuild-mlops.yml</span>. The <span class="tt">vela:</span> node provides the <span class="tt">ini:</span> configuration file and <span class="tt">options:</span> that can be used to invoke Vela.</p>
 <div class="fragment"><div class="line">vela --config &lt;vela.ini&gt; &lt;vela.options&gt; ml-model.tflite</div>
-</div><!-- fragment --><h1><a class="anchor" id="integration_configure_memory"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="configure-memory-placement-and-the-linker-script"></a>
 Configure memory placement and the linker script</h1>
-<p>The common relationship between compiler memory areas and driver regions is described in <a href="../vela/index.html#vela_match_driver_configuration">Match the driver configuration</a>. The generated command stream uses numeric NPU regions, also called base pointer indices; it does not use the <code>Axi0</code> or <code>Axi1</code> aliases.</p>
-<p>Generated commands such as <code>NPU_SET_IFM_REGION</code>, <code>NPU_SET_OFM_REGION</code>, <code>NPU_SET_WEIGHT_REGION</code>, <code>NPU_SET_SCALE_REGION</code>, <code>NPU_SET_DMA0_SRC_REGION</code>, and <code>NPU_SET_DMA0_DST_REGION</code> carry region numbers and offsets. The runtime and driver supply the base addresses and memory attributes for those regions.</p>
+<p>The diagram summarizes the settings that must describe a consistent mapping to physical memory.</p>
+<div class="mermaidgraph">
+<pre class="mermaid">
+flowchart LR
+    mode[&quot;Vela memory mode&quot;] --&gt; regions[&quot;Command-stream&lt;br/&gt;regions&quot;]
+    regions --&gt; linker[&quot;Linker placement&quot;]
+    linker --&gt; memory[&quot;Physical memory&quot;]
+    attributes[&quot;MPU/SAU and&lt;br/&gt;cache attributes&quot;] --&gt; memory
+    driver[&quot;Driver&lt;br/&gt;region settings&quot;] --&gt; memory</pre>
+</div>
+<p>The common relationship between compiler memory areas and driver regions is described in <a href="../vela/index.html#match-the-driver-configuration">Match the driver configuration</a>. The generated command stream uses numeric NPU regions, also called base pointer indices; it does not use the <span class="tt">Axi0</span> or <span class="tt">Axi1</span> aliases.</p>
+<p>Generated commands such as <span class="tt">NPU_SET_IFM_REGION</span>, <span class="tt">NPU_SET_OFM_REGION</span>, <span class="tt">NPU_SET_WEIGHT_REGION</span>, <span class="tt">NPU_SET_SCALE_REGION</span>, <span class="tt">NPU_SET_DMA0_SRC_REGION</span>, and <span class="tt">NPU_SET_DMA0_DST_REGION</span> carry region numbers and offsets. The runtime and driver supply the base addresses and memory attributes for those regions.</p>
 <p>The following driver sections explain the platform hooks and region attributes that must agree with this placement.</p>
-<p>Create the physical sections for model constants, the tensor arena, and any separate scratch-fast storage as described in <a href="../vela/index.html#vela_create_linker_script">Create the linker script</a>. Use the linker map to verify that their addresses and sizes match the selected memory mode and that every generated NPU region is accessible through the driver configuration.</p>
-<h1><a class="anchor" id="integration_complete_application"></a>
+<p>Create the physical sections for model constants, the tensor arena, and any separate scratch-fast storage as described in <a href="../vela/index.html#create-the-linker-script">Create the linker script</a>. Use the linker map to verify that their addresses and sizes match the selected memory mode and that every generated NPU region is accessible through the driver configuration.</p>
+<h1 class="doxsection"><a class="anchor" id="complete-application-integration"></a>
 Complete application integration</h1>
 <p>Validate interrupt wiring alongside Vela, linker, MPU/SAU, cache, and driver settings.</p>
-<h1><a class="anchor" id="integration_validate_tune"></a>
+<h2 class="doxsection"><a class="anchor" id="troubleshoot-an-inference-that-does-not-complete"></a>
+Troubleshoot an inference that does not complete</h2>
+<p>During bring-up, provide a watchdog or RTOS timeout so that a missing completion interrupt does not block the application indefinitely. If an inference times out, capture the driver logs and NPU state before resetting the NPU. Check the following areas:</p>
+<ul>
+<li><b>Interrupt delivery:</b> Verify the NPU interrupt number, enable state, priority, security routing, and vector-table entry. Confirm that the ISR calls <a class="elRef" href="../driver/group__ethosu__public__api.html#ga55fec2a7ca5b5b51dc7c3d18914a3f03" title="ethosu_irq_handler">ethosu_irq_handler()</a> with the correct driver instance. If the NPU <span class="tt">STATUS</span> register reports command completion or a fault while the application remains blocked, inspect the interrupt path and the RTOS semaphore implementation.</li>
+<li><b>NPU status and progress:</b> Enable driver logging and record <span class="tt">STATUS</span> and <span class="tt">QREAD</span>. Fault status indicates a command-stream, memory-access, security, or hardware error. If <span class="tt">QREAD</span> does not advance, check the NPU clock and power, command-stream address and size, address remapping, and command-stream cache cleaning.</li>
+<li><b>Memory access:</b> If <span class="tt">QREAD</span> advances and then stops, verify all base-pointer addresses and sizes, <span class="tt">NPU_REGIONCFG_x</span> values, physical memory placement, MPU/SAU and interconnect permissions, and cache maintenance. Confirm that the command stream, constants, tensor arena, and any scratch-fast buffer are all accessible to the NPU.</li>
+<li><b>Synchronization:</b> For asynchronous invocation, call <span class="tt"><a class="elRef" href="../driver/group__ethosu__public__api.html#ga33e63dcf2625e5b10d07193490b6323b">ethosu_wait()</a></span> only after <span class="tt"><a class="elRef" href="../driver/group__ethosu__public__api.html#ga7a052a3c7ea0c14992b3dc2cd6e20d0b">ethosu_invoke_async()</a></span> succeeds. For an RTOS integration, verify that the semaphore hooks wake the waiting task and that timeout units have the expected meaning.</li>
+<li><b>Recovery and isolation:</b> Preserve fault information, then use <a class="elRef" href="../driver/group__ethosu__public__api.html#ga480a7f7b324b3be61c1a9ffc92be9f3a" title="ethosu_soft_reset">ethosu_soft_reset()</a> before another submission. Retry with a minimal known-good model to separate platform integration faults from model-specific failures.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="validate-and-tune"></a>
 Validate and tune</h1>
 <hr  />
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1 class="doxsection"><a class="anchor" id="ethos-u-configuration"></a>
 Ethos-U configuration</h1>
 <p>The Vela guide explains how to select an existing configuration and how to create one for a device:</p>
 <ul>
-<li>See <a href="../vela/index.html#vela_use_configuration">use the Ethos-U configuration</a> to inspect the resolved <code>System_Config</code> and <code>Memory_Mode</code>; and</li>
-<li>See <a href="../vela/index.html#vela_create_configuration">create device-specific <code>vela.ini</code> file</a> for <code>vela.ini</code> syntax, memory modes, performance parameters, arena-cache behavior, and spilling. The constraints for parsing <code>vela.ini</code> can differ between Ethos-U cores, so follow the requirements for the selected core.</li>
+<li>See <a href="../vela/index.html#use-the-ethos-u-configuration">use the Ethos-U configuration</a> to inspect the resolved <span class="tt">System_Config</span> and <span class="tt">Memory_Mode</span>; and</li>
+<li>See <a href="../vela/index.html#create-device-specific-velaini-file">create device-specific <code>vela.ini</code> file</a> for <span class="tt">vela.ini</span> syntax, memory modes, performance parameters, arena-cache behavior, and spilling. The constraints for parsing <span class="tt">vela.ini</span> can differ between Ethos-U cores, so follow the requirements for the selected core.</li>
 </ul>
-<p>This integration guide assumes that the accelerator configuration, <code>System_Config</code>, and <code>Memory_Mode</code> have already been selected. The remaining task is to keep that configuration consistent with the generated command-stream regions, physical memory placement, driver settings, and application memory budget described below.</p>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<p>This integration guide assumes that the accelerator configuration, <span class="tt">System_Config</span>, and <span class="tt">Memory_Mode</span> have already been selected. The remaining task is to keep that configuration consistent with the generated command-stream regions, physical memory placement, driver settings, and application memory budget described below.</p>
+<h1 class="doxsection"><a class="anchor" id="linker-configuration"></a>
 Linker configuration</h1>
 <p>The following driver sections explain the platform hooks and region attributes that must agree with this placement.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1 class="doxsection"><a class="anchor" id="driver-weak-hooks"></a>
 Driver weak hooks</h1>
 <p>The driver provides weak functions that a platform can override when the default implementation is not sufficient. These hooks are part of the integration layer: they connect the generic driver to the cache, address map, and synchronization policy of the target system.</p>
-<p>For data cache maintenance, the driver exposes <a class="elRef" href="../drivers/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a">ethosu_flush_dcache()</a> and <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66">ethosu_invalidate_dcache()</a>. The default implementations are no-ops. Override them when the Cortex-M data cache is enabled and the NPU accesses memory that may also be cached by the CPU. Clean and invalidate the cache as appropriate.</p>
+<p>For data cache maintenance, the driver exposes <a class="elRef" href="../driver/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a" title="ethosu_flush_dcache">ethosu_flush_dcache()</a> and <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66" title="ethosu_invalidate_dcache">ethosu_invalidate_dcache()</a>. The default implementations are no-ops. Override them when the Cortex-M data cache is enabled and the NPU accesses memory that may also be cached by the CPU. Clean and invalidate the cache as appropriate.</p>
 <ul>
-<li><a class="elRef" href="../drivers/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a">ethosu_flush_dcache()</a> prepares CPU-written data for NPU access. It is used before inference so the NPU sees the command stream, constants, and input or activation data that may still be dirty in the CPU cache.</li>
-<li><a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66">ethosu_invalidate_dcache()</a> prepares NPU-written data for CPU access. It is used after inference so the CPU does not read stale cache lines for output or activation buffers updated by the NPU. Clean and invalidate the cache as appropriate.</li>
+<li><a class="elRef" href="../driver/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a" title="ethosu_flush_dcache">ethosu_flush_dcache()</a> prepares CPU-written data for NPU access. It is used before inference so the NPU sees the command stream, constants, and input or activation data that may still be dirty in the CPU cache.</li>
+<li><a class="elRef" href="../driver/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66" title="ethosu_invalidate_dcache">ethosu_invalidate_dcache()</a> prepares NPU-written data for CPU access. It is used after inference so the CPU does not read stale cache lines for output or activation buffers updated by the NPU. Clean and invalidate the cache as appropriate.</li>
 </ul>
 <p>Cache management policy is platform-specific, but these rules are useful during integration:</p>
 <ul>
@@ -252,68 +326,75 @@ Driver weak hooks</h1>
 <li>Cleaning by address can be slower for large model buffers, but cleaning the full data cache can disturb unrelated software by evicting or writing back data outside the inference buffers.</li>
 <li>If a cache hook is asked to operate on a non-cacheable region, such as TCM or a memory region configured as device/non-cacheable, it should do nothing for that range except apply any required ordering barrier.</li>
 </ul>
-<p>The driver also exposes <a class="elRef" href="../drivers/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a">ethosu_address_remap()</a> and <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga872178ba3393d3f21c57c950ed82fb1a">ethosu_config_select()</a> for address and region-configuration handling.</p>
+<p>The driver also exposes <a class="elRef" href="../driver/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a" title="ethosu_address_remap">ethosu_address_remap()</a> and <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga872178ba3393d3f21c57c950ed82fb1a" title="ethosu_config_select">ethosu_config_select()</a> for address and region-configuration handling.</p>
 <ul>
-<li><a class="elRef" href="../drivers/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a">ethosu_address_remap()</a> converts the address used by Cortex-M software into the address that must be programmed into the NPU when both agents see the same memory through different address windows. This is common when linker sections are placed in TCM for the CPU while the NPU reaches that storage through an AXI alias.</li>
-<li><a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga872178ba3393d3f21c57c950ed82fb1a">ethosu_config_select()</a> selects the NPU memory region attributes for a command stream or base pointer. The default build-time definitions are enough for many systems; override this hook when the region selection depends on the address or memory placement.</li>
+<li><a class="elRef" href="../driver/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a" title="ethosu_address_remap">ethosu_address_remap()</a> converts the address used by Cortex-M software into the address that must be programmed into the NPU when both agents see the same memory through different address windows. This is common when linker sections are placed in TCM for the CPU while the NPU reaches that storage through an AXI alias.</li>
+<li><a class="elRef" href="../driver/group__ethosu__callback__api.html#ga872178ba3393d3f21c57c950ed82fb1a" title="ethosu_config_select">ethosu_config_select()</a> selects the NPU memory region attributes for a command stream or base pointer. The default build-time definitions are enough for many systems; override this hook when the region selection depends on the address or memory placement.</li>
 </ul>
-<p>For bare-metal systems, the default synchronization hooks may be sufficient if only one execution context submits work to the driver. For RTOS-based systems or for integrations where multiple contexts may use the driver, override the mutex and semaphore hooks to use the operating system primitives: <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga263037460610168af74801efae3385a2">ethosu_mutex_create()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga9b812e75be8b38f21234da2c855b1ff1">ethosu_mutex_destroy()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga17827ea06a500bad6bda5aa9e751f4f1">ethosu_mutex_lock()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#gaa0075944c4284c6ced884698e560eea4">ethosu_mutex_unlock()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga4bb4d49e7ba5ec009af2796fe77e349a">ethosu_semaphore_create()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga501658b237bf401cda781eccfd1f358a">ethosu_semaphore_destroy()</a>, <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga9792e5bb9f00971f20037db9a9982725">ethosu_semaphore_take()</a>, and <a class="elRef" href="../drivers/group__ethosu__callback__api.html#ga71614f92cb653bed7b7632b0362939b4">ethosu_semaphore_give()</a>.</p>
+<p>For bare-metal systems, the default synchronization hooks may be sufficient if only one execution context submits work to the driver. For RTOS-based systems or for integrations where multiple contexts may use the driver, override the mutex and semaphore hooks to use the operating system primitives: <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga263037460610168af74801efae3385a2" title="ethosu_mutex_create">ethosu_mutex_create()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga9b812e75be8b38f21234da2c855b1ff1" title="ethosu_mutex_destroy">ethosu_mutex_destroy()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga17827ea06a500bad6bda5aa9e751f4f1" title="ethosu_mutex_lock">ethosu_mutex_lock()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#gaa0075944c4284c6ced884698e560eea4" title="ethosu_mutex_unlock">ethosu_mutex_unlock()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga4bb4d49e7ba5ec009af2796fe77e349a" title="ethosu_semaphore_create">ethosu_semaphore_create()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga501658b237bf401cda781eccfd1f358a" title="ethosu_semaphore_destroy">ethosu_semaphore_destroy()</a>, <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga9792e5bb9f00971f20037db9a9982725" title="ethosu_semaphore_take">ethosu_semaphore_take()</a>, and <a class="elRef" href="../driver/group__ethosu__callback__api.html#ga71614f92cb653bed7b7632b0362939b4" title="ethosu_semaphore_give">ethosu_semaphore_give()</a>.</p>
 <p>These hooks are separate from the memory placement model, but they are commonly implemented in the same platform integration layer as cache maintenance and address remapping. The Driver API documentation provides the detailed function prototypes and calling contract.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1 class="doxsection"><a class="anchor" id="driver-build-configuration"></a>
 Driver build configuration</h1>
 <p>The current Ethos-U driver build selects one NPU memory configuration at build time. A single binary cannot switch between different memory-area mappings unless the project builds separate variants or adds a platform-specific selection mechanism.</p>
-<p>With CMSIS-Toolbox, select the required mode by providing the driver compile definitions in the relevant build context, layer, or target configuration. The values used for <code>NPU_QCONFIG</code> and <code>NPU_REGIONCFG_x</code> tell the driver which NPU access path to use for the command stream and for each base pointer region:</p>
+<p>With CMSIS-Toolbox, select the required mode by providing the driver compile definitions in the relevant build context, layer, or target configuration. The values used for <span class="tt">NPU_QCONFIG</span> and <span class="tt">NPU_REGIONCFG_x</span> tell the driver which NPU access path to use for the command stream and for each base pointer region:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Driver define   </th><th class="markdownTableHeadNone">Used for   </th><th class="markdownTableHeadNone">Compiler memory area in the examples below    </th></tr>
+<th class="markdownTableHeadNone">Driver define  </th><th class="markdownTableHeadNone">Used for  </th><th class="markdownTableHeadNone">Compiler memory area in the examples below  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>NPU_QCONFIG</code>   </td><td class="markdownTableBodyNone">command stream   </td><td class="markdownTableBodyNone">usually placed with model constants    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span>  </td><td class="markdownTableBodyNone">command stream  </td><td class="markdownTableBodyNone">usually placed with model constants  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>NPU_REGIONCFG_0</code>   </td><td class="markdownTableBodyNone">base pointer region 0   </td><td class="markdownTableBodyNone"><code>const_mem_area</code>    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_0</span>  </td><td class="markdownTableBodyNone">base pointer region 0  </td><td class="markdownTableBodyNone"><span class="tt">const_mem_area</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>NPU_REGIONCFG_1</code>   </td><td class="markdownTableBodyNone">base pointer region 1   </td><td class="markdownTableBodyNone"><code>arena_mem_area</code>    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_1</span>  </td><td class="markdownTableBodyNone">base pointer region 1  </td><td class="markdownTableBodyNone"><span class="tt">arena_mem_area</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>NPU_REGIONCFG_2</code>   </td><td class="markdownTableBodyNone">base pointer region 2   </td><td class="markdownTableBodyNone"><code>cache_mem_area</code>, when the generated model uses scratch-fast storage   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_2</span>  </td><td class="markdownTableBodyNone">base pointer region 2  </td><td class="markdownTableBodyNone"><span class="tt">cache_mem_area</span>, when the generated model uses scratch-fast storage  </td></tr>
 </table>
-<p>Additional <code>NPU_REGIONCFG_3</code> to <code>NPU_REGIONCFG_7</code> definitions exist for command streams used by other platform configurations. For example, the experimental Ethos-U85 Direct Drive flow on Linux uses region 3 for input tensors and region 4 for output tensors. Cortex-M integrations use regions 0 to 2 and do not need to configure these additional regions.</p>
-<p>For the default driver configuration, the practical mapping is:</p>
+<p>The remaining <span class="tt">NPU_REGIONCFG_3</span> to <span class="tt">NPU_REGIONCFG_7</span> definitions are not used for Cortex-M integrations.</p>
+<p>The value in the following table is the value assigned to the <span class="tt">NPU_QCONFIG</span> or <span class="tt">NPU_REGIONCFG_x</span> driver define.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Value   </th><th class="markdownTableHeadNone">Ethos-U55/U65 meaning   </th><th class="markdownTableHeadNone">Ethos-U85 meaning with the default <code>NPU_MEM_ATTR_0</code> to <code>NPU_MEM_ATTR_3</code>    </th></tr>
+<th class="markdownTableHeadNone">Value  </th><th class="markdownTableHeadNone">Ethos-U55/U65 meaning  </th><th class="markdownTableHeadNone">Ethos-U85 meaning  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>0</code> or <code>1</code>   </td><td class="markdownTableBodyNone">use AXI0   </td><td class="markdownTableBodyNone">use AXI_SRAM    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">0</span>  </td><td class="markdownTableBodyNone">AXI0, <span class="tt">AXI_LIMIT0</span>  </td><td class="markdownTableBodyNone">Use AXI_SRAM, <span class="tt">NPU_MEM_ATTR_0</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2</code> or <code>3</code>   </td><td class="markdownTableBodyNone">use AXI1   </td><td class="markdownTableBodyNone">use AXI_EXT   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone">AXI0, <span class="tt">AXI_LIMIT1</span>  </td><td class="markdownTableBodyNone">Use AXI_SRAM, <span class="tt">NPU_MEM_ATTR_1</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">2</span>  </td><td class="markdownTableBodyNone">AXI1, <span class="tt">AXI_LIMIT2</span>  </td><td class="markdownTableBodyNone">Use AXI_EXT, <span class="tt">NPU_MEM_ATTR_2</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">3</span>  </td><td class="markdownTableBodyNone">AXI1, <span class="tt">AXI_LIMIT3</span>  </td><td class="markdownTableBodyNone">Use AXI_EXT, <span class="tt">NPU_MEM_ATTR_3</span>  </td></tr>
 </table>
-<p>This lets the same region values give the same intended behavior across Ethos-U55, Ethos-U65, and Ethos-U85: use <code>0</code> or <code>1</code> for base pointer regions whose compiler storage role is resolved through the <code>Axi0</code> alias, and use <code>2</code> or <code>3</code> for base pointer regions whose role is resolved through the <code>Axi1</code> alias.</p>
+<p>This lets the same region values give the same intended behavior across Ethos-U55, Ethos-U65, and Ethos-U85: use <span class="tt">0</span> or <span class="tt">1</span> for base pointer regions whose compiler storage role is resolved through the <span class="tt">Axi0</span> alias, and use <span class="tt">2</span> or <span class="tt">3</span> for base pointer regions whose role is resolved through the <span class="tt">Axi1</span> alias.</p>
 <p>The value does not name a physical memory by itself. It selects the NPU access path and the attributes programmed for that path. The platform integration must still ensure that the linker placement, MPU/SAU attributes, cache policy, and driver AXI limit settings match the real SRAM, Flash, MRAM, DRAM, or TCM behind the selected region configuration.</p>
-<p>For example, a shared-SRAM memory mode may place the command stream and constants in the memory selected by <code>Axi1</code>, and activations in the memory selected by <code>Axi0</code>.</p>
-<p>If the driver configuration maps <code>2</code> or <code>3</code> to the memory selected by <code>Axi1</code> and <code>0</code> or <code>1</code> to the memory selected by <code>Axi0</code>, the corresponding build definitions can be:</p>
+<p>For example, a shared-SRAM memory mode may place the command stream and constants in the memory selected by <span class="tt">Axi1</span>, and activations in the memory selected by <span class="tt">Axi0</span>.</p>
+<p>If the driver configuration maps <span class="tt">2</span> or <span class="tt">3</span> to the memory selected by <span class="tt">Axi1</span> and <span class="tt">0</span> or <span class="tt">1</span> to the memory selected by <span class="tt">Axi0</span>, the corresponding build definitions can be:</p>
 <div class="fragment"><div class="line">defines:</div>
 <div class="line">  - NPU_QCONFIG: 2</div>
 <div class="line">  - NPU_REGIONCFG_0: 3</div>
 <div class="line">  - NPU_REGIONCFG_1: 0</div>
 <div class="line">  - NPU_REGIONCFG_2: 1</div>
-</div><!-- fragment --><p>For a dedicated-SRAM memory mode, where supported, activations may move to the memory selected by <code>Axi1</code> while the staging or cache region remains in the memory selected by <code>Axi0</code>.</p>
+</div><!-- fragment --><p>For a dedicated-SRAM memory mode, where supported, activations may move to the memory selected by <span class="tt">Axi1</span> while the staging or cache region remains in the memory selected by <span class="tt">Axi0</span>.</p>
 <p>The build definitions then follow that placement:</p>
 <div class="fragment"><div class="line">defines:</div>
 <div class="line">  - NPU_QCONFIG: 2</div>
 <div class="line">  - NPU_REGIONCFG_0: 3</div>
 <div class="line">  - NPU_REGIONCFG_1: 2</div>
 <div class="line">  - NPU_REGIONCFG_2: 1</div>
-</div><!-- fragment --><p>For an SRAM-only memory mode, all generated regions can use the memory selected by <code>Axi0</code>:</p>
+</div><!-- fragment --><p>For an SRAM-only memory mode, all generated regions can use the memory selected by <span class="tt">Axi0</span>:</p>
 <div class="fragment"><div class="line">defines:</div>
 <div class="line">  - NPU_QCONFIG: 0</div>
 <div class="line">  - NPU_REGIONCFG_0: 1</div>
 <div class="line">  - NPU_REGIONCFG_1: 0</div>
 <div class="line">  - NPU_REGIONCFG_2: 1</div>
-</div><!-- fragment --><p>The distinction between <code>0</code> and <code>1</code>, or between <code>2</code> and <code>3</code>, is target- and system-specific. On Ethos-U55 and Ethos-U65, the value is the REGIONCFG encoding and selects one of the AXI limit entries: <code>0</code> and <code>1</code> use the AXI0-side limit settings, while <code>2</code> and <code>3</code> use the AXI1-side limit settings. On Ethos-U85, the value is a MEM_ATTR index; the driver defaults make MEM_ATTR0 and MEM_ATTR1 use AXI_SRAM, and MEM_ATTR2 and MEM_ATTR3 use AXI_EXT. Change <code>NPU_MEM_ATTR_0</code> through <code>NPU_MEM_ATTR_3</code> only when the platform needs different U85 memory attributes.</p>
-<p>The AXI limit values are separate platform-tuning settings. Simplified, <code>AXI_LIMIT0</code> and <code>AXI_LIMIT1</code> on Ethos-U55 and Ethos-U65 correspond to the AXI0-side configuration, while <code>AXI_LIMIT2</code> and <code>AXI_LIMIT3</code> correspond to the AXI1-side configuration. On Ethos-U85, the equivalent limit settings are grouped under AXI_SRAM and AXI_EXT. The exact outstanding transaction and burst settings depend on the SoC interconnect and memory system.</p>
-<p>Keep these definitions synchronized with the <code>Memory_Mode</code> used to compile the model with the Vela compiler and with the linker sections used by the application. The driver must ultimately program region attributes that match the memory used for the command stream and each model base pointer. If the meaning of a numeric value is not clear for the selected Ethos-U target, use the target integration guide, hardware register descriptions, or a platform-provided configuration as the source of truth before benchmarking or releasing the build. </p>
+</div><!-- fragment --><p>The distinction between <span class="tt">0</span> and <span class="tt">1</span>, or between <span class="tt">2</span> and <span class="tt">3</span>, is target- and system-specific. On Ethos-U55 and Ethos-U65, the value is the REGIONCFG encoding and selects one of the AXI limit entries: <span class="tt">0</span> and <span class="tt">1</span> use the AXI0-side limit settings, while <span class="tt">2</span> and <span class="tt">3</span> use the AXI1-side limit settings. On Ethos-U85, the value is a MEM_ATTR index; the driver defaults make MEM_ATTR0 and MEM_ATTR1 use AXI_SRAM, and MEM_ATTR2 and MEM_ATTR3 use AXI_EXT. Change <span class="tt">NPU_MEM_ATTR_0</span> through <span class="tt">NPU_MEM_ATTR_3</span> only when the platform needs different U85 memory attributes.</p>
+<p>Todo: clean this section <span class="tt">AXI_LIMIT</span> is NPU AXI bus configuration, not part of the Ethos-U performance monitoring unit (PMU). An outstanding transaction is a read or write request issued by the NPU for which the transfer has not yet completed. On Ethos-U55 and Ethos-U65, <span class="tt">AXI_LIMIT0</span> to <span class="tt">AXI_LIMIT3</span> configure the maximum numbers of outstanding reads and writes, the burst-split alignment, and the AXI memory attributes for the corresponding port and counter shown in the table. The driver programs these registers from the <span class="tt">AXI_LIMITx_*</span> build definitions.</p>
+<p>On Ethos-U85, the <span class="tt">AXI_SRAM</span> and <span class="tt">AXI_EXT</span> settings provide the corresponding outstanding-transaction and burst controls, while <span class="tt">NPU_MEM_ATTR_0</span> to <span class="tt">NPU_MEM_ATTR_3</span> define the memory attributes and select the AXI interface. The limits must match the capabilities of the SoC interconnect and memory system. Larger limits can allow more transactions to proceed concurrently; smaller limits constrain the traffic generated by the NPU.</p>
+<p>The PMU is separate, but it can count AXI traffic and read or write stalls caused by reaching an AXI limit. These events help determine whether the configured limits are restricting NPU performance; the PMU does not set the limits.</p>
+<p>Keep these definitions synchronized with the <span class="tt">Memory_Mode</span> used to compile the model with the Vela compiler and with the linker sections used by the application. The driver must ultimately program region attributes that match the memory used for the command stream and each model base pointer. If the meaning of a numeric value is not clear for the selected Ethos-U target, use the target integration guide, hardware register descriptions, or a platform-provided configuration as the source of truth before benchmarking or releasing the build. </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
+</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

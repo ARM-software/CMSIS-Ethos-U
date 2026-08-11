@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['the_20device_0',['Compile the ML model for the device',['../index.html#integration_compile_model',1,'']]],
-  ['the_20em_20csolution_20project_20em_1',['Create the &lt;em&gt;csolution project&lt;/em&gt;',['../index.html#integration_create_csolution',1,'']]],
-  ['the_20linker_20script_2',['Configure memory placement and the linker script',['../index.html#integration_configure_memory',1,'']]],
-  ['the_20memory_20budget_3',['Determine the memory budget',['../index.html#autotoc_md1',1,'']]],
-  ['the_20ml_20model_20for_20the_20device_4',['Compile the ML model for the device',['../index.html#integration_compile_model',1,'']]],
-  ['to_20version_20control_5',['Add ML model and configuration to version control',['../index.html#autotoc_md4',1,'']]],
-  ['tune_6',['Validate and tune',['../index.html#integration_validate_tune',1,'']]]
+  ['script_0',['Configure memory placement and the linker script',['../index.html#configure-memory-placement-and-the-linker-script',1,'']]],
+  ['specific_20functions_1',['Platform-specific functions',['../../driver/group__ethosu__callback__api.html',1,'']]],
+  ['sram_20to_20external_20dram_2',['Example: Move the tensor arena from SRAM to external DRAM',['../index.html#example-move-the-tensor-arena-from-sram-to-external-dram',1,'']]],
+  ['starting_20point_3',['Starting point',['../index.html#starting-point',1,'']]],
+  ['structures_4',['Structures',['../../driver/group__ethosu__driver__structs.html',1,'']]]
 ];

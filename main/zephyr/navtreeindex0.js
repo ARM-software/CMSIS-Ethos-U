@@ -1,14 +1,14 @@
 var NAVTREEINDEX0 =
 {
 "index.html":[],
-"index.html#autotoc_md0":[0],
-"index.html#autotoc_md1":[1],
-"index.html#autotoc_md2":[2],
-"index.html#autotoc_md3":[3],
-"index.html#autotoc_md4":[4],
-"index.html#autotoc_md5":[5],
-"index.html#autotoc_md6":[6],
-"index.html#autotoc_md7":[7],
-"index.html#autotoc_md8":[8],
+"index.html#build-in-arm-keil-studio-for-vs-code":[5],
+"index.html#build-with-west":[4],
+"index.html#configure-the-application":[3],
+"index.html#corstone-300-fvp-example":[6],
+"index.html#describe-the-npu-in-devicetree":[2],
+"index.html#how-the-integration-works":[0],
+"index.html#prerequisites":[1],
+"index.html#references":[8],
+"index.html#verification-checklist":[7],
 "pages.html":[]
 };

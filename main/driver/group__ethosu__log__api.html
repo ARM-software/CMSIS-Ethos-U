@@ -1,0 +1,447 @@
+<!-- HTML header for doxygen 1.17.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Driver: Logging</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="tabs.js?v=5"></script>
+<script type="text/javascript" src="footer.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', init_search);
+</script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="text/javascript" src="theme_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow" style="height: 55px;">
+  <td id="projectlogo" style="padding: 1em;"><img alt="Logo" src="arm.png"/></td>
+  <td id="projectalign" style="padding-left: 2em; padding-bottom: 1em; padding-top: 1em;">
+   <div id="projectname">Ethos-U Integration for Cortex-M
+   </div>
+   <div id="projectbrief">Ethos-U Driver</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">
+      writeComponentTabs.call(this);
+    </script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.17.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('group__ethosu__log__api.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Logging <div class="ingroups"><a class="el" href="group__ethosu__driver__api.html">Ethos-U Driver API</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Compile-time logging controls and macros from <code>ethosu_log.h</code>.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga925b62cb4a7b32b5770f1ebdacb6d8d8" id="r_ga925b62cb4a7b32b5770f1ebdacb6d8d8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga925b62cb4a7b32b5770f1ebdacb6d8d8">ETHOSU_LOG_ERR</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:ga925b62cb4a7b32b5770f1ebdacb6d8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error severity level.  <br /></td></tr>
+<tr class="memitem:gaa04304f007fbd79ba5368c295dc275e6" id="r_gaa04304f007fbd79ba5368c295dc275e6"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6">ETHOSU_LOG_WARN</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gaa04304f007fbd79ba5368c295dc275e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Warning severity level.  <br /></td></tr>
+<tr class="memitem:gaec30d1751550d3ecd9996bf56f55c88f" id="r_gaec30d1751550d3ecd9996bf56f55c88f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#gaec30d1751550d3ecd9996bf56f55c88f">ETHOSU_LOG_INFO</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:gaec30d1751550d3ecd9996bf56f55c88f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Informational severity level.  <br /></td></tr>
+<tr class="memitem:ga715573525d22ecd62dc3a371f459b7ef" id="r_ga715573525d22ecd62dc3a371f459b7ef"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga715573525d22ecd62dc3a371f459b7ef">ETHOSU_LOG_DEBUG</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memdesc:ga715573525d22ecd62dc3a371f459b7ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Debug severity level.  <br /></td></tr>
+<tr class="memitem:gafab8c39657a7823439de4dcec41b6638" id="r_gafab8c39657a7823439de4dcec41b6638"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#gafab8c39657a7823439de4dcec41b6638">ETHOSU_LOG_ENABLE</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gafab8c39657a7823439de4dcec41b6638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Master compile-time switch for driver logging.  <br /></td></tr>
+<tr class="memitem:gae2521780190d2ccdc7a712a7af419aea" id="r_gae2521780190d2ccdc7a712a7af419aea"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#gae2521780190d2ccdc7a712a7af419aea">ETHOSU_LOG_SEVERITY</a>&#160;&#160;&#160;<a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6">ETHOSU_LOG_WARN</a></td></tr>
+<tr class="memdesc:gae2521780190d2ccdc7a712a7af419aea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Most verbose severity compiled into the driver.  <br /></td></tr>
+<tr class="memitem:ga684cbf16ece7e6e25cd49fdef621a475" id="r_ga684cbf16ece7e6e25cd49fdef621a475"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga684cbf16ece7e6e25cd49fdef621a475">LOG</a>(f, ...)</td></tr>
+<tr class="memdesc:ga684cbf16ece7e6e25cd49fdef621a475"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write an unprefixed message to <code>stdout</code>.  <br /></td></tr>
+<tr class="memitem:ga531b8a1a22e3fdd27811bfab52217e13" id="r_ga531b8a1a22e3fdd27811bfab52217e13"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga531b8a1a22e3fdd27811bfab52217e13">LOG_ERR</a>(f, ...)</td></tr>
+<tr class="memdesc:ga531b8a1a22e3fdd27811bfab52217e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write an error message to <code>stderr</code>.  <br /></td></tr>
+<tr class="memitem:ga0ac9ed4ee5b005ba22993796a63fe4d5" id="r_ga0ac9ed4ee5b005ba22993796a63fe4d5"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga0ac9ed4ee5b005ba22993796a63fe4d5">LOG_WARN</a>(f, ...)</td></tr>
+<tr class="memdesc:ga0ac9ed4ee5b005ba22993796a63fe4d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a warning message to <code>stdout</code>.  <br /></td></tr>
+<tr class="memitem:ga0346634c15a318e68d86de21729d51c9" id="r_ga0346634c15a318e68d86de21729d51c9"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga0346634c15a318e68d86de21729d51c9">LOG_INFO</a>(f, ...)</td></tr>
+<tr class="memdesc:ga0346634c15a318e68d86de21729d51c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write an informational message to <code>stdout</code>.  <br /></td></tr>
+<tr class="memitem:ga4cfe278bc804bda9db3a59830b6fbfb8" id="r_ga4cfe278bc804bda9db3a59830b6fbfb8"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga4cfe278bc804bda9db3a59830b6fbfb8">LOG_DEBUG</a>(f, ...)</td></tr>
+<tr class="memdesc:ga4cfe278bc804bda9db3a59830b6fbfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write a debug message to <code>stdout</code>.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description</h2>
+<div class="textblock"><p>Compile-time logging controls and macros from <code>ethosu_log.h</code>. </p>
+<p>The driver uses printf-style macros that write to the C library <code>stdout</code> and <code>stderr</code> streams. Logging is configured at compile time; it does not provide a runtime callback or logging backend. Embedded targets that enable logging must retarget the required streams to an available output.</p>
+<p>Use <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> as the master switch and <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> to select the most verbose severity compiled into the driver. Severity filtering does not apply to <a class="el" href="#ga684cbf16ece7e6e25cd49fdef621a475" title="LOG">LOG</a>. See <a href="index.html#logging">Logging</a> for configuration and usage guidance. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="ga925b62cb4a7b32b5770f1ebdacb6d8d8" name="ga925b62cb4a7b32b5770f1ebdacb6d8d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga925b62cb4a7b32b5770f1ebdacb6d8d8">&#9670;&#160;</a></span>ETHOSU_LOG_ERR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_ERR&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Error severity level. </p>
+<p>Select this value for <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> to include only <a class="el" href="#ga531b8a1a22e3fdd27811bfab52217e13" title="LOG_ERR">LOG_ERR</a> messages. Its numeric value is 0. </p>
+
+</div>
+</div>
+<a id="gaa04304f007fbd79ba5368c295dc275e6" name="gaa04304f007fbd79ba5368c295dc275e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa04304f007fbd79ba5368c295dc275e6">&#9670;&#160;</a></span>ETHOSU_LOG_WARN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_WARN&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Warning severity level. </p>
+<p>Select this value for <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> to include error and warning messages. Its numeric value is 1 and it is the default severity. </p>
+
+</div>
+</div>
+<a id="gaec30d1751550d3ecd9996bf56f55c88f" name="gaec30d1751550d3ecd9996bf56f55c88f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec30d1751550d3ecd9996bf56f55c88f">&#9670;&#160;</a></span>ETHOSU_LOG_INFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_INFO&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Informational severity level. </p>
+<p>Select this value for <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> to include error, warning, and informational messages. Its numeric value is 2. </p>
+
+</div>
+</div>
+<a id="ga715573525d22ecd62dc3a371f459b7ef" name="ga715573525d22ecd62dc3a371f459b7ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga715573525d22ecd62dc3a371f459b7ef">&#9670;&#160;</a></span>ETHOSU_LOG_DEBUG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_DEBUG&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Debug severity level. </p>
+<p>Select this value for <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> to include all severity-based messages. Its numeric value is 3. </p>
+
+</div>
+</div>
+<a id="gafab8c39657a7823439de4dcec41b6638" name="gafab8c39657a7823439de4dcec41b6638"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafab8c39657a7823439de4dcec41b6638">&#9670;&#160;</a></span>ETHOSU_LOG_ENABLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_ENABLE&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Master compile-time switch for driver logging. </p>
+<p>The default value is 1. Set it to 0 to compile out all logging, including <a class="el" href="#ga684cbf16ece7e6e25cd49fdef621a475" title="LOG">LOG</a>. Arguments to disabled logging macros are not evaluated at runtime. The CMake option with the same name accepts <code>ON</code> or <code>OFF</code>. </p>
+
+</div>
+</div>
+<a id="gae2521780190d2ccdc7a712a7af419aea" name="gae2521780190d2ccdc7a712a7af419aea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae2521780190d2ccdc7a712a7af419aea">&#9670;&#160;</a></span>ETHOSU_LOG_SEVERITY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_LOG_SEVERITY&#160;&#160;&#160;<a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6">ETHOSU_LOG_WARN</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Most verbose severity compiled into the driver. </p>
+<p>The default value is <a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6" title="ETHOSU_LOG_WARN">ETHOSU_LOG_WARN</a>. Set it to one of <a class="el" href="#ga925b62cb4a7b32b5770f1ebdacb6d8d8" title="ETHOSU_LOG_ERR">ETHOSU_LOG_ERR</a>, <a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6" title="ETHOSU_LOG_WARN">ETHOSU_LOG_WARN</a>, <a class="el" href="#gaec30d1751550d3ecd9996bf56f55c88f" title="ETHOSU_LOG_INFO">ETHOSU_LOG_INFO</a>, or <a class="el" href="#ga715573525d22ecd62dc3a371f459b7ef" title="ETHOSU_LOG_DEBUG">ETHOSU_LOG_DEBUG</a>. The corresponding CMake option accepts <code>err</code>, <code>warning</code>, <code>info</code>, or <code>debug</code>. This setting does not filter <a class="el" href="#ga684cbf16ece7e6e25cd49fdef621a475" title="LOG">LOG</a>. </p>
+
+</div>
+</div>
+<a id="ga684cbf16ece7e6e25cd49fdef621a475" name="ga684cbf16ece7e6e25cd49fdef621a475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga684cbf16ece7e6e25cd49fdef621a475">&#9670;&#160;</a></span>LOG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">LOG_COMMON(stdout, f, ##__VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Write an unprefixed message to <code>stdout</code>. </p>
+<p>The arguments follow <code>fprintf</code> formatting rules. No newline is appended. Output is controlled by <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> but not by <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a>. </p>
+
+</div>
+</div>
+<a id="ga531b8a1a22e3fdd27811bfab52217e13" name="ga531b8a1a22e3fdd27811bfab52217e13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga531b8a1a22e3fdd27811bfab52217e13">&#9670;&#160;</a></span>LOG_ERR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_ERR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">LOG_COMMON(stderr, <span class="stringliteral">&quot;E: %s:%d: &quot;</span> f <span class="stringliteral">&quot;\n&quot;</span>, strrchr(<span class="stringliteral">&quot;/&quot;</span> __FILE__, <span class="charliteral">&#39;/&#39;</span>) + 1, __LINE__, ##__VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Write an error message to <code>stderr</code>. </p>
+<p>The arguments follow <code>fprintf</code> formatting rules. The macro prefixes the message with <code>E:</code>, the source file name, and the source line, and appends a newline. It is enabled when <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> is nonzero and <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> is at least <a class="el" href="#ga925b62cb4a7b32b5770f1ebdacb6d8d8" title="ETHOSU_LOG_ERR">ETHOSU_LOG_ERR</a>. </p>
+
+</div>
+</div>
+<a id="ga0ac9ed4ee5b005ba22993796a63fe4d5" name="ga0ac9ed4ee5b005ba22993796a63fe4d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0ac9ed4ee5b005ba22993796a63fe4d5">&#9670;&#160;</a></span>LOG_WARN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_WARN</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">LOG_COMMON(stdout, <span class="stringliteral">&quot;W: &quot;</span> f <span class="stringliteral">&quot;\n&quot;</span>, ##__VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Write a warning message to <code>stdout</code>. </p>
+<p>The arguments follow <code>fprintf</code> formatting rules. The macro prefixes the message with <code>W:</code> and appends a newline. It is enabled when <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> is nonzero and <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> is at least <a class="el" href="#gaa04304f007fbd79ba5368c295dc275e6" title="ETHOSU_LOG_WARN">ETHOSU_LOG_WARN</a>. </p>
+
+</div>
+</div>
+<a id="ga0346634c15a318e68d86de21729d51c9" name="ga0346634c15a318e68d86de21729d51c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0346634c15a318e68d86de21729d51c9">&#9670;&#160;</a></span>LOG_INFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_INFO</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">LOG_COMMON_NOP(stdout, f, ##__VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Write an informational message to <code>stdout</code>. </p>
+<p>The arguments follow <code>fprintf</code> formatting rules. The macro prefixes the message with <code>I:</code> and appends a newline. It is enabled when <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> is nonzero and <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> is at least <a class="el" href="#gaec30d1751550d3ecd9996bf56f55c88f" title="ETHOSU_LOG_INFO">ETHOSU_LOG_INFO</a>. </p>
+
+</div>
+</div>
+<a id="ga4cfe278bc804bda9db3a59830b6fbfb8" name="ga4cfe278bc804bda9db3a59830b6fbfb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4cfe278bc804bda9db3a59830b6fbfb8">&#9670;&#160;</a></span>LOG_DEBUG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LOG_DEBUG</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>f</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">LOG_COMMON_NOP(stdout, f, ##__VA_ARGS__)</div>
+</div><!-- fragment -->
+<p>Write a debug message to <code>stdout</code>. </p>
+<p>The arguments follow <code>fprintf</code> formatting rules. The macro prefixes the message with <code>D:</code> and the current function name, and appends a newline. It is enabled when <a class="el" href="#gafab8c39657a7823439de4dcec41b6638" title="ETHOSU_LOG_ENABLE">ETHOSU_LOG_ENABLE</a> is nonzero and <a class="el" href="#gae2521780190d2ccdc7a712a7af419aea" title="ETHOSU_LOG_SEVERITY">ETHOSU_LOG_SEVERITY</a> is at least <a class="el" href="#ga715573525d22ecd62dc3a371f459b7ef" title="ETHOSU_LOG_DEBUG">ETHOSU_LOG_DEBUG</a>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">
+	Copyright &copy; 2021-2026 Arm Limited (or its affiliates). All rights reserved.
+	<!-- Use script below for auto-inserting date, project name, version, etc  -->
+	<!-- <script type="text/javascript">
+        writeFooter.call(this);
+    </script> -->
+    </li>
+  </ul>
+</div>
+</body>
+</html>

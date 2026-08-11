@@ -25,15 +25,15 @@
 var NAVTREE =
 [
   [ "Zephyr", "index.html", [
-    [ "How the integration works", "index.html#autotoc_md0", null ],
-    [ "Prerequisites", "index.html#autotoc_md1", null ],
-    [ "Describe the NPU in devicetree", "index.html#autotoc_md2", null ],
-    [ "Configure the application", "index.html#autotoc_md3", null ],
-    [ "Build with west", "index.html#autotoc_md4", null ],
-    [ "Build in Arm Keil Studio for VS Code", "index.html#autotoc_md5", null ],
-    [ "Corstone-300 FVP example", "index.html#autotoc_md6", null ],
-    [ "Verification checklist", "index.html#autotoc_md7", null ],
-    [ "References", "index.html#autotoc_md8", null ]
+    [ "How the integration works", "index.html#how-the-integration-works", null ],
+    [ "Prerequisites", "index.html#prerequisites", null ],
+    [ "Describe the NPU in devicetree", "index.html#describe-the-npu-in-devicetree", null ],
+    [ "Configure the application", "index.html#configure-the-application", null ],
+    [ "Build with west", "index.html#build-with-west", null ],
+    [ "Build in Arm Keil Studio for VS Code", "index.html#build-in-arm-keil-studio-for-vs-code", null ],
+    [ "Corstone-300 FVP example", "index.html#corstone-300-fvp-example", null ],
+    [ "Verification checklist", "index.html#verification-checklist", null ],
+    [ "References", "index.html#references", null ]
   ] ]
 ];
 
@@ -42,5 +42,6 @@ var NAVTREEINDEX =
 "index.html"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronization';
-var SYNCOFFMSG = 'click to enable panel synchronization';
+const SYNCONMSG = 'click to disable panel synchronization';
+const SYNCOFFMSG = 'click to enable panel synchronization';
+const LISTOFALLMEMBERS = 'List of all members';

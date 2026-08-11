@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['structures_0',['Structures',['../../drivers/group__ethosu__driver__structs.html',1,'']]],
-  ['studio_20for_20vs_20code_1',['Build in Arm Keil Studio for VS Code',['../index.html#autotoc_md5',1,'']]]
+  ['performance_20monitoring_20unit_20api_0',['Performance Monitoring Unit API',['../../driver/group__ethosu__pmu__api.html',1,'']]],
+  ['platform_20specific_20functions_1',['Platform-specific functions',['../../driver/group__ethosu__callback__api.html',1,'']]],
+  ['prerequisites_2',['Prerequisites',['../index.html#prerequisites',1,'']]]
 ];

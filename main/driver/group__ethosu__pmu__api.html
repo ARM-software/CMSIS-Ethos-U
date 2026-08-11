@@ -1,0 +1,1003 @@
+<!-- HTML header for doxygen 1.17.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Driver: Performance Monitoring Unit API</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="tabs.js?v=5"></script>
+<script type="text/javascript" src="footer.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', init_search);
+</script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="text/javascript" src="theme_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow" style="height: 55px;">
+  <td id="projectlogo" style="padding: 1em;"><img alt="Logo" src="arm.png"/></td>
+  <td id="projectalign" style="padding-left: 2em; padding-bottom: 1em; padding-top: 1em;">
+   <div id="projectname">Ethos-U Integration for Cortex-M
+   </div>
+   <div id="projectbrief">Ethos-U Driver</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">
+      writeComponentTabs.call(this);
+    </script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.17.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('group__ethosu__pmu__api.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Performance Monitoring Unit API </div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Control the Ethos-U Performance Monitoring Unit (PMU).  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:gac4ed0239a963456a74e18ec7a06fd086" id="r_gac4ed0239a963456a74e18ec7a06fd086"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gac4ed0239a963456a74e18ec7a06fd086">ETHOSU_PMU_Enable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:gac4ed0239a963456a74e18ec7a06fd086"><td class="mdescLeft">&#160;</td><td class="mdescRight">HW Supported ETHOSU PMU Events.  <br /></td></tr>
+<tr class="memitem:gaf976f4e4d18229593591bdf984645018" id="r_gaf976f4e4d18229593591bdf984645018"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gaf976f4e4d18229593591bdf984645018">ETHOSU_PMU_Disable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:gaf976f4e4d18229593591bdf984645018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable the PMU.  <br /></td></tr>
+<tr class="memitem:ga73f8bf9079d47e1d6afe9bf7a49f6999" id="r_ga73f8bf9079d47e1d6afe9bf7a49f6999"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga73f8bf9079d47e1d6afe9bf7a49f6999">ETHOSU_PMU_Set_EVTYPER</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t num, enum ethosu_pmu_event_type type)</td></tr>
+<tr class="memdesc:ga73f8bf9079d47e1d6afe9bf7a49f6999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set event to count for PMU eventer counter.  <br /></td></tr>
+<tr class="memitem:ga6e52be0fc9b15f9351e83698bd9b5888" id="r_ga6e52be0fc9b15f9351e83698bd9b5888"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga6e52be0fc9b15f9351e83698bd9b5888">ETHOSU_PMU_Get_NumEventCounters</a> (void)</td></tr>
+<tr class="memdesc:ga6e52be0fc9b15f9351e83698bd9b5888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of PMU event counters.  <br /></td></tr>
+<tr class="memitem:ga2450c677d035e1e2dc51c31b1feb2df8" id="r_ga2450c677d035e1e2dc51c31b1feb2df8"><td class="memItemLeft">enum ethosu_pmu_event_type&#160;</td><td class="memItemRight"><a class="el" href="#ga2450c677d035e1e2dc51c31b1feb2df8">ETHOSU_PMU_Get_EVTYPER</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t num)</td></tr>
+<tr class="memdesc:ga2450c677d035e1e2dc51c31b1feb2df8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get event to count for PMU eventer counter.  <br /></td></tr>
+<tr class="memitem:gabe2a2b4b99bf753d02b5683fab77988c" id="r_gabe2a2b4b99bf753d02b5683fab77988c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gabe2a2b4b99bf753d02b5683fab77988c">ETHOSU_PMU_CYCCNT_Reset</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:gabe2a2b4b99bf753d02b5683fab77988c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset cycle counter.  <br /></td></tr>
+<tr class="memitem:ga6bfb8e6dbb653f003fd4a196b895a79d" id="r_ga6bfb8e6dbb653f003fd4a196b895a79d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga6bfb8e6dbb653f003fd4a196b895a79d">ETHOSU_PMU_EVCNTR_ALL_Reset</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga6bfb8e6dbb653f003fd4a196b895a79d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset all event counters.  <br /></td></tr>
+<tr class="memitem:ga100f5c40ed0cfda7fd0f6dae35c51da2" id="r_ga100f5c40ed0cfda7fd0f6dae35c51da2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga100f5c40ed0cfda7fd0f6dae35c51da2">ETHOSU_PMU_CNTR_Enable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:ga100f5c40ed0cfda7fd0f6dae35c51da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable counters.  <br /></td></tr>
+<tr class="memitem:gae13ce2d6a114658e6bf2d9d70135eeb8" id="r_gae13ce2d6a114658e6bf2d9d70135eeb8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gae13ce2d6a114658e6bf2d9d70135eeb8">ETHOSU_PMU_CNTR_Disable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:gae13ce2d6a114658e6bf2d9d70135eeb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable counters.  <br /></td></tr>
+<tr class="memitem:ga285ba30593341536860b81151ec202f7" id="r_ga285ba30593341536860b81151ec202f7"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga285ba30593341536860b81151ec202f7">ETHOSU_PMU_CNTR_Status</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga285ba30593341536860b81151ec202f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine counters activation.  <br /></td></tr>
+<tr class="memitem:ga99ab8589f4909184d0a1038887f1228d" id="r_ga99ab8589f4909184d0a1038887f1228d"><td class="memItemLeft">uint64_t&#160;</td><td class="memItemRight"><a class="el" href="#ga99ab8589f4909184d0a1038887f1228d">ETHOSU_PMU_Get_CCNTR</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga99ab8589f4909184d0a1038887f1228d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read cycle counter (64 bit).  <br /></td></tr>
+<tr class="memitem:ga598367d9920c99b08d062b0684593e9a" id="r_ga598367d9920c99b08d062b0684593e9a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga598367d9920c99b08d062b0684593e9a">ETHOSU_PMU_Set_CCNTR</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint64_t val)</td></tr>
+<tr class="memdesc:ga598367d9920c99b08d062b0684593e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set cycle counter (64 bit).  <br /></td></tr>
+<tr class="memitem:ga61c678210a7d508e9436c144964246ff" id="r_ga61c678210a7d508e9436c144964246ff"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga61c678210a7d508e9436c144964246ff">ETHOSU_PMU_Get_EVCNTR</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t num)</td></tr>
+<tr class="memdesc:ga61c678210a7d508e9436c144964246ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read event counter.  <br /></td></tr>
+<tr class="memitem:ga9e64f737eaffba38af803a91696f1f19" id="r_ga9e64f737eaffba38af803a91696f1f19"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga9e64f737eaffba38af803a91696f1f19">ETHOSU_PMU_Set_EVCNTR</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t num, uint32_t val)</td></tr>
+<tr class="memdesc:ga9e64f737eaffba38af803a91696f1f19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set event counter value.  <br /></td></tr>
+<tr class="memitem:ga8bd68f0c49c74fe81bf91867fff71c43" id="r_ga8bd68f0c49c74fe81bf91867fff71c43"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga8bd68f0c49c74fe81bf91867fff71c43">ETHOSU_PMU_Get_CNTR_OVS</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga8bd68f0c49c74fe81bf91867fff71c43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read counter overflow status.  <br /></td></tr>
+<tr class="memitem:gab6656b95629a2b087f7e47dc5d0cc897" id="r_gab6656b95629a2b087f7e47dc5d0cc897"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gab6656b95629a2b087f7e47dc5d0cc897">ETHOSU_PMU_Set_CNTR_OVS</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:gab6656b95629a2b087f7e47dc5d0cc897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear counter overflow status.  <br /></td></tr>
+<tr class="memitem:ga25620215f065e2e192299d7cca9c3c39" id="r_ga25620215f065e2e192299d7cca9c3c39"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga25620215f065e2e192299d7cca9c3c39">ETHOSU_PMU_Set_CNTR_IRQ_Enable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:ga25620215f065e2e192299d7cca9c3c39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable counter overflow interrupt request.  <br /></td></tr>
+<tr class="memitem:ga55731dad7fd178f52f3f17bf9e696187" id="r_ga55731dad7fd178f52f3f17bf9e696187"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga55731dad7fd178f52f3f17bf9e696187">ETHOSU_PMU_Set_CNTR_IRQ_Disable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:ga55731dad7fd178f52f3f17bf9e696187"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable counter overflow interrupt request.  <br /></td></tr>
+<tr class="memitem:gabcfa90c7c1a1078a13c608986f65a893" id="r_gabcfa90c7c1a1078a13c608986f65a893"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#gabcfa90c7c1a1078a13c608986f65a893">ETHOSU_PMU_Get_IRQ_Enable</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:gabcfa90c7c1a1078a13c608986f65a893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get counters overflow interrupt request stiinings.  <br /></td></tr>
+<tr class="memitem:gaab2e8591bd63f87dffb38e1cfa6df5e9" id="r_gaab2e8591bd63f87dffb38e1cfa6df5e9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gaab2e8591bd63f87dffb38e1cfa6df5e9">ETHOSU_PMU_CNTR_Increment</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, uint32_t mask)</td></tr>
+<tr class="memdesc:gaab2e8591bd63f87dffb38e1cfa6df5e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Software increment event counter.  <br /></td></tr>
+<tr class="memitem:gaebaab4ed38f8dee05ad50b1eac8a73b3" id="r_gaebaab4ed38f8dee05ad50b1eac8a73b3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#gaebaab4ed38f8dee05ad50b1eac8a73b3">ETHOSU_PMU_PMCCNTR_CFG_Set_Start_Event</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, enum ethosu_pmu_event_type start_event)</td></tr>
+<tr class="memdesc:gaebaab4ed38f8dee05ad50b1eac8a73b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set start event number for the cycle counter.  <br /></td></tr>
+<tr class="memitem:ga8cd24678c33e3d238ec0866e61150bb4" id="r_ga8cd24678c33e3d238ec0866e61150bb4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga8cd24678c33e3d238ec0866e61150bb4">ETHOSU_PMU_PMCCNTR_CFG_Set_Stop_Event</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv, enum ethosu_pmu_event_type stop_event)</td></tr>
+<tr class="memdesc:ga8cd24678c33e3d238ec0866e61150bb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set stop event number for the cycle counter.  <br /></td></tr>
+<tr class="memitem:ga2530cb39de40e314b7a19e42f220ab2f" id="r_ga2530cb39de40e314b7a19e42f220ab2f"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga2530cb39de40e314b7a19e42f220ab2f">ETHOSU_PMU_Get_QREAD</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga2530cb39de40e314b7a19e42f220ab2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read qread register.  <br /></td></tr>
+<tr class="memitem:ga511b1edd27d2afb94205976f5da84281" id="r_ga511b1edd27d2afb94205976f5da84281"><td class="memItemLeft">uint32_t&#160;</td><td class="memItemRight"><a class="el" href="#ga511b1edd27d2afb94205976f5da84281">ETHOSU_PMU_Get_STATUS</a> (struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *drv)</td></tr>
+<tr class="memdesc:ga511b1edd27d2afb94205976f5da84281"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read status register.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description</h2>
+<div class="textblock"><p>Control the Ethos-U Performance Monitoring Unit (PMU). </p>
+<p>The PMU provides a 64-bit cycle counter and programmable event counters. Use the symbolic values from <span class="tt">enum ethosu_pmu_event_type</span> to select events. See <a class="el" href="index.html#pmu-example" title="PMU example">PMU example</a> for a complete measurement example.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="gac4ed0239a963456a74e18ec7a06fd086" name="gac4ed0239a963456a74e18ec7a06fd086"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4ed0239a963456a74e18ec7a06fd086">&#9670;&#160;</a></span>ETHOSU_PMU_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Enable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>HW Supported ETHOSU PMU Events. </p>
+<p>Note: These values are symbolic. Actual HW-values may change. I.e. always use API to set/get actual event-type value.</p>
+<p>Enable the PMU </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Enables the PMU and requests NPU power. </p>
+
+</div>
+</div>
+<a id="gaf976f4e4d18229593591bdf984645018" name="gaf976f4e4d18229593591bdf984645018"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf976f4e4d18229593591bdf984645018">&#9670;&#160;</a></span>ETHOSU_PMU_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Disable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable the PMU. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Disables the PMU and releases its NPU power request. </p>
+
+</div>
+</div>
+<a id="ga73f8bf9079d47e1d6afe9bf7a49f6999" name="ga73f8bf9079d47e1d6afe9bf7a49f6999"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga73f8bf9079d47e1d6afe9bf7a49f6999">&#9670;&#160;</a></span>ETHOSU_PMU_Set_EVTYPER()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_EVTYPER </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>num</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum ethosu_pmu_event_type</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set event to count for PMU eventer counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Event counter (0-ETHOSU_PMU_NCOUNTERS) to configure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Event to count</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Selects the event counted by an event counter. </p>
+
+</div>
+</div>
+<a id="ga6e52be0fc9b15f9351e83698bd9b5888" name="ga6e52be0fc9b15f9351e83698bd9b5888"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e52be0fc9b15f9351e83698bd9b5888">&#9670;&#160;</a></span>ETHOSU_PMU_Get_NumEventCounters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_NumEventCounters </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get number of PMU event counters. </p>
+<dl class="section return"><dt>Returns</dt><dd>Number of event counters</dd></dl>
+<p>Returns the number of event counters implemented by the configured NPU. </p>
+
+</div>
+</div>
+<a id="ga2450c677d035e1e2dc51c31b1feb2df8" name="ga2450c677d035e1e2dc51c31b1feb2df8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2450c677d035e1e2dc51c31b1feb2df8">&#9670;&#160;</a></span>ETHOSU_PMU_Get_EVTYPER()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum ethosu_pmu_event_type ETHOSU_PMU_Get_EVTYPER </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>num</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get event to count for PMU eventer counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Event counter (0-ETHOSU_PMU_NCOUNTERS) to configure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>type Event to count</dd></dl>
+<p>Returns the event selected for an event counter. </p>
+
+</div>
+</div>
+<a id="gabe2a2b4b99bf753d02b5683fab77988c" name="gabe2a2b4b99bf753d02b5683fab77988c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabe2a2b4b99bf753d02b5683fab77988c">&#9670;&#160;</a></span>ETHOSU_PMU_CYCCNT_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_CYCCNT_Reset </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset cycle counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Resets the cycle counter to zero. </p>
+
+</div>
+</div>
+<a id="ga6bfb8e6dbb653f003fd4a196b895a79d" name="ga6bfb8e6dbb653f003fd4a196b895a79d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6bfb8e6dbb653f003fd4a196b895a79d">&#9670;&#160;</a></span>ETHOSU_PMU_EVCNTR_ALL_Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_EVCNTR_ALL_Reset </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reset all event counters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Resets all programmable event counters to zero. </p>
+
+</div>
+</div>
+<a id="ga100f5c40ed0cfda7fd0f6dae35c51da2" name="ga100f5c40ed0cfda7fd0f6dae35c51da2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga100f5c40ed0cfda7fd0f6dae35c51da2">&#9670;&#160;</a></span>ETHOSU_PMU_CNTR_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_CNTR_Enable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable counters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counters to enable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Enables one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Enables the counters selected by <span class="tt">mask</span>. </p>
+
+</div>
+</div>
+<a id="gae13ce2d6a114658e6bf2d9d70135eeb8" name="gae13ce2d6a114658e6bf2d9d70135eeb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae13ce2d6a114658e6bf2d9d70135eeb8">&#9670;&#160;</a></span>ETHOSU_PMU_CNTR_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_CNTR_Disable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable counters. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counters to disable </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Disables one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Disables the counters selected by <span class="tt">mask</span>. </p>
+
+</div>
+</div>
+<a id="ga285ba30593341536860b81151ec202f7" name="ga285ba30593341536860b81151ec202f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga285ba30593341536860b81151ec202f7">&#9670;&#160;</a></span>ETHOSU_PMU_CNTR_Status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_CNTR_Status </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Determine counters activation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a bitmask where bit-set means:<ul>
+<li>event counters activated (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter activate (bit 31) </li>
+</ul>
+</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>ETHOSU specific. Usage breaks CMSIS complience</dd></dl>
+<p>Returns the enabled state of the cycle and event counters. </p>
+
+</div>
+</div>
+<a id="ga99ab8589f4909184d0a1038887f1228d" name="ga99ab8589f4909184d0a1038887f1228d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga99ab8589f4909184d0a1038887f1228d">&#9670;&#160;</a></span>ETHOSU_PMU_Get_CCNTR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t ETHOSU_PMU_Get_CCNTR </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read cycle counter (64 bit). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cycle count </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Two HW 32-bit registers that can increment independently in-between reads. To work-around raciness yet still avoid turning off the event both are read as one value twice. If the latter read is not greater than the former, it means overflow of LSW without incrementing MSW has occurred, in which case the former value is used.</dd></dl>
+<p>Returns a consistent 64-bit cycle-counter value. </p>
+
+</div>
+</div>
+<a id="ga598367d9920c99b08d062b0684593e9a" name="ga598367d9920c99b08d062b0684593e9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga598367d9920c99b08d062b0684593e9a">&#9670;&#160;</a></span>ETHOSU_PMU_Set_CCNTR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_CCNTR </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t</td>          <td class="paramname"><span class="paramname"><em>val</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set cycle counter (64 bit). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Conter value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Two HW 32-bit registers that can increment independently in-between reads. To work-around raciness, counter is temporary disabled if enabled. </dd>
+<dd>
+ETHOSU specific. Usage breaks CMSIS complience</dd></dl>
+<p>Sets the 64-bit cycle-counter value. </p>
+
+</div>
+</div>
+<a id="ga61c678210a7d508e9436c144964246ff" name="ga61c678210a7d508e9436c144964246ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga61c678210a7d508e9436c144964246ff">&#9670;&#160;</a></span>ETHOSU_PMU_Get_EVCNTR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_EVCNTR </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>num</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read event counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Event counter (0-ETHOSU_PMU_NCOUNTERS) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Event count</dd></dl>
+<p>Returns the value of an event counter. </p>
+
+</div>
+</div>
+<a id="ga9e64f737eaffba38af803a91696f1f19" name="ga9e64f737eaffba38af803a91696f1f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9e64f737eaffba38af803a91696f1f19">&#9670;&#160;</a></span>ETHOSU_PMU_Set_EVCNTR()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_EVCNTR </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>num</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>val</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set event counter value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">num</td><td>Event counter (0-ETHOSU_PMU_NCOUNTERS) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">val</td><td>Conter value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>ETHOSU specific. Usage breaks CMSIS complience</dd></dl>
+<p>Sets the value of an event counter. </p>
+
+</div>
+</div>
+<a id="ga8bd68f0c49c74fe81bf91867fff71c43" name="ga8bd68f0c49c74fe81bf91867fff71c43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8bd68f0c49c74fe81bf91867fff71c43">&#9670;&#160;</a></span>ETHOSU_PMU_Get_CNTR_OVS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_CNTR_OVS </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read counter overflow status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Counter overflow status bits for the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS))</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Returns the counter-overflow status bits. </p>
+
+</div>
+</div>
+<a id="gab6656b95629a2b087f7e47dc5d0cc897" name="gab6656b95629a2b087f7e47dc5d0cc897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6656b95629a2b087f7e47dc5d0cc897">&#9670;&#160;</a></span>ETHOSU_PMU_Set_CNTR_OVS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_CNTR_OVS </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clear counter overflow status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counter overflow status bits to clear </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Clears overflow status bits for one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Clears the counter-overflow status bits selected by <span class="tt">mask</span>. </p>
+
+</div>
+</div>
+<a id="ga25620215f065e2e192299d7cca9c3c39" name="ga25620215f065e2e192299d7cca9c3c39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga25620215f065e2e192299d7cca9c3c39">&#9670;&#160;</a></span>ETHOSU_PMU_Set_CNTR_IRQ_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_CNTR_IRQ_Enable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable counter overflow interrupt request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counter overflow interrupt request bits to set </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Sets overflow interrupt request bits for one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Enables overflow interrupt requests for the counters selected by <span class="tt">mask</span>. </p>
+
+</div>
+</div>
+<a id="ga55731dad7fd178f52f3f17bf9e696187" name="ga55731dad7fd178f52f3f17bf9e696187"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55731dad7fd178f52f3f17bf9e696187">&#9670;&#160;</a></span>ETHOSU_PMU_Set_CNTR_IRQ_Disable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_Set_CNTR_IRQ_Disable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Disable counter overflow interrupt request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counter overflow interrupt request bits to clear </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Clears overflow interrupt request bits for one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31)</li>
+</ul>
+</dd></dl>
+<p>Disables overflow interrupt requests for the counters selected by <span class="tt">mask</span>. </p>
+
+</div>
+</div>
+<a id="gabcfa90c7c1a1078a13c608986f65a893" name="gabcfa90c7c1a1078a13c608986f65a893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabcfa90c7c1a1078a13c608986f65a893">&#9670;&#160;</a></span>ETHOSU_PMU_Get_IRQ_Enable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_IRQ_Enable </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get counters overflow interrupt request stiinings. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>mask Counter overflow interrupt request bits </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Sets overflow interrupt request bits for one or more of the following:<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31) </li>
+</ul>
+</dd>
+<dd>
+ETHOSU specific. Usage breaks CMSIS compliance</dd></dl>
+<p>Returns the counter-overflow interrupt enable bits. </p>
+
+</div>
+</div>
+<a id="gaab2e8591bd63f87dffb38e1cfa6df5e9" name="gaab2e8591bd63f87dffb38e1cfa6df5e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab2e8591bd63f87dffb38e1cfa6df5e9">&#9670;&#160;</a></span>ETHOSU_PMU_CNTR_Increment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_CNTR_Increment </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Software increment event counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mask</td><td>Counters to increment<ul>
+<li>event counters (bit 0-ETHOSU_PMU_NCOUNTERS)</li>
+<li>cycle counter (bit 31) </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Software increment bits for one or more event counters.</dd></dl>
+<p>Increments the event counters selected by <span class="tt">mask</span> in software. </p>
+
+</div>
+</div>
+<a id="gaebaab4ed38f8dee05ad50b1eac8a73b3" name="gaebaab4ed38f8dee05ad50b1eac8a73b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaebaab4ed38f8dee05ad50b1eac8a73b3">&#9670;&#160;</a></span>ETHOSU_PMU_PMCCNTR_CFG_Set_Start_Event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_PMCCNTR_CFG_Set_Start_Event </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum ethosu_pmu_event_type</td>          <td class="paramname"><span class="paramname"><em>start_event</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set start event number for the cycle counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">start_event</td><td>Event to trigger start of the cycle counter </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Sets the event number that starts the cycle counter.</dd></dl>
+<p>Selects the event that starts the cycle counter. </p>
+
+</div>
+</div>
+<a id="ga8cd24678c33e3d238ec0866e61150bb4" name="ga8cd24678c33e3d238ec0866e61150bb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8cd24678c33e3d238ec0866e61150bb4">&#9670;&#160;</a></span>ETHOSU_PMU_PMCCNTR_CFG_Set_Stop_Event()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ETHOSU_PMU_PMCCNTR_CFG_Set_Stop_Event </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">enum ethosu_pmu_event_type</td>          <td class="paramname"><span class="paramname"><em>stop_event</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set stop event number for the cycle counter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">stop_event</td><td>Event number </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Sets the event number that stops the cycle counter.</dd></dl>
+<p>Selects the event that stops the cycle counter. </p>
+
+</div>
+</div>
+<a id="ga2530cb39de40e314b7a19e42f220ab2f" name="ga2530cb39de40e314b7a19e42f220ab2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2530cb39de40e314b7a19e42f220ab2f">&#9670;&#160;</a></span>ETHOSU_PMU_Get_QREAD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_QREAD </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read qread register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>QREAD register value</dd></dl>
+<p>Returns the PMU QREAD register value. </p>
+
+</div>
+</div>
+<a id="ga511b1edd27d2afb94205976f5da84281" name="ga511b1edd27d2afb94205976f5da84281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga511b1edd27d2afb94205976f5da84281">&#9670;&#160;</a></span>ETHOSU_PMU_Get_STATUS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t ETHOSU_PMU_Get_STATUS </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="group__ethosu__driver__structs.html#structethosu__driver">ethosu_driver</a> *</td>          <td class="paramname"><span class="paramname"><em>drv</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read status register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">drv</td><td>Driver handle </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Status register value</dd></dl>
+<p>Returns the PMU status register value. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">
+	Copyright &copy; 2021-2026 Arm Limited (or its affiliates). All rights reserved.
+	<!-- Use script below for auto-inserting date, project name, version, etc  -->
+	<!-- <script type="text/javascript">
+        writeFooter.call(this);
+    </script> -->
+    </li>
+  </ul>
+</div>
+</body>
+</html>

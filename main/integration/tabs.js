@@ -15,7 +15,7 @@ var arr = [];
 // fill array
  arr.push( new tabElement( "General",      "general",      "General"     ));
  arr.push( new tabElement( "Vela",         "vela",         "Vela"        ));
- arr.push( new tabElement( "Drivers",      "drivers",      "Drivers"     ));
+ arr.push( new tabElement( "Driver",       "driver",       "Driver"      ));
  arr.push( new tabElement( "Integration",  "integration",  "Integration" ));
  arr.push( new tabElement( "Zephyr",       "zephyr",       "Zephyr"      ));
 

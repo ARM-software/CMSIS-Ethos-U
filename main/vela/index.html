@@ -1,34 +1,75 @@
-<!-- HTML header for doxygen 1.9.6-->
+<!-- HTML header for doxygen 1.17.0-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Vela: Vela</title>
-<link href="doxygen.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="dynsections.js"></script>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
 <script type="text/javascript" src="tabs.js?v=5"></script>
 <script type="text/javascript" src="footer.js"></script>
-<script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript">
-  DoxygenAwesomeInteractiveToc.init()
-</script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
 <script type="text/javascript" src="navtree.js"></script>
-<script type="text/javascript" src="resize.js"></script>
 <script type="text/javascript" src="cookie.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-  $(function() { init_search(); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded', init_search);
 </script>
 <script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="text/javascript" src="theme_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
 <link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
 <link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
 <link href="extra_search.css" rel="stylesheet" type="text/css"/>
@@ -42,20 +83,20 @@
  <tbody>
  <tr id="projectrow" style="height: 55px;">
   <td id="projectlogo" style="padding: 1em;"><img alt="Logo" src="arm.png"/></td>
-  <td style="padding-left: 2em; padding-bottom: 1em;padding-top: 1em;">
-  <div id="projectname">Ethos-U Integration for Cortex-M
+  <td id="projectalign" style="padding-left: 2em; padding-bottom: 1em; padding-top: 1em;">
+   <div id="projectname">Ethos-U Integration for Cortex-M
    </div>
    <div id="projectbrief">Arm Ethos-U Vela Compiler</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
-          <span id="MSearchSelect"                onmouseover="return searchBox.OnSearchSelectShow()"                onmouseout="return searchBox.OnSearchSelectHide()">&#160;</span>
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
           <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
                onfocus="searchBox.OnSearchFieldFocus(true)" 
                onblur="searchBox.OnSearchFieldFocus(false)" 
                onkeyup="searchBox.OnSearchFieldChange(event)"/>
           </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
           </span>
         </div>
 </td>
@@ -65,24 +106,18 @@
 </div>
 <!-- end header part -->
 <div id="Compnav" class="tabs1">
-    <ul class="tablist">
-      <script type="text/javascript">
-		<!--
-		writeComponentTabs.call(this);
-		//-->
-      </script>
-	  </ul>
+  <ul class="tablist">
+    <script type="text/javascript">
+      writeComponentTabs.call(this);
+    </script>
+  </ul>
 </div>
-<!-- Generated by Doxygen 1.13.2 -->
+<!-- Generated by Doxygen 1.17.0 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-var searchBox = new SearchBox("searchBox", "search/",'.html');
-/* @license-end */
+let searchBox = new SearchBox("searchBox", "search/",'.html');
 </script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function() { codefold.init(0); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded', codefold.init);
 </script>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
@@ -96,10 +131,9 @@ $(function() { codefold.init(0); });
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('index.html',''); initResizable(true); });
-/* @license-end */
+document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html','',''); });
 </script>
+<div id="container">
 <div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -126,10 +160,10 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Vela </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="mainpage"></a></p>
-<p>Arm Vela is an ahead-of-time (AOT) neural network model compiler for the <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55">Ethos-U55</a>, <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u65">Ethos-U65</a>, and <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u85">Ethos-U85</a> NPUs. It converts a quantized TensorFlow Lite (<code>.tflite</code>) or TOSA (<code>.tosa</code>) ML model into command streams and encoded constant data for a selected Ethos-U configuration.</p>
-<p>This chapter covers Vela 5.1 and later. Use <code>vela --version</code> to identify the installed version and consult its release notes for version-specific changes.</p>
-<h1><a class="anchor" id="autotoc_md0"></a>
+<div class="textblock"><p><a class="anchor" id="md_src_2main"></a></p>
+<p>Arm Vela is an ahead-of-time (AOT) neural network model compiler for the <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55">Ethos-U55</a>, <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u65">Ethos-U65</a>, and <a href="https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u85">Ethos-U85</a> NPUs. It converts a quantized TensorFlow Lite (<span class="tt">.tflite</span>) or TOSA (<span class="tt">.tosa</span>) ML model into command streams and encoded constant data for a selected Ethos-U configuration.</p>
+<p>This chapter covers Vela 5.1 and later. Use <span class="tt">vela --version</span> to identify the installed version and consult its release notes for version-specific changes.</p>
+<h1 class="doxsection"><a class="anchor" id="feature-overview"></a>
 Feature overview</h1>
 <p>The Vela compiler performs the offline, target-specific part of an Ethos-U deployment:</p>
 <ul>
@@ -144,44 +178,44 @@ Feature overview</h1>
 <li>Reports operator placement, estimated cycles, bandwidth, and memory use.</li>
 </ul>
 <p>Striping divides feature maps into smaller regions to reduce the active working set. Cascading feeds each region directly through a sequence of compatible operations, allowing Vela to use rolling buffers instead of storing complete intermediate feature maps.</p>
-<p>The normal deployment flow is:</p>
-<div class="fragment"><div class="line">quantized model -&gt; Vela compiler + target/memory description -&gt; optimized model</div>
-<div class="line">                                                       |</div>
-<div class="line">                                                       v</div>
-<div class="line">                         ML inference runtime + Ethos-U driver -&gt; NPU</div>
-</div><!-- fragment --><p>For TFLite output, supported regions become Ethos-U custom operators containing the NPU command stream and related data. Unsupported TFLite operators remain in the model for CPU execution, commonly using TensorFlow Lite Micro reference or <a href="https://www.keil.arm.com/packs/cmsis-nn-arm/overview/">CMSIS-NN</a> kernels. Always review compiler warnings and <code>--show-cpu-operations</code>; a successful compilation does not imply that every operation runs on the NPU.</p>
+<p>For the normal deployment flow, see the <a href="../general/index.html#system-overview">system overview</a>.</p>
+<p>For TFLite output, supported regions become Ethos-U custom operators containing the NPU command stream and related data. Unsupported TFLite operators remain in the model for CPU execution, commonly using TensorFlow Lite Micro reference or <a href="https://www.keil.arm.com/packs/cmsis-nn-arm">CMSIS-NN</a> kernels. Always review compiler warnings and <span class="tt">--show-cpu-operations</span>; a successful compilation does not imply that every operation runs on the NPU.</p>
 <p>The Vela compiler's cycle and bandwidth figures are cost-model estimates. Use them to guide compiler decisions and compare like-for-like builds. Validate final performance on an FPGA or target silicon; an <a href="https://www.arm.com/products/development-tools/simulation/fixed-virtual-platforms">Arm Fixed Virtual Platform (FVP)</a> can provide approximate behavior.</p>
-<h1><a class="anchor" id="autotoc_md1"></a>
+<h1 class="doxsection"><a class="anchor" id="installation"></a>
 Installation</h1>
 <p>The Vela compiler runs on Linux, macOS, and Windows. The released package requires Python 3.10 or newer:</p>
 <div class="fragment"><div class="line">python -m pip install ethos-u-vela</div>
 <div class="line">vela --version</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md2"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="update-an-existing-installation"></a>
 Update an existing installation</h2>
-<p>Plain <code>pip install</code> considers an already installed version satisfactory and does not necessarily install a newer release. Request an upgrade explicitly:</p>
+<p>Plain <span class="tt">pip install</span> considers an already installed version satisfactory and does not necessarily install a newer release. Request an upgrade explicitly:</p>
 <div class="fragment"><div class="line">python -m pip install --upgrade ethos-u-vela</div>
 <div class="line">python -m pip show ethos-u-vela</div>
 <div class="line">vela --version</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="troubleshooting-installation"></a>
 Troubleshooting installation</h3>
-<p>If PyPI reports a newer package but <code>vela --version</code> still shows the old version, the <code>pip</code> command and the <code>vela</code> executable usually belong to different Python environments. Locate both and compare them:</p>
+<p>If PyPI reports a newer package but <span class="tt">vela --version</span> still shows the old version, the <span class="tt">pip</span> command and the <span class="tt">vela</span> executable usually belong to different Python environments. Locate both and compare them:</p>
 <div class="fragment"><div class="line">python -c &quot;import sys; print(sys.executable)&quot;</div>
 <div class="line">python -m pip --version</div>
 <div class="line">python -m pip show ethos-u-vela</div>
-</div><!-- fragment --><p>On Windows use <code>where vela</code>; on Linux or macOS use <code>command -v vela</code>. Activate the intended virtual environment, remove the stale executable from <code>PATH</code>, or upgrade through the Python interpreter associated with that executable. A clean reinstallation in the selected environment is the final fallback:</p>
+</div><!-- fragment --><p>On Windows use <span class="tt">where vela</span>; on Linux or macOS use <span class="tt">command -v vela</span>. Activate the intended virtual environment, remove the stale executable from <span class="tt">PATH</span>, or upgrade through the Python interpreter associated with that executable. A clean reinstallation in the selected environment is the final fallback:</p>
 <div class="fragment"><div class="line">python -m pip install --upgrade --force-reinstall ethos-u-vela</div>
 <div class="line">vela --version</div>
-</div><!-- fragment --><p>Use <code>py -m pip ...</code> instead of <code>python -m pip ...</code> on Windows when the Python launcher is how the intended interpreter is selected. Avoid <code>pip</code> without <code>python -m</code>: it is easier for that command to address a different environment.</p>
-<p>PyPI supplies wheels for supported host combinations. If no matching wheel is available, <code>pip</code> builds from source and requires Python development headers, CMake, a C99 compiler, and a C++17 compiler. The package depends on FlatBuffers and NumPy 1.23 or newer.</p>
-<h1><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><p>Use <span class="tt">py -m pip ...</span> instead of <span class="tt">python -m pip ...</span> on Windows when the Python launcher is how the intended interpreter is selected. Avoid <span class="tt">pip</span> without <span class="tt">python -m</span>: it is easier for that command to address a different environment.</p>
+<p>PyPI supplies wheels for supported host combinations. If no matching wheel is available, <span class="tt">pip</span> builds from source and requires Python development headers, CMake, a C99 compiler, and a C++17 compiler. The package depends on FlatBuffers and NumPy 1.23 or newer.</p>
+<h1 class="doxsection"><a class="anchor" id="obtain-an-ethos-u-configuration-for-a-device"></a>
 Obtain an Ethos-U configuration for a device</h1>
-<p>The Vela compiler requires the selected Ethos-U variant and MAC configuration, plus a <code>vela.ini</code> configuration file. The <code>vela.ini</code> file contains <code>System_Config</code> sections that model device memory performance and <code>Memory_Mode</code> sections that define where model data is placed.</p>
-<p>For an Edge AI MCU, a Device Family Pack (DFP), available from <a href="https://www.keil.arm.com/packs">www.keil.arm.com/packs</a>, can provide the Ethos-U configuration information, including the device-specific <code>vela.ini</code> file. CMSIS-Toolbox exports these resources for the selected device and build context through its <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a>.</p>
-<p>When the DFP does not provide this information, create the equivalent configuration manually as described in <a class="el" href="#vela_create_configuration">Create device-specific `vela.ini` file</a>.</p>
-<h1><a class="anchor" id="autotoc_md5"></a>
-Basic invocation</h1>
-<div class="fragment"><div class="line">vela [OPTIONS] NETWORK</div>
-</div><!-- fragment --><p>Only the input ML model file and accelerator configuration are needed for a basic build:</p>
+<p>The Vela compiler requires the selected Ethos-U variant and MAC configuration, plus a <span class="tt">vela.ini</span> configuration file. The <span class="tt">vela.ini</span> file contains <span class="tt">System_Config</span> sections that model device memory performance and <span class="tt">Memory_Mode</span> sections that define where model data is placed.</p>
+<p>For an Edge AI MCU, a Device Family Pack (DFP), available from <a href="https://www.keil.arm.com/packs">www.keil.arm.com/packs</a>, can provide the Ethos-U configuration information, including the device-specific <span class="tt">vela.ini</span> file. CMSIS-Toolbox exports these resources for the selected device and build context through its <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a>.</p>
+<p>When the DFP does not provide this information, create the equivalent configuration manually as described in <a class="el" href="#create-device-specific-velaini-file" title="Create device-specific vela.ini file">Create device-specific `vela.ini` file</a>Create device-specific <span class="tt">vela.ini</span> file.</p>
+<h1 class="doxsection"><a class="anchor" id="invocation"></a>
+Invocation</h1>
+<div class="fragment"><div class="line">vela [Options] NETWORK</div>
+</div><!-- fragment --><ul>
+<li><span class="tt">Options</span> are described in the tables below and can precede or follow <span class="tt">NETWORK</span>. Use <span class="tt">vela --help</span> for the exact <span class="tt">Options</span> provided by the installed version.</li>
+<li><span class="tt">NETWORK</span> is the path to the <span class="tt">.tflite</span> or <span class="tt">.tosa</span> ML model input file.</li>
+</ul>
+<p>Only the input ML model file and accelerator configuration are needed for a basic build:</p>
 <div class="fragment"><div class="line">vela --accelerator-config ethos-u55-128 my_network.tflite</div>
 </div><!-- fragment --><p>For meaningful scheduling and performance estimates, also select a platform configuration, memory mode, and optimization strategy:</p>
 <div class="fragment"><div class="line">vela my_network.tflite \</div>
@@ -190,196 +224,191 @@ Basic invocation</h1>
 <div class="line">  --system-config DEVICE_SYSTEM_CONFIG \</div>
 <div class="line">  --memory-mode DEVICE_MEMORY_MODE \</div>
 <div class="line">  --optimise Performance</div>
-</div><!-- fragment --><p>Options can precede or follow <code>NETWORK</code>. Use <code>vela --help</code> for the exact options provided by the installed version.</p>
-<h1><a class="anchor" id="autotoc_md6"></a>
-Invocation parameters</h1>
-<h2><a class="anchor" id="autotoc_md7"></a>
-Input, output, and discovery</h2>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="options-for-input-output-and-discovery"></a>
+Options for input, output, and discovery</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Purpose    </th></tr>
+<th class="markdownTableHeadNone">Option  </th><th class="markdownTableHeadNone">Description  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>NETWORK</code>   </td><td class="markdownTableBodyNone">Path to the <code>.tflite</code> or <code>.tosa</code> ML model input file.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">-h</span>, <span class="tt">--help</span>  </td><td class="markdownTableBodyNone">Show command help and exit.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>-h</code>, <code>--help</code>   </td><td class="markdownTableBodyNone">Show command help and exit.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--version</span>  </td><td class="markdownTableBodyNone">Show the installed Vela version and exit.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--version</code>   </td><td class="markdownTableBodyNone">Show the installed Vela version and exit.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--api-version</span>  </td><td class="markdownTableBodyNone">Show the deprecated external-API version. Planned for removal.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--api-version</code>   </td><td class="markdownTableBodyNone">Show the deprecated external-API version. Planned for removal.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--supported-ops-report</span>  </td><td class="markdownTableBodyNone">Write <span class="tt">SUPPORTED_OPS.md</span> for TFLite operator constraints and exit.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--supported-ops-report</code>   </td><td class="markdownTableBodyNone">Write <code>SUPPORTED_OPS.md</code> for TFLite operator constraints and exit.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--list-config-files</span>  </td><td class="markdownTableBodyNone">List packaged <span class="tt">vela.ini</span> configuration files and exit.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--list-config-files</code>   </td><td class="markdownTableBodyNone">List packaged <code>vela.ini</code> configuration files and exit.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--list-configs FILE</span>  </td><td class="markdownTableBodyNone">List system configurations and memory modes in a <span class="tt">vela.ini</span> file and exit.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--list-configs FILE</code>   </td><td class="markdownTableBodyNone">List system configurations and memory modes in a <code>vela.ini</code> file and exit.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--output-dir DIR</span>  </td><td class="markdownTableBodyNone">Output directory; defaults to <span class="tt">output</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--output-dir DIR</code>   </td><td class="markdownTableBodyNone">Output directory; defaults to <code>output</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--output-format {tflite,raw}</span>  </td><td class="markdownTableBodyNone">Select the output format; defaults to <span class="tt">tflite</span>. Raw output is an <span class="tt">.npz</span> archive and requires complete NPU placement.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--output-format {tflite,raw}</code>   </td><td class="markdownTableBodyNone">Select the output format; defaults to <code>tflite</code>. Raw output is an <code>.npz</code> archive and requires complete NPU placement.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--enable-debug-db</span>  </td><td class="markdownTableBodyNone">Write an ML model debug database into the output directory.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--enable-debug-db</code>   </td><td class="markdownTableBodyNone">Write an ML model debug database into the output directory.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--config FILE</span>  </td><td class="markdownTableBodyNone">Read a ConfigParser-format <span class="tt">vela.ini</span> file. May be supplied more than once; later files can extend or override earlier definitions.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--config FILE</code>   </td><td class="markdownTableBodyNone">Read a ConfigParser-format <code>vela.ini</code> file. May be supplied more than once; later files can extend or override earlier definitions.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--timing</span>  </td><td class="markdownTableBodyNone">Report time spent in compiler stages.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--timing</code>   </td><td class="markdownTableBodyNone">Report time spent in compiler stages.    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--force-symmetric-int-weights</code>   </td><td class="markdownTableBodyNone">Force signed integer weight zero-points to zero.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--force-symmetric-int-weights</span>  </td><td class="markdownTableBodyNone">Force signed integer weight zero-points to zero.  </td></tr>
 </table>
 <p>Raw output holds command streams, weight data, and tensor quantization metadata for Ethos-U regions. It omits CPU regions and therefore is not a general TFLite-to-TOSA conversion format.</p>
-<h2><a class="anchor" id="autotoc_md8"></a>
-Target and scheduling</h2>
+<h2 class="doxsection"><a class="anchor" id="options-for-ethos-u-target-and-scheduling"></a>
+Options for Ethos-U target and scheduling</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Purpose and values    </th></tr>
+<th class="markdownTableHeadNone">Option  </th><th class="markdownTableHeadNone">Description and values  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--accelerator-config TARGET</code>   </td><td class="markdownTableBodyNone">Select the hardware: <code>ethos-u55-{32,64,128,256}</code>, <code>ethos-u65-{256,512}</code>, or <code>ethos-u85-{128,256,512,1024,2048}</code>. The suffix is the MACs-per-cycle configuration.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--accelerator-config TARGET</span>  </td><td class="markdownTableBodyNone">Select Ethos-U hardware target: <span class="tt">ethos-u55-{32,64,128,256}</span>, <span class="tt">ethos-u65-{256,512}</span>, or <span class="tt">ethos-u85-{128,256,512,1024,2048}</span>. The suffix is the MACs-per-cycle configuration.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--system-config NAME</code>   </td><td class="markdownTableBodyNone">Select <code>[System_Config.NAME]</code> from the configuration files. The internal default provides functional defaults, but a platform-specific definition gives useful scheduling estimates.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--system-config NAME</span>  </td><td class="markdownTableBodyNone">Select <span class="tt">[System_Config.NAME]</span> from the configuration files. The internal default provides functional defaults, but a platform-specific definition gives useful scheduling estimates.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--memory-mode NAME</code>   </td><td class="markdownTableBodyNone">Select <code>[Memory_Mode.NAME]</code>, which maps constants, arena, and cache to the system's memory areas.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--memory-mode NAME</span>  </td><td class="markdownTableBodyNone">Select <span class="tt">[Memory_Mode.NAME]</span>, which maps constants, arena, and cache to the system's memory areas.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--tensor-allocator {LinearAlloc,Greedy,HillClimb}</code>   </td><td class="markdownTableBodyNone">Choose the tensor allocator; defaults to <code>HillClimb</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--tensor-allocator {LinearAlloc,Greedy,HillClimb}</span>  </td><td class="markdownTableBodyNone">Choose the tensor allocator; defaults to <span class="tt">HillClimb</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--max-block-dependency {0,1,2,3}</code>   </td><td class="markdownTableBodyNone">Limit the dependency distance between NPU kernel operations; defaults to <code>3</code>. Smaller values can improve interrupt latency at a possible performance cost.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--max-block-dependency {0,1,2,3}</span>  </td><td class="markdownTableBodyNone">Limit the dependency distance between NPU kernel operations; defaults to <span class="tt">3</span>. Smaller values can improve interrupt latency at a possible performance cost. ?ToDo: don't understand this?  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--optimise {Performance,Size}</code>   </td><td class="markdownTableBodyNone"><code>Performance</code> is the default and minimizes inference time; <code>Size</code> minimizes peak SRAM and ignores the arena-cache size.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--optimise {Performance,Size}</span>  </td><td class="markdownTableBodyNone"><span class="tt">Performance</span> is the default and minimizes inference time; <span class="tt">Size</span> minimizes peak SRAM and ignores the arena-cache size.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--arena-cache-size BYTES</code>   </td><td class="markdownTableBodyNone">Override the selected memory mode's cache capacity for <code>Performance</code> optimization. This is a byte count, not KiB.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--arena-cache-size BYTES</span>  </td><td class="markdownTableBodyNone">Override the selected memory mode's cache capacity for <span class="tt">Performance</span> optimization. This is a byte count, not KiB.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--cpu-tensor-alignment BYTES</code>   </td><td class="markdownTableBodyNone">Alignment for CPU tensors, including custom-operator inputs and outputs; defaults to <code>16</code>. Keep it consistent with the ML inference runtime allocation.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--cpu-tensor-alignment BYTES</span>  </td><td class="markdownTableBodyNone">Alignment for CPU tensors, including custom-operator inputs and outputs; defaults to <span class="tt">16</span>. Keep it consistent with the ML inference runtime allocation.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--recursion-limit COUNT</code>   </td><td class="markdownTableBodyNone">Python recursion limit used during compilation; defaults to <code>1000</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--recursion-limit COUNT</span>  </td><td class="markdownTableBodyNone">Python recursion limit used during compilation; defaults to <span class="tt">1000</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--hillclimb-max-iterations COUNT</code>   </td><td class="markdownTableBodyNone">Maximum HillClimb allocator iterations; defaults to <code>99999</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--hillclimb-max-iterations COUNT</span>  </td><td class="markdownTableBodyNone">Maximum HillClimb allocator iterations; defaults to <span class="tt">99999</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--cop-format {COP1,COP2}</code>   </td><td class="markdownTableBodyNone">Select the custom-operator payload metadata format; defaults to <code>COP1</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--cop-format {COP1,COP2}</span>  </td><td class="markdownTableBodyNone">Select the custom-operator payload metadata format; defaults to <span class="tt">COP1</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--separate-io-regions</code>   </td><td class="markdownTableBodyNone">Place custom-operator inputs and outputs into separate logical regions. Requires <code>--cop-format COP2</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--separate-io-regions</span>  </td><td class="markdownTableBodyNone">Place custom-operator inputs and outputs into separate logical regions. Requires <span class="tt">--cop-format COP2</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--ignore-ops OP[,OP...]</code>   </td><td class="markdownTableBodyNone">Force named TFLite builtin operator types, such as <code>ADD,ARGMAX</code>, onto the CPU. Repeatable and ignored for TOSA.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--ignore-ops OP[,OP...]</span>  </td><td class="markdownTableBodyNone">Force named TFLite builtin operator types, such as <span class="tt">ADD,ARGMAX</span>, onto the CPU. Repeatable and ignored for TOSA.  </td></tr>
 </table>
-<h2><a class="anchor" id="autotoc_md9"></a>
-Reporting and diagnostics</h2>
+<h2 class="doxsection"><a class="anchor" id="options-for-reporting-and-diagnostics"></a>
+Options for reporting and diagnostics</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Purpose    </th></tr>
+<th class="markdownTableHeadNone">Option  </th><th class="markdownTableHeadNone">Description  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--show-cpu-operations</code>   </td><td class="markdownTableBodyNone">List TFLite operations that were not placed on the NPU.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--show-cpu-operations</span>  </td><td class="markdownTableBodyNone">List TFLite operations that were not placed on the NPU.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--show-subgraph-io-summary</code>   </td><td class="markdownTableBodyNone">Summarize every subgraph and its inputs and outputs.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--show-subgraph-io-summary</span>  </td><td class="markdownTableBodyNone">Summarize every subgraph and its inputs and outputs.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-all</code>   </td><td class="markdownTableBodyNone">Enable all verbose reports. The resulting output can be very large.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-all</span>  </td><td class="markdownTableBodyNone">Enable all verbose reports. The resulting output can be very large.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-config</code>   </td><td class="markdownTableBodyNone">Show resolved system and memory configuration.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-config</span>  </td><td class="markdownTableBodyNone">Show resolved system and memory configuration.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-graph</code>   </td><td class="markdownTableBodyNone">Trace graph rewrites.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-graph</span>  </td><td class="markdownTableBodyNone">Trace graph rewrites.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-quantization</code>   </td><td class="markdownTableBodyNone">Show quantization processing.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-quantization</span>  </td><td class="markdownTableBodyNone">Show quantization processing.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-packing</code>   </td><td class="markdownTableBodyNone">Show operation/pass packing.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-packing</span>  </td><td class="markdownTableBodyNone">Show operation/pass packing.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-performance</code>   </td><td class="markdownTableBodyNone">Show detailed performance estimates.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-performance</span>  </td><td class="markdownTableBodyNone">Show detailed performance estimates.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-tensor-purpose</code>   </td><td class="markdownTableBodyNone">Show tensor-purpose assignment.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-tensor-purpose</span>  </td><td class="markdownTableBodyNone">Show tensor-purpose assignment.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-tensor-format</code>   </td><td class="markdownTableBodyNone">Show tensor-format assignment.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-tensor-format</span>  </td><td class="markdownTableBodyNone">Show tensor-format assignment.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-schedule</code>   </td><td class="markdownTableBodyNone">Show the selected schedule.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-schedule</span>  </td><td class="markdownTableBodyNone">Show the selected schedule.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-allocation</code>   </td><td class="markdownTableBodyNone">Show tensor allocation.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-allocation</span>  </td><td class="markdownTableBodyNone">Show tensor allocation.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-high-level-command-stream</code>   </td><td class="markdownTableBodyNone">Print the high-level command stream.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-high-level-command-stream</span>  </td><td class="markdownTableBodyNone">Print the high-level command stream.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-register-command-stream</code>   </td><td class="markdownTableBodyNone">Print the register command stream.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-register-command-stream</span>  </td><td class="markdownTableBodyNone">Print the register command stream.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-operators</code>   </td><td class="markdownTableBodyNone">List operators.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-operators</span>  </td><td class="markdownTableBodyNone">List operators.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-weights</code>   </td><td class="markdownTableBodyNone">Show weight information.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-weights</span>  </td><td class="markdownTableBodyNone">Show weight information.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--verbose-cycle-estimate</code>   </td><td class="markdownTableBodyNone">Show cycle-estimation details.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-cycle-estimate</span>  </td><td class="markdownTableBodyNone">Show cycle-estimation details.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--verbose-progress</code>   </td><td class="markdownTableBodyNone">Show compilation progress.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--verbose-progress</span>  </td><td class="markdownTableBodyNone">Show compilation progress.  </td></tr>
 </table>
-<h1><a class="anchor" id="vela_use_configuration"></a>
+<h1 class="doxsection"><a class="anchor" id="use-the-ethos-u-configuration"></a>
 Use the Ethos-U configuration</h1>
 <p>Compiling an ML model requires three selections from the Ethos-U configuration:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Setting   </th><th class="markdownTableHeadNone">Describes    </th></tr>
+<th class="markdownTableHeadNone">Option  </th><th class="markdownTableHeadNone">Describes  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--accelerator-config</code>   </td><td class="markdownTableBodyNone">NPU architecture and MAC configuration. The generated command stream is target-specific.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--accelerator-config</span>  </td><td class="markdownTableBodyNone">NPU architecture and MAC configuration. The generated command stream is Ethos-U target-specific.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>--system-config</code>   </td><td class="markdownTableBodyNone">Core clock, AXI port mapping, memory clock ratios, burst lengths, latencies, and outstanding transactions used by the cost model.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--system-config</span>  </td><td class="markdownTableBodyNone">Core clock, AXI port mapping, memory clock ratios, burst lengths, latencies, and outstanding transactions used by the cost model.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>--memory-mode</code>   </td><td class="markdownTableBodyNone">Placement of constant, arena, and cache memory areas on the AXI-connected memories.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">--memory-mode</span>  </td><td class="markdownTableBodyNone">Placement of constant, arena, and cache memory areas on the AXI-connected memories.  </td></tr>
 </table>
-<p>When a DFP supplies device-specific Ethos-U configuration information and the CMSIS-Toolbox project includes <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a>, CMSIS-Toolbox places the resolved configuration file in the <code>.cmsis</code> directory. List its available system configurations and memory modes with:</p>
+<p>When a DFP supplies device-specific Ethos-U configuration information and the CMSIS-Toolbox project includes <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps information</a>, CMSIS-Toolbox places the resolved configuration file in the <span class="tt">.cmsis</span> directory. List its available system configurations and memory modes with:</p>
 <div class="fragment"><div class="line">vela --list-configs .cmsis/device-vela.ini  # Use device-specific vela.ini</div>
-</div><!-- fragment --><p>If the project does not provide a device configuration, the Vela installation includes the generic reference file <code>Arm/vela.ini</code> for evaluation, silicon-vendor development, and manual integration. Its parameters do not describe a specific production device. List the installed configuration files and their definitions with:</p>
+</div><!-- fragment --><p>If the project does not provide a device configuration, the Vela installation includes the generic reference file <span class="tt">Arm/vela.ini</span> for evaluation, silicon-vendor development, and manual integration. Its parameters do not describe a specific production device. List the installed configuration files and their definitions with:</p>
 <div class="fragment"><div class="line">vela --list-config-files</div>
 <div class="line">vela --list-configs Arm/vela.ini</div>
-</div><!-- fragment --><p>The generic <code>Arm/vela.ini</code> reference file includes these system configurations:</p>
+</div><!-- fragment --><p>The generic <span class="tt">Arm/vela.ini</span> reference file includes these system configurations:</p>
 <ul>
-<li>Ethos-U55: <code>Ethos_U55_Deep_Embedded</code>, <code>Ethos_U55_High_End_Embedded</code>.</li>
-<li>Ethos-U65: <code>Ethos_U65_Embedded</code>, <code>Ethos_U65_Mid_End</code>, <code>Ethos_U65_High_End</code>, <code>Ethos_U65_Client_Server</code>.</li>
-<li>Ethos-U85: <code>Ethos_U85_SYS_Flash_Low</code>, <code>Ethos_U85_SYS_Flash_High</code>, <code>Ethos_U85_SYS_DRAM_Low</code>, <code>Ethos_U85_SYS_DRAM_Mid</code>, <code>Ethos_U85_SYS_DRAM_High</code>.</li>
+<li>Ethos-U55: <span class="tt">Ethos_U55_Deep_Embedded</span>, <span class="tt">Ethos_U55_High_End_Embedded</span>.</li>
+<li>Ethos-U65: <span class="tt">Ethos_U65_Embedded</span>, <span class="tt">Ethos_U65_Mid_End</span>, <span class="tt">Ethos_U65_High_End</span>, <span class="tt">Ethos_U65_Client_Server</span>.</li>
+<li>Ethos-U85: <span class="tt">Ethos_U85_SYS_Flash_Low</span>, <span class="tt">Ethos_U85_SYS_Flash_High</span>, <span class="tt">Ethos_U85_SYS_DRAM_Low</span>, <span class="tt">Ethos_U85_SYS_DRAM_Mid</span>, <span class="tt">Ethos_U85_SYS_DRAM_High</span>.</li>
 </ul>
-<h2><a class="anchor" id="vela_select_memory_mode"></a>
+<h2 class="doxsection"><a class="anchor" id="select-a-memory-mode"></a>
 Select a memory mode</h2>
 <p>The reference configuration defines typically memory modes as shown below.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Memory Mode   </th><th class="markdownTableHeadCenter"><code>const</code><br  />
-<code>_mem_area</code>   </th><th class="markdownTableHeadCenter"><code>arena</code><br  />
-<code>_mem_area</code>   </th><th class="markdownTableHeadCenter"><code>cache</code><br  />
-<code>_mem_area</code>   </th><th class="markdownTableHeadNone">Content    </th></tr>
+<th class="markdownTableHeadNone">Memory Mode  </th><th class="markdownTableHeadCenter">const<br  />
+_mem_area  </th><th class="markdownTableHeadCenter">arena<br  />
+_mem_area  </th><th class="markdownTableHeadCenter">cache<br  />
+_mem_area  </th><th class="markdownTableHeadNone">Content  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>Sram_Only</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyNone">All model storage uses the memory type selected for <code>Axi0</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">Sram_Only</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyNone">All model storage uses the memory type selected for <span class="tt">Axi0</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>Shared_Sram</code>   </td><td class="markdownTableBodyCenter"><code>Axi1</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyNone">Constants remain in the memory selected for <code>Axi1</code>; arena and cache share the <code>Axi0</code> memory.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">Shared_Sram</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi1</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyNone">Constants remain in the memory selected for <span class="tt">Axi1</span>; arena and cache share the <span class="tt">Axi0</span> memory.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>Dedicated_Sram</code>   </td><td class="markdownTableBodyCenter"><code>Axi1</code>   </td><td class="markdownTableBodyCenter"><code>Axi1</code>   </td><td class="markdownTableBodyCenter"><code>Axi0</code>   </td><td class="markdownTableBodyNone">The <code>Axi0</code> memory is a fast staging cache for an arena in the writable memory selected for <code>Axi1</code>.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">Dedicated_Sram</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi1</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi1</span>  </td><td class="markdownTableBodyCenter"><span class="tt">Axi0</span>  </td><td class="markdownTableBodyNone">The <span class="tt">Axi0</span> memory is a fast staging cache for an arena in the writable memory selected for <span class="tt">Axi1</span>.  </td></tr>
 </table>
-<p>Note that there can be memory mode variants such as <code>Dedicated_Sram_256KB</code>, <code>_384KB</code>, <code>_512KB</code>, and <code>_1024KB</code> that inherit <code>Dedicated_Sram</code> and set <code>arena_cache_size</code>.</p>
-<p>The names <code>Axi0</code> and <code>Axi1</code> are logical aliases in <code>vela.ini</code>. Their physical memory types come from the selected system configuration.</p>
-<p>Ethos-U85 can have up to six AXI port interfaces, which Vela maps to <code>Axi0</code> and <code>Axi1</code>. The <code>vela.ini</code> parameter <code>&lt;Memory&gt;_ports_used</code> contains the number of physical AXI ports that map to a logical alias.</p>
-<p>The <code>vela.ini</code> file, device interconnect, linker placement, MPU/SAU attributes, cache policy, driver region indices, and ML inference runtime tensor arena must agree. The Vela compiler cannot validate the complete firmware memory map.</p>
-<h2><a class="anchor" id="vela_arena_cache_size"></a>
+<p>Note that there can be memory mode variants such as <span class="tt">Dedicated_Sram_256KB</span>, <span class="tt">_384KB</span>, <span class="tt">_512KB</span>, and <span class="tt">_1024KB</span> that inherit <span class="tt">Dedicated_Sram</span> and set <span class="tt">arena_cache_size</span>.</p>
+<p>The names <span class="tt">Axi0</span> and <span class="tt">Axi1</span> are logical aliases in <span class="tt">vela.ini</span>. Their physical memory types come from the selected system configuration.</p>
+<p>Ethos-U85 can have up to six AXI port interfaces, which Vela maps to <span class="tt">Axi0</span> and <span class="tt">Axi1</span>. The <span class="tt">vela.ini</span> parameter <span class="tt">&lt;Memory&gt;_ports_used</span> contains the number of physical AXI ports that map to a logical alias.</p>
+<p>The <span class="tt">vela.ini</span> file, device interconnect, linker placement, MPU/SAU attributes, cache policy, driver region indices, and ML inference runtime tensor arena must agree. The Vela compiler cannot validate the complete firmware memory map.</p>
+<h2 class="doxsection"><a class="anchor" id="understand-arena-cache-and-spilling"></a>
 Understand arena cache and spilling</h2>
-<p><code>cache_mem_area</code> does not always create a separate cache allocation. When it resolves to the same memory type as <code>arena_mem_area</code>, the fast-scratch memory region is folded into <code>arena_mem_area</code>. <code>cache_mem_area</code> is a distinct area only when <code>arena_mem_area</code> is in a different memory type.</p>
-<p>The Ethos-U55 hardware AXI1 port is a read-only interface. Consequently, <code>Dedicated_Sram</code> is not a practical Ethos-U55 execution model when the writable feature-map arena would be placed on that interface. Do not infer the same read-only restriction for the logical <code>Axi1</code> alias in <code>vela.ini</code> on every Ethos-U target.</p>
-<h1><a class="anchor" id="vela_create_configuration"></a>
+<p><span class="tt">cache_mem_area</span> does not always create a separate cache allocation. When it resolves to the same memory type as <span class="tt">arena_mem_area</span>, the fast-scratch memory region is folded into <span class="tt">arena_mem_area</span>. <span class="tt">cache_mem_area</span> is a distinct area only when <span class="tt">arena_mem_area</span> is in a different memory type.</p>
+<p>The Ethos-U55 hardware AXI1 port is a read-only interface. Consequently, <span class="tt">Dedicated_Sram</span> is not a practical Ethos-U55 execution model when the writable feature-map arena would be placed on that interface. Do not infer the same read-only restriction for the logical <span class="tt">Axi1</span> alias in <span class="tt">vela.ini</span> on every Ethos-U target.</p>
+<h1 class="doxsection"><a class="anchor" id="create-device-specific-velaini-file"></a>
 Create device-specific vela.ini file</h1>
-<p>To support a device manually, create a device-specific <code>vela.ini</code> file. Application developers normally obtain this file from the silicon vendor, either directly or from a DFP through CMSIS-Toolbox.</p>
+<p>To support a device manually, create a device-specific <span class="tt">vela.ini</span> file. Application developers normally obtain this file from the silicon vendor, either directly or from a DFP through CMSIS-Toolbox.</p>
 <p>Creating an Ethos-U configuration requires these steps:</p>
 <ol type="1">
 <li>Select the Ethos-U variant and MAC configuration integrated into the device.</li>
 <li>Identify the physical memories accessible to the NPU and obtain their clock, bandwidth, latency, burst, and outstanding-transaction characteristics.</li>
-<li>Define a <code>System_Config</code> that models those memories through the logical <code>Axi0</code> and <code>Axi1</code> aliases.</li>
-<li>Define one or more <code>Memory_Mode</code> sections that place constants, the writable arena, and optional fast staging storage on those aliases.</li>
+<li>Define a <span class="tt">System_Config</span> that models those memories through the logical <span class="tt">Axi0</span> and <span class="tt">Axi1</span> aliases.</li>
+<li>Define one or more <span class="tt">Memory_Mode</span> sections that place constants, the writable arena, and optional fast staging storage on those aliases.</li>
 <li>Create matching linker and driver configurations for the physical memory placement.</li>
 <li>Validate the complete configuration with compiler reports, the linker map, and measurements on the device.</li>
 </ol>
-<p>The <code>vela.ini</code>, linker, MPU/SAU, cache, and driver settings must describe the same finished device integration.</p>
-<p><code>vela.ini</code> uses Python ConfigParser syntax and is case-sensitive for section names, keys, and values. It contains two section types:</p>
+<p>The <span class="tt">vela.ini</span>, linker, MPU/SAU, cache, and driver settings must describe the same finished device integration.</p>
+<p><span class="tt">vela.ini</span> uses Python ConfigParser syntax and is case-sensitive for section names, keys, and values. It contains two section types:</p>
 <div class="fragment"><div class="line">[System_Config.ConfigurationName]</div>
 <div class="line">; NPU clock, AXI mapping, and memory performance</div>
 <div class="line"> </div>
 <div class="line">[Memory_Mode.ModeName]</div>
 <div class="line">; compiler memory-area placement</div>
-</div><!-- fragment --><p><code>ConfigurationName</code> and <code>ModeName</code> must not contain spaces. A file can define multiple sections of either type; select them with <code>--system-config</code> and <code>--memory-mode</code>. Every property is optional, when omitted it defaults to <code>1</code>. It is recommended to define every property that affects the target system.</p>
-<p>Any section can contain <code>inherit=Part.Name</code> to inherit the values of another section.</p>
+</div><!-- fragment --><p><span class="tt">ConfigurationName</span> and <span class="tt">ModeName</span> must not contain spaces. A file can define multiple sections of either type; select them with <span class="tt">--system-config</span> and <span class="tt">--memory-mode</span>. Every property is optional, when omitted it defaults to <span class="tt">1</span>. It is recommended to define every property that affects the target system.</p>
+<p>Any section can contain <span class="tt">inherit=Part.Name</span> to inherit the values of another section.</p>
 <ul>
 <li>Put a section that is inherited from before the section that inherits it.</li>
-<li>Underscores in memory type names are not permitted. The Vela compiler splits a memory type such as <code>&lt;Memory&gt;_clock_scale</code> at the first underscore. ToDo: verify this</li>
-<li>Start the name of a custom Ethos-U55 system configuration with <code>Ethos_U55</code>. The Vela compiler uses this prefix when selecting the U55 AXI bandwidth width while translating memory-performance values.</li>
+<li>Underscores in memory type names are not permitted. The Vela compiler splits a memory type such as <span class="tt">&lt;Memory&gt;_clock_scale</span> at the first underscore. ToDo: verify this</li>
+<li>Start the name of a custom Ethos-U55 system configuration with <span class="tt">Ethos_U55</span>. The Vela compiler uses this prefix when selecting the U55 AXI bandwidth width while translating memory-performance values.</li>
 </ul>
-<h2><a class="anchor" id="vela_system_configuration"></a>
+<h2 class="doxsection"><a class="anchor" id="system-configuration-parameters"></a>
 System configuration parameters</h2>
-<p>The system configuration maps the two logical aliases in <code>vela.ini</code> to memory types and supplies the performance model. <code>axi0_port</code> and <code>axi1_port</code> connect the aliases used by a memory mode to those types; they do not by themselves identify a physical memory or hardware port. Parameters for a memory type are needed only when <code>axi0_port</code> or <code>axi1_port</code> selects that type.</p>
+<p>The system configuration maps the two logical aliases in <span class="tt">vela.ini</span> to memory types and supplies the performance model. <span class="tt">axi0_port</span> and <span class="tt">axi1_port</span> connect the aliases used by a memory mode to those types; they do not by themselves identify a physical memory or hardware port. Parameters for a memory type are needed only when <span class="tt">axi0_port</span> or <span class="tt">axi1_port</span> selects that type.</p>
 <p>Derive the values from the device data sheet, interconnect description, and measured memory behavior:</p>
 <ul>
-<li>use the integrated Ethos-U clock for <code>core_clock</code>;</li>
+<li>use the integrated Ethos-U clock for <span class="tt">core_clock</span>;</li>
 <li>map each logical alias to the memory type that most closely represents the physical memory connected through that access path;</li>
 <li>express memory clock or bandwidth scaling relative to the Ethos-U core clock;</li>
 <li>convert read and write latency to Ethos-U core cycles; and</li>
@@ -388,64 +417,64 @@ System configuration parameters</h2>
 <p>These inputs form a scheduling cost model, not a cycle-accurate hardware model. Start with conservative values when the hardware documentation gives a range, then compare compiler estimates and hardware measurements for representative ML models.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Type or values   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<th class="markdownTableHeadNone">Parameter  </th><th class="markdownTableHeadNone">Type or values  </th><th class="markdownTableHeadNone">Description  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>core_clock</code>   </td><td class="markdownTableBodyNone">Float, Hz   </td><td class="markdownTableBodyNone">Ethos-U core frequency. Scientific notation such as <code>500e6</code> is accepted.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">core_clock</span>  </td><td class="markdownTableBodyNone">Float, Hz  </td><td class="markdownTableBodyNone">Ethos-U core frequency. Scientific notation such as <span class="tt">500e6</span> is accepted.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>axi0_port</code>   </td><td class="markdownTableBodyNone"><code>Sram</code>, <code>Dram</code>, <code>OnChipFlash</code>, <code>OffChipFlash</code>   </td><td class="markdownTableBodyNone">Memory type assigned to the logical <code>Axi0</code> alias.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">axi0_port</span>  </td><td class="markdownTableBodyNone"><span class="tt">Sram</span>, <span class="tt">Dram</span>, <span class="tt">OnChipFlash</span>, <span class="tt">OffChipFlash</span>  </td><td class="markdownTableBodyNone">Memory type assigned to the logical <span class="tt">Axi0</span> alias.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>axi1_port</code>   </td><td class="markdownTableBodyNone"><code>Sram</code>, <code>Dram</code>, <code>OnChipFlash</code>, <code>OffChipFlash</code>   </td><td class="markdownTableBodyNone">Memory type assigned to the logical <code>Axi1</code> alias.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">axi1_port</span>  </td><td class="markdownTableBodyNone"><span class="tt">Sram</span>, <span class="tt">Dram</span>, <span class="tt">OnChipFlash</span>, <span class="tt">OffChipFlash</span>  </td><td class="markdownTableBodyNone">Memory type assigned to the logical <span class="tt">Axi1</span> alias.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_clock_scale</code>   </td><td class="markdownTableBodyNone">Float, <code>0.0</code> to <code>1.0</code>   </td><td class="markdownTableBodyNone">Memory clock/bandwidth scale relative to <code>core_clock</code>. <code>&lt;Memory&gt;</code> is <code>Sram</code>, <code>Dram</code>, <code>OnChipFlash</code>, or <code>OffChipFlash</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_clock_scale</span>  </td><td class="markdownTableBodyNone">Float, <span class="tt">0.0</span> to <span class="tt">1.0</span>  </td><td class="markdownTableBodyNone">Memory clock/bandwidth scale relative to <span class="tt">core_clock</span>. <span class="tt">&lt;Memory&gt;</span> is <span class="tt">Sram</span>, <span class="tt">Dram</span>, <span class="tt">OnChipFlash</span>, or <span class="tt">OffChipFlash</span>.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_ports_used</code>   </td><td class="markdownTableBodyNone">Integer   </td><td class="markdownTableBodyNone">Number of ports used for memory (used for <code>Sram</code>, <code>Dram</code>, <code>OnChipFlash</code>)    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_ports_used</span>  </td><td class="markdownTableBodyNone">Integer  </td><td class="markdownTableBodyNone">Number of ports used for memory (used for <span class="tt">Sram</span>, <span class="tt">Dram</span>, <span class="tt">OnChipFlash</span>)  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_burst_length</code>   </td><td class="markdownTableBodyNone">Integer, bytes   </td><td class="markdownTableBodyNone">Minimum efficient transfer burst.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_burst_length</span>  </td><td class="markdownTableBodyNone">Integer, bytes  </td><td class="markdownTableBodyNone">Minimum efficient transfer burst.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_read_latency</code>   </td><td class="markdownTableBodyNone">Integer, cycles   </td><td class="markdownTableBodyNone">Read latency used by the cost model.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_read_latency</span>  </td><td class="markdownTableBodyNone">Integer, cycles  </td><td class="markdownTableBodyNone">Read latency used by the cost model.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_write_latency</code>   </td><td class="markdownTableBodyNone">Integer, cycles   </td><td class="markdownTableBodyNone">Write latency used by the cost model. Use <code>0</code> for a read-only memory when appropriate.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_write_latency</span>  </td><td class="markdownTableBodyNone">Integer, cycles  </td><td class="markdownTableBodyNone">Write latency used by the cost model. Use <span class="tt">0</span> for a read-only memory when appropriate.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_max_reads</code>   </td><td class="markdownTableBodyNone">Integer   </td><td class="markdownTableBodyNone">Maximum outstanding reads.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_max_reads</span>  </td><td class="markdownTableBodyNone">Integer  </td><td class="markdownTableBodyNone">Maximum outstanding reads.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>&lt;Memory&gt;_max_writes</code>   </td><td class="markdownTableBodyNone">Integer   </td><td class="markdownTableBodyNone">Maximum outstanding writes. Use <code>0</code> for a read-only memory when appropriate.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">&lt;Memory&gt;_max_writes</span>  </td><td class="markdownTableBodyNone">Integer  </td><td class="markdownTableBodyNone">Maximum outstanding writes. Use <span class="tt">0</span> for a read-only memory when appropriate.  </td></tr>
 </table>
-<p>The option reference lists the full metric set for <code>Sram</code>, <code>Dram</code>, and <code>OffChipFlash</code>, and lists <code>OnChipFlash_clock_scale</code> for on-chip Flash. Use <code>--verbose-config</code> with the installed Vela version to inspect the resolved properties supported by that version.</p>
-<p>The values in <code>vela.ini</code> are used by the Vela compiler to optimize the ML model for the target and the output report. The can alter scheduling, buffering, DMA insertion, allocation sizes, and the generated command stream. <code>core_clock</code> is primarily used to convert cycle estimates to time.</p>
-<h2><a class="anchor" id="vela_memory_mode"></a>
+<p>The option reference lists the full metric set for <span class="tt">Sram</span>, <span class="tt">Dram</span>, and <span class="tt">OffChipFlash</span>, and lists <span class="tt">OnChipFlash_clock_scale</span> for on-chip Flash. Use <span class="tt">--verbose-config</span> with the installed Vela version to inspect the resolved properties supported by that version.</p>
+<p>The values in <span class="tt">vela.ini</span> are used by the Vela compiler to optimize the ML model for the target and the output report. The can alter scheduling, buffering, DMA insertion, allocation sizes, and the generated command stream. <span class="tt">core_clock</span> is primarily used to convert cycle estimates to time.</p>
+<h2 class="doxsection"><a class="anchor" id="memory-mode-parameters"></a>
 Memory mode parameters</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Parameter   </th><th class="markdownTableHeadNone">Type or values   </th><th class="markdownTableHeadNone">Description    </th></tr>
+<th class="markdownTableHeadNone">Parameter  </th><th class="markdownTableHeadNone">Type or values  </th><th class="markdownTableHeadNone">Description  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const_mem_area</code>   </td><td class="markdownTableBodyNone"><code>Axi0</code> or <code>Axi1</code>   </td><td class="markdownTableBodyNone">Location for read-only constants, including weights, scales, biases, and constant tensors.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">const_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">Axi0</span> or <span class="tt">Axi1</span>  </td><td class="markdownTableBodyNone">Location for read-only constants, including weights, scales, biases, and constant tensors.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>arena_mem_area</code>   </td><td class="markdownTableBodyNone"><code>Axi0</code> or <code>Axi1</code>   </td><td class="markdownTableBodyNone">Location for read/write feature maps, intermediate tensors, and internal buffers.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">arena_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">Axi0</span> or <span class="tt">Axi1</span>  </td><td class="markdownTableBodyNone">Location for read/write feature maps, intermediate tensors, and internal buffers.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>cache_mem_area</code>   </td><td class="markdownTableBodyNone"><code>Axi0</code> or <code>Axi1</code>   </td><td class="markdownTableBodyNone">Staging or fast-scratch location. It is separate from the arena only when it resolves to a different memory type from <code>arena_mem_area</code>.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">cache_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">Axi0</span> or <span class="tt">Axi1</span>  </td><td class="markdownTableBodyNone">Staging or fast-scratch location. It is separate from the arena only when it resolves to a different memory type from <span class="tt">arena_mem_area</span>.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>arena_cache_size</code>   </td><td class="markdownTableBodyNone">Integer, bytes   </td><td class="markdownTableBodyNone">Scheduler's fast-memory budget: the arena target when arena and cache resolve to the same memory type, or the separate staging-cache size when they differ. The CLI <code>--arena-cache-size</code> overrides it for <code>Performance</code> optimization.    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">arena_cache_size</span>  </td><td class="markdownTableBodyNone">Integer, bytes  </td><td class="markdownTableBodyNone">Scheduler's fast-memory budget: the arena target when arena and cache resolve to the same memory type, or the separate staging-cache size when they differ. The CLI <span class="tt">--arena-cache-size</span> overrides it for <span class="tt">Performance</span> optimization.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>inherit</code>   </td><td class="markdownTableBodyNone"><code>Part.Name</code>   </td><td class="markdownTableBodyNone">Parent section whose parameters are inherited. Child values take precedence.   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">inherit</span>  </td><td class="markdownTableBodyNone"><span class="tt">Part.Name</span>  </td><td class="markdownTableBodyNone">Parent section whose parameters are inherited. Child values take precedence.  </td></tr>
 </table>
 <p>The memory-area mapping must be consistent with the Ethos-U driver, the ML inference runtime tensor arena, the linker script, and the physical memory system. These options guide compilation; they do not configure the hardware.</p>
-<p>With <code>--optimise Size</code>, the Vela compiler minimizes SRAM use and does not use the arena-cache size. With <code>--optimise Performance</code>, it uses the configured or command-line arena-cache size. If neither is supplied, the compiler uses the maximum addressable size for the selected Ethos-U target.</p>
-<h2><a class="anchor" id="vela_create_linker_script"></a>
+<p>With <span class="tt">--optimise Size</span>, the Vela compiler minimizes SRAM use and does not use the arena-cache size. With <span class="tt">--optimise Performance</span>, it uses the configured or command-line arena-cache size. If neither is supplied, the compiler uses the maximum addressable size for the selected Ethos-U target.</p>
+<h2 class="doxsection"><a class="anchor" id="create-the-linker-script"></a>
 Create the linker script</h2>
-<p>The linker script places the generated model artifacts and runtime buffers in the physical memories represented by the selected <code>System_Config</code> and <code>Memory_Mode</code>. It does not use the logical names <code>Axi0</code> and <code>Axi1</code> directly. Instead, it provides sections or memory regions for the Ethos-U I/O resources.</p>
+<p>The linker script places the generated model artifacts and runtime buffers in the physical memories represented by the selected <span class="tt">System_Config</span> and <span class="tt">Memory_Mode</span>. It does not use the logical names <span class="tt">Axi0</span> and <span class="tt">Axi1</span> directly. Instead, it provides sections or memory regions for the Ethos-U I/O resources.</p>
 <p>The linker section names are device- and runtime-specific. The examples provided with this pack use the following section names.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Vela area   </th><th class="markdownTableHeadNone">Linker section<br  />
-in examples   </th><th class="markdownTableHeadNone">Content   </th><th class="markdownTableHeadNone">Access    </th></tr>
+<th class="markdownTableHeadNone">Vela area  </th><th class="markdownTableHeadNone">Linker section<br  />
+in examples  </th><th class="markdownTableHeadNone">Content  </th><th class="markdownTableHeadNone">Access  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>const_mem_area</code>   </td><td class="markdownTableBodyNone"><code>ethos_model</code>   </td><td class="markdownTableBodyNone">Compiled model, command stream, encoded weights, scales, and other constants   </td><td class="markdownTableBodyNone">Read-only    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">const_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">ethos_model</span>  </td><td class="markdownTableBodyNone">Compiled model, command stream, encoded weights, scales, and other constants  </td><td class="markdownTableBodyNone">Read-only  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>arena_mem_area</code>   </td><td class="markdownTableBodyNone"><code>ethos_arena</code>   </td><td class="markdownTableBodyNone">Input, output, intermediate activations, and scratch storage used by the ML inference runtime   </td><td class="markdownTableBodyNone">Read-write    </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">arena_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">ethos_arena</span>  </td><td class="markdownTableBodyNone">Input, output, intermediate activations, and scratch storage used by the ML inference runtime  </td><td class="markdownTableBodyNone">Read-write  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>cache_mem_area</code>   </td><td class="markdownTableBodyNone"><code>ethos_cache</code>   </td><td class="markdownTableBodyNone">Optional scratch-fast or staging buffer when it resolves to a different physical memory from <code>arena_mem_area</code>   </td><td class="markdownTableBodyNone">Read-write   </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">cache_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">ethos_cache</span>  </td><td class="markdownTableBodyNone">Optional scratch-fast or staging buffer when it resolves to a different physical memory from <span class="tt">arena_mem_area</span>  </td><td class="markdownTableBodyNone">Read-write  </td></tr>
 </table>
-<p>Different section names can be used, the important property is their physical placement. If <code>arena_mem_area</code> and <code>cache_mem_area</code> resolve to the same memory type, a separate cache section is not required. If they resolve to different memory types, reserve the configured <code>arena_cache_size</code> in the fast memory used for <code>cache_mem_area</code>.</p>
+<p>Different section names can be used, the important property is their physical placement. If <span class="tt">arena_mem_area</span> and <span class="tt">cache_mem_area</span> resolve to the same memory type, a separate cache section is not required. If they resolve to different memory types, reserve the configured <span class="tt">arena_cache_size</span> in the fast memory used for <span class="tt">cache_mem_area</span>.</p>
 <p>The linker script, MPU/SAU attributes, and CPU cache policy must make every generated region accessible to both the ML inference runtime and the NPU as required. When Cortex-M software and the NPU use different addresses for the same memory, the driver must provide the corresponding address translation. The driver's command-stream and region attributes must also select access paths that match the linker placement.</p>
 <p>Validate a new linker configuration by checking:</p>
 <ul>
@@ -455,25 +484,25 @@ in examples   </th><th class="markdownTableHeadNone">Content   </th><th class="m
 <li>MPU/SAU and cache attributes match the driver cache-maintenance policy; and</li>
 <li>the optimized model runs correctly and meets its memory and performance goals on the device.</li>
 </ul>
-<h2><a class="anchor" id="vela_match_driver_configuration"></a>
+<h2 class="doxsection"><a class="anchor" id="match-the-driver-configuration"></a>
 Match the driver configuration</h2>
-<p>The driver configuration must select NPU access paths that match the physical placement established by <code>vela.ini</code> and the linker script. For the common embedded output flow, verify these relationships:</p>
+<p>The driver configuration must select NPU access paths that match the physical placement established by <span class="tt">vela.ini</span> and the linker script. For the common embedded output flow, verify these relationships:</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Generated content   </th><th class="markdownTableHeadNone">Typical compiler memory area   </th><th class="markdownTableHeadNone">Driver setting    </th></tr>
+<th class="markdownTableHeadNone">Generated content  </th><th class="markdownTableHeadNone">Typical compiler memory area  </th><th class="markdownTableHeadNone">Driver setting  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Command stream   </td><td class="markdownTableBodyNone">Placed with compiled model constants   </td><td class="markdownTableBodyNone"><code>NPU_QCONFIG</code>    </td></tr>
+<td class="markdownTableBodyNone">Command stream  </td><td class="markdownTableBodyNone">Placed with compiled model constants  </td><td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Base region 0: constants and encoded weights   </td><td class="markdownTableBodyNone"><code>const_mem_area</code>   </td><td class="markdownTableBodyNone"><code>NPU_REGIONCFG_0</code>    </td></tr>
+<td class="markdownTableBodyNone">Base region 0: constants and encoded weights  </td><td class="markdownTableBodyNone"><span class="tt">const_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_0</span>  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Base region 1: activations and scratch   </td><td class="markdownTableBodyNone"><code>arena_mem_area</code>   </td><td class="markdownTableBodyNone"><code>NPU_REGIONCFG_1</code>    </td></tr>
+<td class="markdownTableBodyNone">Base region 1: activations and scratch  </td><td class="markdownTableBodyNone"><span class="tt">arena_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_1</span>  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Base region 2: optional scratch-fast storage   </td><td class="markdownTableBodyNone"><code>cache_mem_area</code>   </td><td class="markdownTableBodyNone"><code>NPU_REGIONCFG_2</code>   </td></tr>
+<td class="markdownTableBodyNone">Base region 2: optional scratch-fast storage  </td><td class="markdownTableBodyNone"><span class="tt">cache_mem_area</span>  </td><td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_2</span>  </td></tr>
 </table>
 <p>The numeric values of these driver settings are target-specific. Additional base regions can be present in specialized output flows, so use the generated command stream and the device integration information as the authority. Also configure address translation and cache maintenance when Cortex-M software and the NPU access the same physical memory through different addresses or cache policies.</p>
 <p>See <a href="../integration/index.html">Integration</a> for system validation, platform hooks, target-specific driver build configuration, cache maintenance, and address-remapping guidance.</p>
-<h2><a class="anchor" id="autotoc_md10"></a>
-Complete <code>My_vela.ini</code> example</h2>
+<h2 class="doxsection"><a class="anchor" id="complete-my_velaini-example"></a>
+Complete <span class="tt">My_vela.ini</span> example</h2>
 <div class="fragment"><div class="line">; Ethos-U55 at 500 MHz with SRAM on AXI0 and read-only Flash on AXI1</div>
 <div class="line">[System_Config.My_Ethos_U55_System]</div>
 <div class="line">core_clock=500e6</div>
@@ -517,30 +546,30 @@ Complete <code>My_vela.ini</code> example</h2>
 <div class="line">  --system-config My_Ethos_U55_System \</div>
 <div class="line">  --memory-mode My_Shared_Sram \</div>
 <div class="line">  --verbose-config</div>
-</div><!-- fragment --><h2><a class="anchor" id="vela_publish_configuration"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="publish-ethos-u-configuration-in-a-dfp"></a>
 Publish Ethos-U configuration in a DFP</h2>
-<p>A DFP can publish the NPU capabilities, <code>vela.ini</code> file, and matching linker scripts in its DFP description. CMSIS-Toolbox can then select these resources for the device, processor, and toolchain used by a project.</p>
-<p>Declare each integrated NPU with a device <code>feature</code>. The <code>n</code> attribute identifies the Ethos-U variant, <code>m</code> identifies its MAC configuration, and <code>Pname</code> associates it with a processor when the device contains more than one:</p>
+<p>A CMSIS Device Family Pack (DFP) can publish the NPU capabilities, <span class="tt">vela.ini</span> file, and matching linker scripts in its DFP description. The CMSIS-Toolbox can then select these resources for the device, processor, and toolchain used by a project.</p>
+<p>Declare each integrated NPU with a device <span class="tt">feature</span>. The <span class="tt">n</span> attribute identifies the Ethos-U variant, <span class="tt">m</span> identifies its MAC configuration, and <span class="tt">Pname</span> associates it with a processor when the device contains more than one:</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">feature</span> <span class="keyword">type</span>=<span class="stringliteral">&quot;NPU&quot;</span> <span class="keyword">n</span>=<span class="stringliteral">&quot;Ethos-U55&quot;</span> <span class="keyword">m</span>=<span class="stringliteral">&quot;256MACs&quot;</span> <span class="keyword">Pname</span>=<span class="stringliteral">&quot;M55_P0&quot;</span>/&gt;</div>
 <div class="line">&lt;<span class="keywordtype">feature</span> <span class="keyword">type</span>=<span class="stringliteral">&quot;NPU&quot;</span> <span class="keyword">n</span>=<span class="stringliteral">&quot;Ethos-U55&quot;</span> <span class="keyword">m</span>=<span class="stringliteral">&quot;128MACs&quot;</span> <span class="keyword">Pname</span>=<span class="stringliteral">&quot;M55_P1&quot;</span>/&gt;</div>
-</div><!-- fragment --><p>Publish the device-specific Vela configuration through the <code>VELA</code> environment:</p>
+</div><!-- fragment --><p>Publish the device-specific Vela configuration through the <span class="tt">VELA</span> environment:</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">environment</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;VELA&quot;</span>&gt;</div>
-<div class="line">  &lt;<span class="keywordtype">file</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Device/scripts/vela/My_vela.ini&quot;</span> <span class="keyword">type</span>=<span class="stringliteral">&quot;ini&quot;</span>/&gt;</div>
+<div class="line">  &lt;<span class="keywordtype">file</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Device/scripts/vela/device_vela.ini&quot;</span> <span class="keyword">type</span>=<span class="stringliteral">&quot;ini&quot;</span>/&gt;</div>
 <div class="line">&lt;/<span class="keywordtype">environment</span>&gt;</div>
 </div><!-- fragment --><p>Add linker scripts as component files. Conditions can select the script that matches a processor and toolchain:</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">file</span> <span class="keyword">category</span>=<span class="stringliteral">&quot;linkerScript&quot;</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Device/linker/linker_ac6.sct&quot;</span>    <span class="keyword">attr</span>=<span class="stringliteral">&quot;config&quot;</span> <span class="keyword">condition</span>=<span class="stringliteral">&quot;AC6&quot;</span>/&gt;</div>
 <div class="line">&lt;<span class="keywordtype">file</span> <span class="keyword">category</span>=<span class="stringliteral">&quot;linkerScript&quot;</span> <span class="keyword">name</span>=<span class="stringliteral">&quot;Device/linker/linker_gnu.ld.src&quot;</span> <span class="keyword">attr</span>=<span class="stringliteral">&quot;config&quot;</span> <span class="keyword">condition</span>=<span class="stringliteral">&quot;GCC&quot;</span>/&gt;</div>
-</div><!-- fragment --><p>Keep the NPU feature, Vela environment, <code>My_vela.ini</code>, linker scripts, and their conditions consistent. A project that selects a different processor or toolchain must resolve to the corresponding NPU configuration and linker script.</p>
+</div><!-- fragment --><p>Keep the NPU feature, Vela environment, <span class="tt">My_vela.ini</span>, linker scripts, and their conditions consistent. A project that selects a different processor or toolchain must resolve to the corresponding NPU configuration and linker script.</p>
 <p>For the complete pack structure and element rules, see:</p>
 <ul>
 <li><a href="https://github.com/Open-CMSIS-Pack/DFP-Pack-HandsOn">DFP Pack Hands-On</a>;</li>
-<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_family_pg.html#element_feature"><code>feature</code> element</a>;</li>
-<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_family_pg.html#element_environment"><code>environment</code> element</a>; and</li>
-<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_components_pg.html#element_file">component <code>file</code> element</a>.</li>
+<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_family_pg.html#element_feature"><span class="tt">feature</span> element</a>;</li>
+<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_family_pg.html#element_environment"><span class="tt">environment</span> element</a>; and</li>
+<li><a href="https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_components_pg.html#element_file">component <span class="tt">file</span> element</a>.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1 class="doxsection"><a class="anchor" id="examples"></a>
 Examples</h1>
-<h2><a class="anchor" id="vela_compile_reference_system"></a>
+<h2 class="doxsection"><a class="anchor" id="compile-for-an-ethos-u-reference-system"></a>
 Compile for an Ethos-U reference system</h2>
 <div class="fragment"><div class="line">vela person_detect.tflite \</div>
 <div class="line">  --accelerator-config ethos-u55-128 \</div>
@@ -549,22 +578,22 @@ Compile for an Ethos-U reference system</h2>
 <div class="line">  --memory-mode Shared_Sram \</div>
 <div class="line">  --optimise Performance \</div>
 <div class="line">  --verbose-cycle-estimate</div>
-</div><!-- fragment --><p>The <code>output</code> directory contains the optimized ML model <code>person_detect_vela.tflite</code> and a report. The optimized model is for deployment to the Edge AI MCU.</p>
-<p>The console output shows several details including configuration parameters, memory usage, and with <code>--verbose-cycle-estimate</code> a rough estimation of the inference time.</p>
-<h2><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><p>The <span class="tt">output</span> directory contains the optimized ML model <span class="tt">person_detect_vela.tflite</span> and a report. The optimized model is for deployment to the Edge AI MCU.</p>
+<p>The console output shows several details including configuration parameters, memory usage, and with <span class="tt">--verbose-cycle-estimate</span> a rough estimation of the inference time.</p>
+<h2 class="doxsection"><a class="anchor" id="minimize-peak-sram"></a>
 Minimize peak SRAM</h2>
 <div class="fragment"><div class="line">vela keyword_spotting.tflite \</div>
 <div class="line">  --accelerator-config ethos-u55-64 \</div>
 <div class="line">  --optimise Size</div>
-</div><!-- fragment --><p><code>Size</code> scheduling favors tensor reuse and cascading. It can reread more weights and reduce throughput, so measure both memory and performance.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><p><span class="tt">Size</span> scheduling favors tensor reuse and cascading. It can reread more weights and reduce throughput, so measure both memory and performance.</p>
+<h2 class="doxsection"><a class="anchor" id="set-a-performance-scheduler-sram-budget"></a>
 Set a performance-scheduler SRAM budget</h2>
 <div class="fragment"><div class="line">vela person_detect.tflite \</div>
 <div class="line">  --accelerator-config ethos-u55-128 \</div>
 <div class="line">  --optimise Performance \</div>
 <div class="line">  --arena-cache-size 61440</div>
-</div><!-- fragment --><p>This supplies a 60 KiB cache budget. Reducing it may increase AXI1 traffic as weights or feature-map data are reread. The reported <code>Total SRAM used</code> covers the model's NPU-visible tensors and working buffers, not the RTOS, stacks, application allocations, CPU kernels, or other firmware state.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><p>This supplies a 60 KiB cache budget. Reducing it may increase AXI1 traffic as weights or feature-map data are reread. The reported <span class="tt">Total SRAM used</span> covers the model's NPU-visible tensors and working buffers, not the RTOS, stacks, application allocations, CPU kernels, or other firmware state.</p>
+<h2 class="doxsection"><a class="anchor" id="compile-tosa-for-ethos-u85-raw-output"></a>
 Compile TOSA for Ethos-U85 raw output</h2>
 <div class="fragment"><div class="line">vela my_network.tosa \</div>
 <div class="line">  --config Arm/vela.ini \</div>
@@ -572,8 +601,8 @@ Compile TOSA for Ethos-U85 raw output</h2>
 <div class="line">  --system-config Ethos_U85_SYS_DRAM_High \</div>
 <div class="line">  --memory-mode Dedicated_Sram_384KB \</div>
 <div class="line">  --output-format raw</div>
-</div><!-- fragment --><p>The resulting <code>.npz</code> contains the NPU command streams, constants, and quantization metadata required by an integration that consumes raw compiler output.</p>
-<h2><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><p>The resulting <span class="tt">.npz</span> contains the NPU command streams, constants, and quantization metadata required by an integration that consumes raw compiler output.</p>
+<h2 class="doxsection"><a class="anchor" id="inspect-placement-and-compiler-decisions"></a>
 Inspect placement and compiler decisions</h2>
 <div class="fragment"><div class="line">vela model.tflite \</div>
 <div class="line">  --accelerator-config ethos-u85-512 \</div>
@@ -582,44 +611,46 @@ Inspect placement and compiler decisions</h2>
 <div class="line">  --verbose-config \</div>
 <div class="line">  --verbose-performance \</div>
 <div class="line">  --enable-debug-db</div>
-</div><!-- fragment --><p>Start with focused reports. <code>--verbose-all</code> can produce impractically large logs for representative ML models.</p>
-<h2><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><p>Start with focused reports. <span class="tt">--verbose-all</span> can produce impractically large logs for representative ML models.</p>
+<h2 class="doxsection"><a class="anchor" id="embed-an-optimized-tflite-model-in-firmware"></a>
 Embed an optimized TFLite model in firmware</h2>
-<p>On hosts that provide <code>xxd</code>, convert the Vela compiler output to a C array:</p>
+<p>On hosts that provide <span class="tt">xxd</span>, convert the Vela compiler output to a C array:</p>
 <div class="fragment"><div class="line">xxd -i output/my_network_vela.tflite my_network_model.h</div>
-</div><!-- fragment --><p>Place the generated data in the linker region that matches the memory configuration selected from <code>vela.ini</code>. Ensure that the ML inference runtime registers the Ethos-U custom operator and uses an Ethos-U driver compatible with the compiled command stream.</p>
-<h1><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><p>Place the generated data in the linker region that matches the memory configuration selected from <span class="tt">vela.ini</span>. Ensure that the ML inference runtime registers the Ethos-U custom operator and uses an Ethos-U driver compatible with the compiled command stream.</p>
+<h1 class="doxsection"><a class="anchor" id="executorch-arm-example-flow"></a>
 ExecuTorch Arm example flow</h1>
-<p>The <a href="https://github.com/pytorch/executorch/tree/main/examples/arm">ExecuTorch Arm examples</a> demonstrate an integrated PyTorch-to-Ethos-U workflow. The setup script installs the Arm toolchain, TOSA tools, the Vela compiler, and <a href="https://www.arm.com/products/silicon-ip-subsystems">Corstone</a> FVPs. The AOT Arm backend exports and quantizes a PyTorch model, lowers supported partitions through TOSA and the Vela compiler, and packages the result in an ExecuTorch <code>.pte</code>/<code>.bpte</code> program. In this flow the compiler is called by the backend; users normally run the example helper rather than invoke Vela on a <code>.pte</code> file.</p>
+<p>?ToDo: update this?</p>
+<p>The <a href="https://github.com/pytorch/executorch/tree/main/examples/arm">ExecuTorch Arm examples</a> demonstrate an integrated PyTorch-to-Ethos-U workflow. The setup script installs the Arm toolchain, TOSA tools, the Vela compiler, and <a href="https://www.arm.com/products/silicon-ip-subsystems">Corstone</a> FVPs. The AOT Arm backend exports and quantizes a PyTorch model, lowers supported partitions through TOSA and the Vela compiler, and packages the result in an ExecuTorch <span class="tt">.pte</span>/<span class="tt">.bpte</span> program. In this flow the compiler is called by the backend; users normally run the example helper rather than invoke Vela on a <span class="tt">.pte</span> file.</p>
 <p>From an ExecuTorch checkout on Linux:</p>
 <div class="fragment"><div class="line">./examples/arm/setup.sh --i-agree-to-the-contained-eula</div>
 <div class="line">source examples/arm/arm-scratch/setup_path.sh</div>
 <div class="line">./examples/arm/run.sh \</div>
 <div class="line">  --model_name=examples/arm/example_modules/add.py \</div>
 <div class="line">  --target=ethos-u85-128</div>
-</div><!-- fragment --><p>The helper runs the AOT compiler, builds the matching ML inference runtime, and starts the target simulator unless build-only mode is selected. Other examples include a minimal Ethos-U notebook, a quantizer tutorial, a pruning example, an image-classification application, and Zephyr and <a href="https://www.keil.arm.com/packs/cmsis-arm/overview/">CMSIS</a> project templates. Treat the ExecuTorch branch and Vela version as a tested toolchain because backend-generated Vela options can evolve independently from the standalone CLI examples above.</p>
-<h1><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><p>The <span class="tt">run.sh</span> script runs the AOT compiler, builds the matching ML inference runtime, and starts the target simulator unless build-only mode is selected. Other examples include a minimal Ethos-U notebook, a quantizer tutorial, a pruning example, an image-classification application, and Zephyr and <a href="https://www.keil.arm.com/packs/cmsis-arm/overview/">CMSIS</a> project templates. Treat the ExecuTorch branch and Vela version as a tested toolchain because backend-generated Vela options can evolve independently from the standalone CLI examples above.</p>
+<h1 class="doxsection"><a class="anchor" id="troubleshooting"></a>
 Troubleshooting</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">Symptom   </th><th class="markdownTableHeadNone">Check    </th></tr>
+<th class="markdownTableHeadNone">Symptom  </th><th class="markdownTableHeadNone">Check  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Most operations run on the CPU   </td><td class="markdownTableBodyNone">Confirm integer quantization, inspect <code>--show-cpu-operations</code>, and generate <code>--supported-ops-report</code> to check every operator constraint.    </td></tr>
+<td class="markdownTableBodyNone">Most operations run on the CPU  </td><td class="markdownTableBodyNone">Confirm integer quantization, inspect <span class="tt">--show-cpu-operations</span>, and generate <span class="tt">--supported-ops-report</span> to check every operator constraint.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Compilation succeeds but estimates look unrealistic   </td><td class="markdownTableBodyNone">Use a platform-specific <code>System_Config</code>; verify clocks, AXI mappings, latency, bandwidth, and memory mode. Compare only builds with the same configuration.    </td></tr>
+<td class="markdownTableBodyNone">Compilation succeeds but estimates look unrealistic  </td><td class="markdownTableBodyNone">Use a platform-specific <span class="tt">System_Config</span>; verify clocks, AXI mappings, latency, bandwidth, and memory mode. Compare only builds with the same configuration.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Runtime allocation fails   </td><td class="markdownTableBodyNone">Check the Vela compiler's peak-memory report and add firmware overhead. Align linker regions and the tensor arena with <code>cpu_tensor_alignment</code> and the chosen memory mode.    </td></tr>
+<td class="markdownTableBodyNone">Runtime allocation fails  </td><td class="markdownTableBodyNone">Check the Vela compiler's peak-memory report and add firmware overhead. Align linker regions and the tensor arena with <span class="tt">cpu_tensor_alignment</span> and the chosen memory mode.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Performance degrades after reducing SRAM   </td><td class="markdownTableBodyNone">A smaller cache can cause more AXI1 reads. Inspect the performance CSV/report and hardware PMU counters.    </td></tr>
+<td class="markdownTableBodyNone">Performance degrades after reducing SRAM  </td><td class="markdownTableBodyNone">A smaller cache can cause more AXI1 reads. Inspect the performance CSV/report and hardware PMU counters.  </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">A wheel is unavailable   </td><td class="markdownTableBodyNone">Install Python development headers, CMake, and C99/C++17 build tools, or use a supported host/Python combination.    </td></tr>
+<td class="markdownTableBodyNone">A wheel is unavailable  </td><td class="markdownTableBodyNone">Install Python development headers, CMake, and C99/C++17 build tools, or use a supported host/Python combination.  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">Output does not run on the target   </td><td class="markdownTableBodyNone">Recompile for the exact Ethos-U architecture/MAC configuration and keep <code>vela.ini</code>, driver, linker, and memory-region configuration consistent.   </td></tr>
+<td class="markdownTableBodyNone">Output does not run on the target  </td><td class="markdownTableBodyNone">Recompile for the exact Ethos-U architecture/MAC configuration and keep <span class="tt">vela.ini</span>, driver, linker, and memory-region configuration consistent.  </td></tr>
 </table>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
+</div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

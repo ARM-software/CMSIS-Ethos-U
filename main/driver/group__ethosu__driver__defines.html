@@ -1,0 +1,234 @@
+<!-- HTML header for doxygen 1.17.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.17.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Driver: Defines</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="tabs.js?v=5"></script>
+<script type="text/javascript" src="footer.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', init_search);
+</script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="text/javascript" src="theme_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow" style="height: 55px;">
+  <td id="projectlogo" style="padding: 1em;"><img alt="Logo" src="arm.png"/></td>
+  <td id="projectalign" style="padding-left: 2em; padding-bottom: 1em; padding-top: 1em;">
+   <div id="projectname">Ethos-U Integration for Cortex-M
+   </div>
+   <div id="projectbrief">Ethos-U Driver</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">
+      writeComponentTabs.call(this);
+    </script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.17.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('group__ethosu__driver__defines.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Defines <div class="ingroups"><a class="el" href="group__ethosu__driver__api.html">Ethos-U Driver API</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Compile-time definitions in <code>ethosu_driver.h</code>.  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga506814742e046dc5d5f27584dfe3eec6" id="r_ga506814742e046dc5d5f27584dfe3eec6"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga506814742e046dc5d5f27584dfe3eec6">ETHOSU_SEMAPHORE_WAIT_INFERENCE</a>&#160;&#160;&#160;<a class="el" href="#ga8777fdbb65e94313ee5d8e9465373d9d">ETHOSU_SEMAPHORE_WAIT_FOREVER</a></td></tr>
+<tr class="memdesc:ga506814742e046dc5d5f27584dfe3eec6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout used while waiting for inference completion.  <br /></td></tr>
+<tr class="memitem:ga8777fdbb65e94313ee5d8e9465373d9d" id="r_ga8777fdbb65e94313ee5d8e9465373d9d"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga8777fdbb65e94313ee5d8e9465373d9d">ETHOSU_SEMAPHORE_WAIT_FOREVER</a>&#160;&#160;&#160;(UINT64_MAX)</td></tr>
+<tr class="memdesc:ga8777fdbb65e94313ee5d8e9465373d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value used to request an indefinite semaphore wait.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description</h2>
+<div class="textblock"><p>Compile-time definitions in <code>ethosu_driver.h</code>. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="ga506814742e046dc5d5f27584dfe3eec6" name="ga506814742e046dc5d5f27584dfe3eec6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga506814742e046dc5d5f27584dfe3eec6">&#9670;&#160;</a></span>ETHOSU_SEMAPHORE_WAIT_INFERENCE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_SEMAPHORE_WAIT_INFERENCE&#160;&#160;&#160;<a class="el" href="#ga8777fdbb65e94313ee5d8e9465373d9d">ETHOSU_SEMAPHORE_WAIT_FOREVER</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timeout used while waiting for inference completion. </p>
+<p>This value is passed to <a class="el" href="group__ethosu__callback__api.html#ga9792e5bb9f00971f20037db9a9982725" title="ethosu_semaphore_take">ethosu_semaphore_take</a> when <a class="el" href="group__ethosu__public__api.html#ga33e63dcf2625e5b10d07193490b6323b" title="ethosu_wait">ethosu_wait</a> blocks for inference completion. Its unit and interpretation are defined by the platform semaphore implementation. Define it at compile time to select a finite timeout. It defaults to <a class="el" href="#ga8777fdbb65e94313ee5d8e9465373d9d" title="ETHOSU_SEMAPHORE_WAIT_FOREVER">ETHOSU_SEMAPHORE_WAIT_FOREVER</a>. </p>
+
+</div>
+</div>
+<a id="ga8777fdbb65e94313ee5d8e9465373d9d" name="ga8777fdbb65e94313ee5d8e9465373d9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8777fdbb65e94313ee5d8e9465373d9d">&#9670;&#160;</a></span>ETHOSU_SEMAPHORE_WAIT_FOREVER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define ETHOSU_SEMAPHORE_WAIT_FOREVER&#160;&#160;&#160;(UINT64_MAX)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Value used to request an indefinite semaphore wait. </p>
+<p>This value is defined as <code>UINT64_MAX</code>. A platform implementation of <a class="el" href="group__ethosu__callback__api.html#ga9792e5bb9f00971f20037db9a9982725" title="ethosu_semaphore_take">ethosu_semaphore_take</a> must interpret it as no timeout. The driver also uses this value while waiting for an NPU driver instance to become available. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">
+	Copyright &copy; 2021-2026 Arm Limited (or its affiliates). All rights reserved.
+	<!-- Use script below for auto-inserting date, project name, version, etc  -->
+	<!-- <script type="text/javascript">
+        writeFooter.call(this);
+    </script> -->
+    </li>
+  </ul>
+</div>
+</body>
+</html>

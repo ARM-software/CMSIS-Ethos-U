@@ -1,13 +1,13 @@
 var NAVTREEINDEX0 =
 {
 "index.html":[],
-"index.html#autotoc_md0":[0],
-"index.html#autotoc_md1":[1],
-"index.html#autotoc_md2":[2],
-"index.html#autotoc_md3":[3],
-"index.html#autotoc_md4":[4],
-"index.html#autotoc_md5":[5],
-"index.html#autotoc_md6":[6],
-"index.html#autotoc_md7":[7],
+"index.html#coordinating-the-device-configuration":[4],
+"index.html#deployment-lifecycle":[6],
+"index.html#device-packs":[1],
+"index.html#key-terms":[2],
+"index.html#related-resources":[7],
+"index.html#system-configuration-and-memory-modes-at-a-glance":[5],
+"index.html#system-overview":[3],
+"index.html#target-audiences":[0],
 "pages.html":[]
 };
