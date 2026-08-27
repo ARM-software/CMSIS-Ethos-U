@@ -120,7 +120,7 @@ through its
 [MLOps information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
 
 When the DFP does not provide this information, create the equivalent configuration
-manually as described in [Create device-specific `vela.ini` file](#create-device-specific-velaini-file).
+manually as described in <a href="#create-device-specific-velaini-file">Create device-specific <code>vela.ini</code> file</a>.
 
 ## Invocation
 
@@ -179,7 +179,7 @@ TFLite-to-TOSA conversion format.
 | `--system-config NAME` | Select `[System_Config.NAME]` from the configuration files. The internal default provides functional defaults, but a platform-specific definition gives useful scheduling estimates. |
 | `--memory-mode NAME` | Select `[Memory_Mode.NAME]`, which maps constants, arena, and cache to the system's memory areas. |
 | `--tensor-allocator {LinearAlloc,Greedy,HillClimb}` | Choose the tensor allocator; defaults to `HillClimb`. |
-| `--max-block-dependency {0,1,2,3}` | Limit the dependency distance between NPU kernel operations; defaults to `3`. Smaller values can improve interrupt latency at a possible performance cost. ?ToDo: don't understand this? |
+| `--max-block-dependency {0,1,2,3}` | Deprecated. Set the maximum block-dependency delay between NPU kernel operations; defaults to `3`. A lower value can increase execution time. |
 | `--optimise {Performance,Size}` | `Performance` is the default and minimizes inference time; `Size` minimizes peak SRAM and ignores the arena-cache size. |
 | `--arena-cache-size BYTES` | Override the selected memory mode's cache capacity for `Performance` optimization. This is a byte count, not KiB. |
 | `--cpu-tensor-alignment BYTES` | Alignment for CPU tensors, including custom-operator inputs and outputs; defaults to `16`. Keep it consistent with the ML inference runtime allocation. |
@@ -284,11 +284,11 @@ resolves to the same memory type as `arena_mem_area`, the fast-scratch memory re
 folded into `arena_mem_area`. `cache_mem_area` is a distinct area only when
 `arena_mem_area` is in a different memory type.
 
-The Ethos-U55 hardware AXI1 port is a read-only interface. Consequently,
-`Dedicated_Sram` is not a practical Ethos-U55 execution model when the writable
-feature-map arena would be placed on that interface. Do not infer the same
-read-only restriction for the logical `Axi1` alias in `vela.ini` on every
-Ethos-U target.
+Ethos-U55 provides one read/write and one read-only AXI port and supports
+`Sram_Only` and `Shared_Sram` modes. `Dedicated_Sram` places the writable arena
+in the memory selected for `Axi1` while reserving the `Axi0` memory for fast
+staging. Both paths must be writable, so the `Dedicated_Sram` mode is available
+on Ethos-U65 and Ethos-U85.
 
 ## Create device-specific vela.ini file
 
@@ -331,10 +331,10 @@ It is recommended to define every property that affects the target system.
 
 Any section can contain `inherit=Part.Name` to inherit the values of another section.
 
-- Put a section that is inherited from before the section that inherits it.
-- Underscores in memory type names are not permitted. The Vela compiler splits a
-  memory type such as `<Memory>_clock_scale` at the first underscore.
-ToDo: verify this
+- Inherited sections can appear in any order. Do not create recursive inheritance.
+- `axi0_port` and `axi1_port` accept only the supported Vela memory types
+  `Sram`, `Dram`, `OnChipFlash`, and `OffChipFlash`; custom memory type names are
+  not supported.
 - Start the name of a custom Ethos-U55 system configuration with
   `Ethos_U55`. The Vela compiler uses this prefix when selecting the U55 AXI
   bandwidth width while translating memory-performance values.
@@ -382,7 +382,7 @@ Use `--verbose-config` with the installed Vela version to inspect the resolved
 properties supported by that version.
 
 The values in `vela.ini` are used by the Vela compiler to optimize the ML model for the target and the output report.
-The can alter scheduling, buffering, DMA insertion, allocation sizes, and the generated
+They can alter scheduling, buffering, DMA insertion, allocation sizes, and the generated
 command stream. `core_clock` is primarily used to convert cycle estimates to time.
 
 ### Memory mode parameters
@@ -390,7 +390,7 @@ command stream. `core_clock` is primarily used to convert cycle estimates to tim
 | Parameter | Type or values | Description |
 |---|---|---|
 | `const_mem_area` | `Axi0` or `Axi1` | Location for read-only constants, including weights, scales, biases, and constant tensors. |
-| `arena_mem_area` | `Axi0` or `Axi1` | Location for read/write feature maps, intermediate tensors, and internal buffers. |
+| `arena_mem_area` | `Axi0` or `Axi1` | Location for read/write feature maps, intermediate tensors, and Vela-managed working storage. |
 | `cache_mem_area` | `Axi0` or `Axi1` | Staging or fast-scratch location. It is separate from the arena only when it resolves to a different memory type from `arena_mem_area`. |
 | `arena_cache_size` | Integer, bytes | Scheduler's fast-memory budget: the arena target when arena and cache resolve to the same memory type, or the separate staging-cache size when they differ. The CLI `--arena-cache-size` overrides it for `Performance` optimization. |
 | `inherit` | `Part.Name` | Parent section whose parameters are inherited. Child values take precedence. |
@@ -463,7 +463,7 @@ configure address translation and cache maintenance when Cortex-M software and
 the NPU access the same physical memory through different addresses or cache
 policies.
 
-See [Integration](../integration/index.html) for system validation, platform
+See <a href="../integration/index.html">Integration</a> for system validation, platform
 hooks, target-specific driver build configuration, cache maintenance, and
 address-remapping guidance.
 
@@ -563,6 +563,76 @@ For the complete pack structure and element rules, see:
 - [`environment` element](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_family_pg.html#element_environment); and
 - [component `file` element](https://open-cmsis-pack.github.io/Open-CMSIS-Pack-Spec/main/html/pdsc_components_pg.html#element_file).
 
+## Read the Vela reports
+
+After compilation, Vela prints a summary report and writes a CSV file in the
+output directory. The report reflects the selected accelerator configuration,
+system configuration, memory mode, and optimization strategy.
+
+| Report area | Meaning |
+|---|---|
+| Configuration | Selected accelerator, system and memory configurations, NPU clock, and design peak memory bandwidth. |
+| Memory use | Required storage in each Vela memory type: `Sram`, `Dram`, `OnChipFlash`, or `OffChipFlash`. The selected system configuration and memory mode determine these memory types. |
+| Operator placement | Number and percentage of operators assigned to the CPU and NPU. |
+| Memory traffic | Estimated average bandwidth and bytes transferred for feature maps and weights. |
+| MACs | Number of multiply-accumulate operations per batch. |
+
+The CSV file uses `weights_storage_area` for the Vela memory type selected by
+`const_mem_area` and `feature_map_storage_area` for the type selected by
+`arena_mem_area`. It reports memory use as a total for each Vela memory type. In
+`Dedicated_Sram_256KB`, both data roles resolve to `Dram`, so
+`dram_memory_used` contains their combined requirement.
+`total_npu_encoded_weights` covers only encoded weights, not the complete
+constant area, so it cannot be used to derive the size of `arena_mem_area`.
+
+Use `--verbose-cycle-estimate` to add estimated NPU and memory-access cycles,
+total cycles, inference time, and inferences per second. Use
+`--verbose-performance` to generate a per-layer CSV with memory use, cycle
+estimates, MAC utilization, and the contribution of each layer to the network.
+The summary report is normally sufficient for configuration comparison; use the
+per-layer report to investigate the reason for a difference.
+
+> [!CAUTION]
+> Vela cycle counts and inference times are estimates, not measured
+> performance. They are useful for estimating expected performance and comparing
+> candidates, but the selected configuration must be validated on the target
+> hardware.
+
+## Compare Ethos-U configurations
+
+Before selecting a device, use the Ethos-U reference systems in the generic
+`Arm/vela.ini` file for an initial comparison. They provide example
+system and memory configurations for estimating performance and memory use, but
+do not describe a specific production device. After selecting a device, repeat
+the comparison with its device-specific `vela.ini` file.
+
+Use the same ML model to test each accelerator, system configuration, and memory
+mode.
+
+> [!Tip]
+> Keep the Vela version and other compiler options unchanged. Check that the same
+> operations run on the NPU, and use a separate output directory for every build.
+
+The following example comparison uses the
+[`ad_large_int8.tflite` MicroNet Large INT8 anomaly-detection model](https://github.com/ARM-software/ML-zoo/blob/master/models/anomaly_detection/micronet_large/tflite_int8/ad_large_int8.tflite)
+from the [Arm ML Zoo](https://github.com/ARM-software/ML-zoo) and Vela 5.1.0.
+**Other memory** is `OffChipFlash` for the Ethos-U55 system and `Dram` for the
+Ethos-U85 system.
+
+To optimize for memory size, compile with `--optimise Size`:
+
+| Accelerator | System configuration | Memory mode | SRAM | Other memory | Estimated time |
+|---|---|---|---:|---:|---:|
+| `ethos-u55-128` | `Ethos_U55_Deep_Embedded` | `Shared_Sram` | 136.00 KiB | 425.36 KiB | 27.816 ms |
+| `ethos-u85-256` | `Ethos_U85_SYS_DRAM_High` | `Shared_Sram` | 136.00 KiB | 419.02 KiB | 1.158 ms |
+
+To optimize for performance, compile with `--optimise Performance`:
+
+| Accelerator | System configuration | Memory mode | SRAM | Other memory | Estimated time |
+|---|---|---|---:|---:|---:|
+| `ethos-u55-128` | `Ethos_U55_Deep_Embedded` | `Shared_Sram` | 390.61 KiB | 425.52 KiB | 5.806 ms |
+| `ethos-u85-256` | `Ethos_U85_SYS_DRAM_High` | `Shared_Sram` | 436.77 KiB | 419.11 KiB | 0.458 ms |
+
 ## Examples
 
 ### Compile for an Ethos-U reference system
@@ -652,37 +722,9 @@ the compiled command stream.
 
 ## ExecuTorch Arm example flow
 
-?ToDo: update this?
-
-The
-[ExecuTorch Arm examples](https://github.com/pytorch/executorch/tree/main/examples/arm)
-demonstrate an integrated PyTorch-to-Ethos-U workflow. The setup script installs
-the Arm toolchain, TOSA tools, the Vela compiler, and
-[Corstone](https://www.arm.com/products/silicon-ip-subsystems) FVPs. The AOT Arm
-backend exports and quantizes a
-PyTorch model, lowers supported partitions through TOSA and the Vela compiler,
-and packages the result in an ExecuTorch `.pte`/`.bpte` program. In this flow
-the compiler is called by the backend; users normally run the example helper
-rather than invoke Vela on a `.pte` file.
-
-From an ExecuTorch checkout on Linux:
-
-```console
-./examples/arm/setup.sh --i-agree-to-the-contained-eula
-source examples/arm/arm-scratch/setup_path.sh
-./examples/arm/run.sh \
-  --model_name=examples/arm/example_modules/add.py \
-  --target=ethos-u85-128
-```
-
-The `run.sh` script runs the AOT compiler, builds the matching ML inference runtime, and
-starts the target simulator unless build-only mode is selected. Other examples
-include a minimal Ethos-U notebook, a quantizer tutorial, a pruning example, an
-image-classification application, and Zephyr and
-[CMSIS](https://www.keil.arm.com/packs/cmsis-arm/overview/) project templates.
-Treat the ExecuTorch branch and Vela version as a tested toolchain because
-backend-generated Vela options can evolve independently from the standalone CLI
-examples above.
+For the ExecuTorch Arm integration see the official PyTorch
+[Arm Ethos-U backend documentation](https://docs.pytorch.org/executorch/stable/backends-arm-ethos-u.html)
+for the workflow and examples.
 
 ## Troubleshooting
 

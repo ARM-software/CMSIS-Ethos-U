@@ -27,7 +27,8 @@ jobs:
 
       - uses: Open-CMSIS-Pack/gen-pack-action@main
         with:
-          doxygen-version: 1.17.0
+          # 1.18.0 fixes duplicated labels for internal Markdown links (doxygen#12155).
+          doxygen-version: 1.18.0
           packchk-version: 1.4.5
           gen-doc-script: ./documentation/doxygen/gen_doc.sh
           doc-path: ./documentation/html

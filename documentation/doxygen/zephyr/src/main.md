@@ -22,8 +22,8 @@ The following configuration layers must agree:
 | Kconfig | Enable TFLM and the Ethos-U integration. |
 | Board support | Provide the physical addresses, interrupt specifier, memory regions, and required security attribution. |
 
-See [Vela](../vela/index.html) for model compilation and
-[Integration](../integration/index.html) for the end-to-end memory and driver
+See <a href="../vela/index.html">Vela</a> for model compilation and
+<a href="../integration/index.html">Integration</a> for the end-to-end memory and driver
 mapping.
 
 ## Prerequisites

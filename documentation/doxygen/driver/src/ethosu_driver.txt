@@ -28,6 +28,55 @@
 @}
 */
 
+/**
+\addtogroup ethosu_log_api
+@{
+
+\par Implementation details
+
+The private \c source/src/ethosu_log.h header implements compile-time,
+printf-style logging for the driver and device backends. It does not provide a
+run-time callback or logging backend.
+
+| Macro | Output |
+| --- | --- |
+| \c LOG() | Unprefixed text on \c stdout; no newline is appended. |
+| \c LOG_ERR() | Error text on \c stderr, prefixed with \c E:, the source file, and the source line. |
+| \c LOG_WARN() | Warning text on \c stdout, prefixed with \c W:. |
+| \c LOG_INFO() | Informational text on \c stdout, prefixed with \c I:. |
+| \c LOG_DEBUG() | Debug text on \c stdout, prefixed with \c D: and the function name. |
+
+\ref ETHOSU_LOG_ENABLE defaults to 1 and controls every logging macro.
+\ref ETHOSU_LOG_SEVERITY defaults to \ref ETHOSU_LOG_WARN and controls the
+severity-based macros. The unprefixed \ref LOG macro is controlled by
+\ref ETHOSU_LOG_ENABLE but is not filtered by \ref ETHOSU_LOG_SEVERITY.
+
+The macros write through the C library \c stdout and \c stderr streams. An
+embedded target that enables logging must retarget those streams to an output
+such as a UART, semihosting, or an ITM channel. Disabling logging avoids pulling
+formatted I/O into an application that does not require driver output.
+
+For CMake, the corresponding options accept \c ON or \c OFF for
+\c ETHOSU_LOG_ENABLE and \c err, \c warning, \c info, or \c debug for
+\c ETHOSU_LOG_SEVERITY. For example:
+
+\code{.sh}
+cmake -S source -B build \
+    -DETHOSU_LOG_ENABLE=ON \
+    -DETHOSU_LOG_SEVERITY=debug
+\endcode
+
+Other build systems define the equivalent preprocessor values while compiling
+the driver sources, for example:
+
+\code{.text}
+ETHOSU_LOG_ENABLE=1
+ETHOSU_LOG_SEVERITY=ETHOSU_LOG_INFO
+\endcode
+
+@}
+*/
+
 
 /**
 \defgroup ethosu_driver_structs Structures
@@ -122,6 +171,52 @@
 */
 
 /**
+  \struct ethosu_pmu_ops
+  \brief Variant-specific PMU operations.
+  \details
+  Internal operation table selected for the NPU family associated with a
+  driver instance.
+*/
+
+/**
+  \struct ethosu_pmu_desc
+  \brief Variant-specific PMU descriptor.
+  \details
+  Associates a driver instance with its PMU operation table.
+*/
+
+/**
+  \struct ethosu_device_ops
+  \brief Variant-specific device operations.
+  \details
+  Internal operation table implemented by each Ethos-U family backend.
+*/
+
+/**
+  \struct ethosu_device_caps
+  \brief NPU product capabilities.
+  \details
+  Identifies the Ethos-U product, its encoded MAC configuration, and optional
+  feature bits.
+*/
+
+/**
+  \struct ethosu_device
+  \brief Device state owned by a driver instance.
+  \details
+  Holds the selected backend, register base, capabilities, configuration, and
+  optional per-driver user operations. Applications must not modify it.
+*/
+
+/**
+  \struct ethosu_device_config
+  \brief Variant-specific device configuration wrapper.
+  \details
+  Points to the configuration structure expected by the selected device
+  backend.
+*/
+
+/**
 @}
 */
 
@@ -152,6 +247,18 @@ asynchronous invocation examples.
   \note
   Before the first inference, route and enable the NPU interrupt so that the
   target interrupt handler calls ethosu_irq_handler().
+*/
+
+/**
+  \fn int ethosu_init_ex(struct ethosu_driver *drv, const struct ethosu_device_desc *dev_desc, struct ethosu_device_config *dev_config, struct ethosu_device_user_ops *dev_user_ops, void *const base_address, const void *fast_memory, const size_t fast_memory_size, uint32_t secure_enable, uint32_t privilege_enable)
+  \details
+  Initializes and registers one NPU instance in a multi-variant build. The
+  device descriptor selects the NPU backend, the device configuration supplies
+  the register settings, and the optional user operations provide per-driver
+  address-remapping and memory-configuration callbacks.
+
+  The lifecycle and interrupt-routing requirements are the same as for
+  \ref ethosu_init.
 */
 
 /**
@@ -263,6 +370,32 @@ asynchronous invocation examples.
 */
 
 /**
+  \fn int ethosu_invoke_auto(const void *custom_data_ptr, const int custom_data_size, uint64_t *const base_addr, const size_t *base_addr_size, const int num_base_addr, void *user_arg)
+  \param custom_data_ptr  Pointer to the command stream payload.
+  \param custom_data_size Size in bytes of the command stream payload.
+  \param base_addr        Array of base address pointers for tensor arenas and weight buffers.
+  \param base_addr_size   Array of sizes in bytes, one entry per base address.
+  \param num_base_addr    Number of entries in base_addr and base_addr_size.
+  \param user_arg         User argument passed to ethosu_inference_begin() and ethosu_inference_end().
+  \return 0 on success, else negative error code.
+  \details
+  Reads the required product and MAC configuration from the Vela custom
+  operator payload, reserves a matching driver, invokes the inference
+  synchronously, and releases the driver.
+
+  The payload, base-address, cache-maintenance, and callback requirements are
+  the same as for \ref ethosu_invoke_v3.
+*/
+
+/**
+  \fn int ethosu_get_product_config_from_cop_data(const void *custom_data_ptr, const int custom_data_size, uint32_t *product_out, uint32_t *log2_macs_out)
+  \details
+  Reads the Ethos-U product and encoded MAC configuration required by a Vela
+  custom operator payload. On success, the returned values can be passed to
+  \ref ethosu_reserve_driver_ex.
+*/
+
+/**
   \fn int ethosu_wait(struct ethosu_driver *drv, bool block)
   \details
   Finalizes a job started by ethosu_invoke_async(). When block=true, waits for
@@ -291,6 +424,16 @@ asynchronous invocation examples.
   Waiting for an available driver instance uses the global driver semaphore
   with forever-wait semantics. At least one driver must have been successfully
   initialized and registered before this function is called.
+*/
+
+/**
+  \fn struct ethosu_driver *ethosu_reserve_driver_ex(uint32_t product, uint32_t log2_macs)
+  \details
+  Blocks until a registered driver matching the requested Ethos-U product and
+  encoded MAC configuration is available, then reserves and returns it.
+
+  Use an \c ETHOSU_PRODUCT_U* value for \c product and an \c ETHOSU_MACS_* value
+  for \c log2_macs.
 */
 
 /**

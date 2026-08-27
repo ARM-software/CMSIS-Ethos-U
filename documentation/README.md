@@ -8,29 +8,12 @@ This document describes how to generate Doxygen-style documentation.
 
 - Install bash shell (for example git bash for Windows)
 - Install [Doxygen](https://www.doxygen.nl/download.html) v1.17.0 or later
-- Install [Graphviz](http://www.graphviz.org/download/) (verified to work with v14.1.2)
-- Install Java (PlantUML requires Java)
-  - Check whether Java is already installed, run `java --version` from the command line
-  - If not installed, download and install [prebuilt OpenJDK Binaries](https://adoptium.net/temurin/releases) (verified to work with v25.0.2)
-- Download [PlantUML compiled Jar under Apache license](https://github.com/plantuml/plantuml/releases/download/v1.2026.1/plantuml-asl-1.2026.1.jar) (verified to work with v1.2026.1):
-  - Optional: check [download page](https://plantuml.com/download) for latest version
-  - Copy downloaded plantuml-asl-x.jar file to C:/Tools/plantuml/ (or any other directory)
-  - Create plantuml.bat with content (adjust if you use different path):
-
-    ```text
-    @echo off
-    java -jar C:/Tools/plantuml/plantuml-asl-1.2026.1.jar %*
-    ```
-
-  - Add path to plantuml.bat to the environment PATH
 
 ### Linux and macOS
 
 Use your favorite package manager (apt, brew) to download and install:
 
 - Doxygen v1.17.0 or later
-- Graphviz (verified to work with v14.1.2)
-- PlantUML (verified to work with v1.2026.1)
 
 ## Build documentation
 
@@ -71,7 +54,7 @@ to the main source of information rather than repeat configuration tables.
 
 ### Authoring for engineers and automated agents
 
-- Start each page by stating its scope and what it does not own.
+- Start each chapter by stating its scope.
 - Use the exact configuration keys, API names, files, and generated region
   numbers that a reader must inspect or change.
 - Separate facts, platform assumptions, examples, and measurements. Label
@@ -84,7 +67,3 @@ to the main source of information rather than repeat configuration tables.
 - Do not publish unresolved investigation notes as guidance. Move confirmed,
   reusable conclusions into the owning section and leave a provenance pointer
   in `temp` if the history remains useful.
-
-### Notes
-
-- Check [additional PlantUML documentation](https://plantuml-documentation.readthedocs.io/en/latest/index.html)

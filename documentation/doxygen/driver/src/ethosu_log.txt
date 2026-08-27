@@ -10,7 +10,7 @@ retarget the required streams to an available output.
 Use \ref ETHOSU_LOG_ENABLE as the master switch and
 \ref ETHOSU_LOG_SEVERITY to select the most verbose severity compiled into the
 driver. Severity filtering does not apply to \ref LOG. See
-<a href="index.html#logging">Logging</a> for configuration and usage guidance.
+<a href="index.html#text-logging">Text logging</a> for user configuration.
 
 \ingroup ethosu_driver_api
 @{

@@ -1,0 +1,63 @@
+solution:
+  description: TensorFlow Lite Micro on Ethos-U85, running as an integration test
+    on the Corstone-320 FVP
+  created-for: CMSIS-Toolbox@2.14.0
+  cdefault:
+
+  # List of tested compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+
+  compiler: AC6
+
+  packs:
+    - pack: ARM::SSE_320_BSP@1.1.0
+
+  # This solution targets exactly one system. Ethos-U55 and Ethos-U65 use
+  # separate Corstone-300 solutions and board layers in this directory.
+  target-types:
+    - type: SSE-320-U85
+      board: ARM::SSE-320
+      device: ARM::SSE-320-FVP
+      variables:
+        - Board-Layer: ./Board/Corstone-320/Board-U85.clayer.yml
+      target-set:
+        - set:
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-320
+            config-file: ./Board/Corstone-320/fvp_config_u85.txt
+            args: ""
+          images:
+            - project-context: Hello-Ethos-U.Debug
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: ./Hello-Ethos-U.cproject.yml
+
+  # MLOps information: exported to cmsis-executorch-simple.cbuild-mlops.yml when
+  # building with `cbuild ... --active SSE-320-U85`. Retarget the NPU here and
+  # the export script (model/export_model.py) picks it up automatically.
+  # https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information
+  mlops:
+    description: TinyCNN int8 image classifier for Ethos-U85
+    npu:
+      type: Ethos-U85
+      macs: 256
+    vela:
+      system: Ethos_U85_SYS_DRAM_Mid # system-config from the Vela config
+      memory: Shared_Sram # memory-mode from the Vela config
+    model:
+      clayer: ./Model/ML-MyModels.clayer.yml
+      name: TinyCNN
+#    simulator:
+#      target-type: SSE-320-U85

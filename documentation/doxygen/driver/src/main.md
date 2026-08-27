@@ -9,7 +9,7 @@ The Ethos-U driver operations and features at a glance:
 - Starts the NPU and handles completion or fault interrupts;
 - Supports synchronous and asynchronous invocation;
 - Provides access to the Ethos-U Performance Monitoring Unit (PMU);
-- Exposes weak [platform-specific functions](group__ethosu__callback__api.html) for
+- Exposes weak <a href="group__ethosu__callback__api.html">platform-specific functions</a> for
   power, cache, address, and RTOS integration.
 
 The input to the Ethos-U driver must provide:
@@ -23,18 +23,23 @@ The input to the Ethos-U driver must provide:
 The driver does not compile models, allocate the ML framework's tensor arena,
 choose a memory mode in `vela.ini`, or place sections in physical memory.
 
+For the first execution on a target, follow the
+<a href="#driver-bring-up-checklist">Driver bring-up checklist</a>.
+
 ## Ethos-U driver source code
 
-The driver is provided by the software pack `ARM::Ethos-U` and can be added to a CMSIS-based application as a software component.
-The pack also includes CMSIS-RTOS2 and cache-management interfaces as optional source templates.
-
-The [CMSIS-Ethos-U GitHub repository](https://github.com/ARM-software/CMSIS-Ethos-U) provides access to the source code for other build environments.
+The driver source is maintained in the
+[Ethos-U core-driver repository](https://gitlab.arm.com/artificial-intelligence/ethos-u/ethos-u-core-driver).
+The software pack `ARM::CMSIS-Ethos-U` includes this source code unchanged and
+makes it available to CMSIS-based applications as a software component. The
+same source can therefore be obtained directly from the repository for use with
+other build environments. The pack also includes CMSIS-RTOS2, FreeRTOS and
+cache-management interfaces as optional source code templates.
 
 | File or directory | Content |
 | --- | --- |
-| `config/` | Configurable headers for the Generic U55, U65, and U85 component variants. |
-| `include/` | Public driver, data-type, and PMU header files. |
-| `src/` | Common driver and PMU implementations, NPU-specific device implementations, and private headers. |
+| `include/` | Public driver, device, data-type, and PMU header files. |
+| `src/` | Common driver code, variant-specific backend and PMU implementations, default configuration headers, register interfaces, and private headers. |
 | `zephyr/` | Metadata for using the driver as a Zephyr module. |
 | `CMakeLists.txt` | Build description for integrating or building the driver with CMake. |
 | `README.md` | Standalone build instructions and driver API examples. |
@@ -42,22 +47,321 @@ The [CMSIS-Ethos-U GitHub repository](https://github.com/ARM-software/CMSIS-Etho
 
 ### CMSIS Software component
 
-The pack `Arm::CMSIS-Ethos-U` provides the software component `ARM::Machine Learning:NPU Support:Ethos-U Driver` in multiple variants. For using the driver add one variant of the component as shown below:
+The pack `ARM::CMSIS-Ethos-U` provides the software component `ARM::Machine Learning:NPU Support:Ethos-U Driver` in multiple variants. For using the driver add one variant of the component as shown below:
 
 ```yaml
 components:
-  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U55" # For Ethos-U55
+  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U55" # For Ethos-U55 single-variant
 ```
 
 ```yaml
 components:
-  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U65" # For Ethos-U65
+  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U65" # For Ethos-U65 single-variant
 ```
 
 ```yaml
 components:
-  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U85" # For Ethos-U85
+  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Generic U85" # For Ethos-U85 single-variant
 ```
+
+```yaml
+components:
+  - component: "ARM::Machine Learning:NPU Support:Ethos-U Driver&Multi-Variant" # For runtime Ethos-U selection
+```
+
+## Compile-time configuration
+
+The Ethos-U driver is configured with preprocessor `#define` statements. The following tables
+list the supported configuration statements.
+
+### Single-variant build
+
+A single-variant build supports one Ethos-U variant selected at compile time.
+Define exactly one Ethos-U family together with its MAC configuration. Do not
+define `ETHOSU_MULTI_VARIANT`. When using the CMSIS pack, selection of a
+single-variant Ethos-U Driver component defines the corresponding Ethos-U
+family automatically.
+
+| Definition | Purpose |
+| --- | --- |
+| `ETHOSU55`, `ETHOSU65`, or `ETHOSU85` | Select the Ethos-U family. Define exactly one. The CMSIS component selection defines this automatically. |
+| `ETHOSU_MACS` | Select the MAC configuration, for example `128` for an Ethos-U55-128 variant. |
+
+### Multi-variant build
+
+A multi-variant build includes support for Ethos-U55, Ethos-U65, and Ethos-U85.
+The Ethos-U variant and MAC configuration are selected for each driver instance
+at run time. Do not define the single-variant `ETHOSU55`, `ETHOSU65`,
+`ETHOSU85`, or `ETHOSU_MACS` statements in this build. When using the CMSIS
+pack, selection of the Multi-Variant Ethos-U Driver component defines
+`ETHOSU_MULTI_VARIANT` automatically.
+
+| Definition | Purpose |
+| --- | --- |
+| `ETHOSU_MULTI_VARIANT` | Enable multi-variant support. The CMSIS component selection defines this automatically. This changes the initialization, reservation, platform-operation, and PMU APIs available to the application. |
+
+### Common configuration
+
+The following `#define` statements apply in either a single-variant or
+multi-variant build. In a multi-variant build, the memory-routing statements
+initialize the default configuration for each included Ethos-U family.
+
+`NPU_QCONFIG` and `NPU_REGIONCFG_0` through `NPU_REGIONCFG_7` provide default
+memory-access selectors; they do not contain addresses. `NPU_QCONFIG` selects
+the access configuration used to fetch the command stream. The suffix in
+`NPU_REGIONCFG_n` identifies the corresponding `base_addr[n]` region, while the
+value selects its access configuration. On Ethos-U55 and Ethos-U65, the value
+selects an `AXI_LIMITx` access profile. On Ethos-U85, it selects a `MEM_ATTR`
+entry. See
+<a href="#command-stream-regions-and-base-pointers">Command stream regions and base pointers</a>.
+
+| Definition | Purpose |
+| --- | --- |
+| `ETHOSU_MAX_WAITERS` | Set the maximum number of distinct Ethos-U variants tracked by driver reservation. The default is `4`. |
+| `ETHOSU_SEMAPHORE_WAIT_INFERENCE` | Set the timeout passed to the platform semaphore while waiting for inference completion. The default is `ETHOSU_SEMAPHORE_WAIT_FOREVER`; the platform defines the time unit. See <a href="#mutex-and-semaphores">Mutex and semaphores</a>. |
+| `NPU_QCONFIG` | Set the default memory-access selector for fetching the command stream. |
+| `NPU_REGIONCFG_0` through `NPU_REGIONCFG_7` | Set the default memory-access selector for each corresponding `base_addr[0]` through `base_addr[7]` region. |
+
+### Text logging
+
+The following `#define` statements configure driver text logging through the C
+standard I/O streams. See \ref ethosu_log_api "Logging" for the generated macro
+reference and implementation details.
+
+| Definition | Purpose |
+| --- | --- |
+| `ETHOSU_LOG_ENABLE` | Enable or disable logging. The default is `1`. |
+| `ETHOSU_LOG_SEVERITY` | Select the most verbose compiled log level: `ETHOSU_LOG_ERR`, `ETHOSU_LOG_WARN`, `ETHOSU_LOG_INFO`, or `ETHOSU_LOG_DEBUG`. The default is `ETHOSU_LOG_WARN`. |
+
+### Variant-specific hardware configuration
+
+The configuration headers provide default values for the following hardware
+`#define` statements. A silicon vendor can supply values validated for its NPU,
+interconnect, memory system, cache policy, and security configuration to adjust
+the driver defaults. Do not tune these settings independently. See
+<a href="#command-stream-regions-and-base-pointers">Command stream regions and base pointers</a>.
+
+| Ethos-U variant | Configuration definitions |
+| --- | --- |
+| Ethos-U55 and Ethos-U65 | `AXI_LIMITx_MAX_BEATS_BYTES`, `AXI_LIMITx_MEM_TYPE`, `AXI_LIMITx_MAX_OUTSTANDING_READS`, and `AXI_LIMITx_MAX_OUTSTANDING_WRITES`, where `x` is `0` through `3`. |
+| Ethos-U85 | `NPU_MAC_PWR_RAMP_CYCLES`, `NPU_MEM_ATTR_0` through `NPU_MEM_ATTR_3`, `AXI_LIMIT_SRAM_MAX_OUTSTANDING_READ`, `AXI_LIMIT_SRAM_MAX_OUTSTANDING_WRITE`, `AXI_LIMIT_SRAM_MAX_BEATS`, `AXI_LIMIT_EXT_MAX_OUTSTANDING_READ`, `AXI_LIMIT_EXT_MAX_OUTSTANDING_WRITE`, and `AXI_LIMIT_EXT_MAX_BEATS`. |
+
+For Ethos-U55 and Ethos-U65, each `AXI_LIMITx` register defines a complete AXI
+access profile, despite the register name suggesting that it contains only
+transaction limits. The corresponding `AXI_LIMITx_*` `#define` statements
+configure its maximum burst size, memory type, and maximum number of
+outstanding read and write transactions. In particular, `AXI_LIMITx_MEM_TYPE`
+sets the memory type used to encode the AXI AxCACHE signals.
+
+## Command stream regions and base pointers
+
+### Determine the memory regions used by Vela
+
+<a href="../vela/index.html">Vela</a> generates command streams that refer to
+memory regions. The system configuration and memory mode selected in the
+`vela.ini` file determine the expected memory area for each memory region used
+by the compiled ML model.
+
+The Ethos-U NPU and driver support eight base pointers and the corresponding
+`REGIONCFG[0] ... REGIONCFG[7]` selectors. Vela currently uses only three
+regions:
+
+- region 0: permanent model data, such as constants and weights
+  (`const_mem_area`).
+- region 1: the scratch arena (`arena_mem_area`).
+- region 2: optional fast scratch, used when `cache_mem_area` maps to `Sram` and
+  uses a different logical alias from `arena_mem_area`.
+
+Consequently, only regions 0 through 2 are referenced in the following section.
+
+The memory mode selects which Vela logical alias, `Axi0` or `Axi1`, each memory
+area uses. The following table shows the default `vela.ini` settings. Region 2
+(`cache_mem_area`) is used only when region 1 (`arena_mem_area`) uses a
+different logical alias.
+
+| Vela memory mode | Region 0 (const_mem_area) | Region 1 (arena_mem_area) | Region 2 (cache_mem_area) |
+| --- | --- | --- | --- |
+| `Sram_Only` | `Axi0` | `Axi0` | `Axi0` (not used) |
+| `Shared_Sram` | `Axi1` | `Axi0` | `Axi0` (not used) |
+| `Dedicated_Sram` | `Axi1` | `Axi1` | `Axi0` |
+
+The system configuration maps each logical alias to a Vela memory type. The
+following tables show two example mappings from the default `vela.ini`
+settings.
+
+**Example using `--system-config Ethos_U55_High_End_Embedded`:**
+
+| Vela memory mode | Region 0 (const_mem_area) | Region 1 (arena_mem_area) | Region 2 (cache_mem_area) |
+| --- | --- | --- | --- |
+| `Sram_Only` | `Sram` | `Sram` | Not used |
+| `Shared_Sram` | `OffChipFlash` | `Sram` | Not used |
+| `Dedicated_Sram` | `OffChipFlash` | `OffChipFlash` (invalid) | `Sram` |
+
+**Example using `--system-config Ethos_U85_SYS_DRAM_Mid`:**
+
+| Vela memory mode | Region 0 (const_mem_area) | Region 1 (arena_mem_area) | Region 2 (cache_mem_area) |
+| --- | --- | --- | --- |
+| `Sram_Only` | `Sram` | `Sram` | Not used |
+| `Shared_Sram` | `Dram` | `Sram` | Not used |
+| `Dedicated_Sram` | `Dram` | `Dram` | `Sram` |
+
+The linker maps each Vela memory type to physical memory. Even when region 0 is
+in `Dram`, it may be placed in ROM (Flash) because it contains constants.
+Driver base addresses and access settings must match the memory placement
+selected by Vela and the linker.
+
+> [!Note]
+> If the physical memory differs from the memory type modeled by the selected
+> system configuration, Vela's performance estimates are no longer accurate.
+
+### Configure memory access with NPU_QCONFIG and NPU_REGIONCFG_x
+
+The simplest setup uses a <a href="#single-variant-build">single-variant
+driver</a> with one fixed memory-access configuration for all ML models. The
+`NPU_QCONFIG` definition selects the memory-access configuration used to
+fetch the command stream. Each `NPU_REGIONCFG_x` definition selects the
+memory-access configuration for region `x`. In the Vela configurations above,
+`x` is 0, 1, or 2.
+
+> [!Note]
+> If the `NPU_QCONFIG` and `NPU_REGIONCFG_x` macros are not defined, the driver
+> uses the default values listed below.
+
+Selector encodings are NPU-specific; see
+<a href="#ethos-u55-and-ethos-u65">Ethos-U55 and Ethos-U65</a> and
+<a href="#ethos-u85">Ethos-U85</a> below.
+
+### Other memory-access setup methods
+
+The memory-access configuration can also be selected at run time:
+
+- In a <a href="#single-variant-build">single-variant build</a>, override the
+  weak \ref ethosu_config_select "ethosu_config_select()" function. The function
+  receives the memory address and an index: `-1` for the command stream, or the
+  region number for a base address.
+- In a <a href="#multi-variant-build">multi-variant build</a>, set `qconfig`
+  and `regioncfg` in the device configuration passed to \ref ethosu_init_ex
+  "ethosu_init_ex()". Alternatively, provide a per-driver `config_select`
+  callback through `ethosu_device_user_ops` when the selection depends on the
+  memory address.
+
+### Memory region usage by the driver
+
+The inference invocation functions (\ref ethosu_invoke_v3
+"ethosu_invoke_v3()", \ref ethosu_invoke_async "ethosu_invoke_async()", and
+\ref ethosu_invoke_auto "ethosu_invoke_auto()") receive `custom_data_ptr`,
+which points to the Vela-generated custom-operator payload. This payload
+contains metadata and the command stream. The `base_addr` argument points to an array containing
+the actual base address of each memory region, and `num_base_addr` specifies the number of entries.
+
+Vela uses memory region 2 for fast scratch memory. The `fast_memory` and
+`fast_memory_size` arguments to \ref ethosu_init "ethosu_init()" or
+\ref ethosu_init_ex "ethosu_init_ex()" specify the physical location and size
+of this memory.
+
+The following table maps invocation parameters to the corresponding NPU
+registers and driver definitions.
+
+| Invocation function parameter | Address register | Access-configuration selector | Default definition |
+| --- | --- | --- | --- |
+| `custom_data_ptr` | `QBASE` | `QCONFIG` | `NPU_QCONFIG` |
+| `base_addr[n]` | `BASEP[n]` | `REGIONCFG[n]` | `NPU_REGIONCFG_n` |
+
+### Ethos-U55 and Ethos-U65
+
+Ethos-U55 and Ethos-U65 provide the `AXI0` and `AXI1` access paths.
+
+| Memory placement | AXI port |
+| --- | --- |
+| SRAM | `AXI0` |
+| DRAM/Flash | `AXI1` |
+
+> [!Note]
+> On Ethos-U55 `AXI1` port is read-only and cannot access writable scratch data.
+
+The driver provides the following default values:
+
+| Ethos-U variant | NPU_QCONFIG | NPU_REGIONCFG_0 | NPU_REGIONCFG_1 | NPU_REGIONCFG_2 |
+| --- | --- | --- | --- | --- |
+| Ethos-U55 | `2` -> `AXI1` | `3` -> `AXI1` | `0` -> `AXI0` | `1` -> `AXI0` |
+| Ethos-U65 | `2` -> `AXI1` | `3` -> `AXI1` | `0` -> `AXI0` | `1` -> `AXI0` |
+
+For Ethos-U55 and Ethos-U65, `QCONFIG` and the `REGIONCFG[0..7]` fields
+accept values 0 through 3. The value selects an AXI port, an outstanding
+transaction counter, and the corresponding `AXI_LIMITx` access profile.
+
+| Value | AXI port | AXI access profile | Transaction counter |
+| --- | --- | --- | --- |
+| `0` | `AXI0` | `AXI_LIMIT0` | `AXI0_OUTSTANDING_COUNTER0` |
+| `1` | `AXI0` | `AXI_LIMIT1` | `AXI0_OUTSTANDING_COUNTER1` |
+| `2` | `AXI1` | `AXI_LIMIT2` | `AXI1_OUTSTANDING_COUNTER2` |
+| `3` | `AXI1` | `AXI_LIMIT3` | `AXI1_OUTSTANDING_COUNTER3` |
+
+Transaction counters enforce the limits in the corresponding
+`AXI_LIMITx` profile. For their use in performance analysis, see
+<a href="#monitoring-axi-transaction-latency">Monitoring AXI transaction
+latency</a>.
+
+Each `AXI_LIMITx` access profile contains the burst split alignment, the memory
+type used to encode AxCACHE, and the maximum number of outstanding read and
+write transactions. These fields are configured by
+`AXI_LIMITx_MAX_BEATS_BYTES`, `AXI_LIMITx_MEM_TYPE`,
+`AXI_LIMITx_MAX_OUTSTANDING_READS`, and
+`AXI_LIMITx_MAX_OUTSTANDING_WRITES`, respectively.
+
+### Ethos-U85
+
+The AXI ports are referred to as `AXI_SRAM` and `AXI_EXT`.
+
+| Memory placement | AXI port |
+| --- | --- |
+| SRAM | `AXI_SRAM` |
+| DRAM/Flash | `AXI_EXT` |
+
+The driver provides the following default values:
+
+| Ethos-U variant | NPU_QCONFIG | NPU_REGIONCFG_0 | NPU_REGIONCFG_1 | NPU_REGIONCFG_2 |
+| --- | --- | --- | --- | --- |
+| Ethos-U85 | `2` -> `MEM_ATTR_2` -> `AXI_EXT` | `3` -> `MEM_ATTR_3` -> `AXI_EXT` | `0` -> `MEM_ATTR_0` -> `AXI_SRAM` | `1` -> `MEM_ATTR_1` -> `AXI_SRAM` |
+
+For Ethos-U85, each `NPU_MEM_ATTR_n` `#define` supplies the packed value written
+to the corresponding `MEM_ATTR[n]` register. The suffix `n` identifies the
+entry; it is not the value assigned to the `#define`. Each entry selects the AXI
+port and specifies the memory domain and the memory type used to encode the
+AxCACHE signals.
+
+`QCONFIG` and each `REGIONCFG` field contain an index from 0 through 3 that
+selects one of these `MEM_ATTR` entries. The default `MEM_ATTR_0` and
+`MEM_ATTR_1` entries use `AXI_SRAM`, while `MEM_ATTR_2` and `MEM_ATTR_3` use
+`AXI_EXT`. For example, `NPU_QCONFIG` defaults to `2`, selecting `MEM_ATTR_2`;
+the default packed value of `NPU_MEM_ATTR_2` is `(1 << 2)`, or `4`, which
+selects `AXI_EXT`.
+
+These default `MEM_ATTR` values are set by the driver to replicate the default
+Ethos-U55 and Ethos-U65 behavior, making it easier to correlate configurations
+across variants, but the `MEM_ATTR` values can be configured by the user.
+
+Ethos-U85 AXI limits are configured in the `AXI_SRAM` and `AXI_EXT` registers.
+There is one `AXI_SRAM` register and one `AXI_EXT` register, so those limit
+settings apply to all ports in each group.
+
+Ethos-U85 AXI information:
+
+| U85 configuration (MACs/CC) | Number of SRAM ports | Maximum outstanding reads per port | Maximum outstanding writes per port |
+| --- | --- | --- | --- |
+| 128 | 2 | 12 | 16 |
+| 256 | 2 | 12 | 16 |
+| 512 | 2 | 12 | 16 |
+| 1024 | 2 | 12 | 16 |
+| 2048 | 4 | 12 | 16 |
+
+| U85 configuration (MACs/CC) | Number of EXT ports | Maximum outstanding reads per port | Maximum outstanding writes per port |
+| --- | --- | --- | --- |
+| 128 | 1 | 32 | 32 |
+| 256 | 1 | 32 | 32 |
+| 512 | 1 | 64 | 32 |
+| 1024 | 2 | 64 | 32 |
+| 2048 | 2 | 64 | 32 |
 
 ## Driver API
 
@@ -66,37 +370,43 @@ in `include/ethosu_types.h`.
 
 ## API functions
 
-| API Function | Description |
-| --- | --- |
-| \ref ethosu_init "ethosu_init()", \ref ethosu_deinit "ethosu_deinit()" | initialize or remove an NPU instance |
-| \ref ethosu_invoke_v3 "ethosu_invoke_v3()" | invoke and wait synchronously |
-| \ref ethosu_invoke_async "ethosu_invoke_async()", \ref ethosu_wait "ethosu_wait()" | submit asynchronously and poll or block |
-| \ref ethosu_irq_handler "ethosu_irq_handler()" | handle the target interrupt |
-| \ref ethosu_get_driver_version "ethosu_get_driver_version()", \ref ethosu_get_hw_info "ethosu_get_hw_info()" | inspect driver and hardware versions |
-| \ref ethosu_soft_reset "ethosu_soft_reset()" | recover the NPU from an error |
-| \ref ethosu_request_power "ethosu_request_power()", \ref ethosu_release_power "ethosu_release_power()" | manage power lifetime |
-| \ref ethosu_reserve_driver "ethosu_reserve_driver()", \ref ethosu_release_driver "ethosu_release_driver()" | reserve an instance in a multi-NPU system |
+| API Function | Build | Description |
+| --- | --- | --- |
+| \ref ethosu_init "ethosu_init()" | Single-variant | Initialize and register an NPU instance using the compile-time device selection. |
+| \ref ethosu_init_ex "ethosu_init_ex()" | Multi-variant | Initialize and register an NPU instance using a device descriptor, run-time configuration, and optional per-driver user operations. |
+| \ref ethosu_deinit "ethosu_deinit()" | Both | Unregister an idle NPU instance and release its synchronization resources. |
+| \ref ethosu_invoke_v3 "ethosu_invoke_v3()" | Both | Submit an inference to a specified driver and wait synchronously for completion. |
+| \ref ethosu_invoke_async "ethosu_invoke_async()", \ref ethosu_wait "ethosu_wait()" | Both | Submit an inference asynchronously, then poll or block for completion. |
+| \ref ethosu_invoke_auto "ethosu_invoke_auto()" | Multi-variant | Read the network's NPU requirements, reserve a matching driver, run the inference, and release the driver. |
+| \ref ethosu_get_product_config_from_cop_data "ethosu_get_product_config_from_cop_data()" | Both | Read the Ethos-U product and MAC configuration from a Vela custom-operator payload. |
+| \ref ethosu_irq_handler "ethosu_irq_handler()" | Both | Handle an NPU completion or fault interrupt for a driver instance. |
+| \ref ethosu_get_driver_version "ethosu_get_driver_version()", \ref ethosu_get_hw_info "ethosu_get_hw_info()" | Both | Inspect the driver version and an NPU instance's hardware information. |
+| \ref ethosu_soft_reset "ethosu_soft_reset()" | Both | Reset an NPU instance and restore its configuration. |
+| \ref ethosu_request_power "ethosu_request_power()", \ref ethosu_release_power "ethosu_release_power()" | Both | Manage reference-counted NPU power requests. |
+| \ref ethosu_reserve_driver "ethosu_reserve_driver()" | Single-variant | Block until an instance of the compile-time NPU variant is available and reserve it. |
+| \ref ethosu_reserve_driver_ex "ethosu_reserve_driver_ex()" | Both | Block until an instance matching the requested product and MAC configuration is available and reserve it. |
+| \ref ethosu_release_driver "ethosu_release_driver()" | Both | Release a reserved driver instance. |
 
-See [Driver functions](group__ethosu__public__api.html) for the complete generated API
-and [Driver structures](group__ethosu__driver__structs.html) for public data types.
+See <a href="group__ethosu__public__api.html">Driver functions</a> for the complete generated API
+and <a href="group__ethosu__driver__structs.html">Driver structures</a> for public data types.
 
 ## Platform-specific functions
 
 The driver provides default implementations for
-[platform-specific functions](group__ethosu__callback__api.html) listed below. The
+<a href="group__ethosu__callback__api.html">platform-specific functions</a> listed below. The
 default weak function implementation of the driver should be carefully review
 and overwritten when needed.
 
 | API Function | When an overwrite is needed |
 | --- | --- |
-| \ref ethosu_flush_dcache "ethosu_flush_dcache()", \ref ethosu_invalidate_dcache "ethosu_invalidate_dcache()" | CPU-cached memory is shared with the NPU and requires [platform-specific cache maintenance](#data-caching). |
+| \ref ethosu_flush_dcache "ethosu_flush_dcache()", \ref ethosu_invalidate_dcache "ethosu_invalidate_dcache()" | CPU-cached memory is shared with the NPU and requires <a href="#data-caching">platform-specific cache maintenance</a>. |
 | \ref ethosu_address_remap "ethosu_address_remap()" | The CPU and NPU use different addresses for the same storage. |
 | \ref ethosu_config_select "ethosu_config_select()" | Memory-region attributes depend on the address or run-time placement. |
-| Mutex and semaphore functions in [Platform-specific functions](group__ethosu__callback__api.html) | Multiple tasks or NPUs can use the driver and require [platform-specific RTOS locking](#mutex-and-semaphores). |
-| \ref ethosu_inference_begin "ethosu_inference_begin()", \ref ethosu_inference_end "ethosu_inference_end()" | [Inference tracing, power control, or application callbacks are required](#beginend-inference-callbacks). |
+| Mutex and semaphore functions in <a href="group__ethosu__callback__api.html">Platform-specific functions</a> | Multiple threads or NPUs can use the driver and require <a href="#mutex-and-semaphores">platform-specific RTOS locking</a>. |
+| \ref ethosu_inference_begin "ethosu_inference_begin()", \ref ethosu_inference_end "ethosu_inference_end()" | <a href="#beginend-inference-callbacks">Inference tracing, power control, or application callbacks are required</a>. |
 
 Cache policy, linker placement, and region configuration are system-level 
-decisions. Detailed guidance is in the chapter [Integration](../integration/index.html).
+decisions. Detailed guidance is in the chapter <a href="../integration/index.html">Integration</a>.
 
 ## Driver Usage
 
@@ -147,13 +457,13 @@ sequenceDiagram
 ```
 
 With an RTOS implementation, \ref ethosu_semaphore_take
-"ethosu_semaphore_take()" blocks the calling task and allows the RTOS scheduler to
+"ethosu_semaphore_take()" blocks the calling thread and allows the RTOS scheduler to
 run other ready threads while the Ethos-U NPU executes the inference. The
 Ethos-U interrupt handler calls \ref ethosu_semaphore_give
 "ethosu_semaphore_give()" when the NPU completes or reports a
 fault, allowing the synchronous invocation to resume. The platform must provide
 the RTOS-specific semaphore functions described in
-[Mutex and semaphores](#mutex-and-semaphores).
+<a href="#mutex-and-semaphores">Mutex and semaphores</a>.
 
 ### Asynchronous invocation
 
@@ -186,12 +496,13 @@ do {
 ethosu_release_driver(drv);
 ```
 
-Note that if \ref ethosu_wait "ethosu_wait()" is invoked from a different thread
-and concurrently with \ref ethosu_invoke_async "ethosu_invoke_async()", the user
-is responsible to guarantee that \ref ethosu_wait "ethosu_wait()" is called after
-a successful completion of \ref ethosu_invoke_async "ethosu_invoke_async()".
-Otherwise \ref ethosu_wait "ethosu_wait()" might fail and not actually wait for
-the inference completion.
+> [!Note]
+> If \ref ethosu_wait "ethosu_wait()" is invoked from a different thread
+> and concurrently with \ref ethosu_invoke_async "ethosu_invoke_async()", the user
+> is responsible to guarantee that \ref ethosu_wait "ethosu_wait()" is called after
+> a successful completion of \ref ethosu_invoke_async "ethosu_invoke_async()".
+> Otherwise \ref ethosu_wait "ethosu_wait()" might fail and not actually wait for
+> the inference completion.
 
 The following simplified sequence diagram shows the asynchronous invocation:
 
@@ -220,137 +531,128 @@ Create one driver instance for each NPU device. All registered NPUs must use the
 same compile-time NPU configuration because a driver build supports only one
 configuration.
 
-## Implementation design
+## Driver bring-up checklist
 
-The driver is structured in two main parts: the driver, which is responsible to
-provide an unified API to the user; and the device part, which deals with the
-details at the hardware level.
+Use this checklist after initializing the driver and before integrating large
+application graphs:
 
-In order to do its task the driver needs a device implementation. There could be
-multiple device implementation for different hardware model and/or
-configurations. Note that the driver can be compiled to target only one NPU
-configuration by specializing the device part at compile time.
-?? ToDo: how
+- Confirm the NPU identity and MAC configuration reported by
+  \ref ethosu_get_hw_info "ethosu_get_hw_info()" match the target used to
+  <a href="../integration/index.html#compile-the-ml-model-for-the-device">compile the ML model for the device</a>.
+- Confirm the command stream and every used base-pointer region are accessible
+  to the NPU. Review <a href="#command-stream-regions-and-base-pointers">Command
+  stream regions and base pointers</a>
+  and <a href="../integration/index.html#configure-memory-placement-and-the-linker-script">Configure memory placement and the linker script</a>.
+- Route the NPU interrupt to
+  \ref ethosu_irq_handler "ethosu_irq_handler()" and exercise an inference
+  timeout. If the wait does not complete, follow
+  <a href="../integration/index.html#troubleshoot-an-inference-that-does-not-complete">Troubleshoot an inference that does not complete</a>.
+- Verify cache cleaning and invalidation with caches enabled, not only disabled.
+  See <a href="#data-caching">Data caching</a>.
+- Check \ref ethosu_address_remap "ethosu_address_remap()" for TCM or aliased
+  memory windows. See <a href="#platform-specific-functions">Platform-specific functions</a>.
+- Start with one known-good, fully supported model before testing a large graph.
+  Use the recovery and isolation guidance in
+  <a href="../integration/index.html#troubleshoot-an-inference-that-does-not-complete">Troubleshoot an inference that does not complete</a>.
+- Use <a href="#performance-monitoring-unit-pmu">PMU</a> cycle, activity, stall,
+  and memory events when validating performance or investigating a difference
+  from compiler estimates.
+- Enable \ref ethosu_log_api "driver logging" and capture fault information
+  before resetting the NPU after an error.
+
+After these driver checks, continue with the end-to-end
+<a href="../integration/index.html#integration-workflow">Integration workflow</a>
+and <a href="../integration/index.html#validate-and-tune">Validate and tune</a>
+before treating platform bring-up as complete.
 
 ## Data caching
 
-For running the driver on Arm CPUs which are configured with data cache, certain
-caution must be taken to ensure cache coherency. The driver expects that cache
-clean/flush has been done by the user application before being invoked. The
-driver does provide a deprecated weakly linked function
-\ref ethosu_flush_dcache "ethosu_flush_dcache()" that could be overriden, causing
-the driver to cache flush/clean base pointers before each inference.
+Cache maintenance is required when the CPU and NPU share memory that is cached
+by the CPU. The driver provides weak no-op implementations of two hooks. If the
+ML runtime does not manage the cache, override both hooks:
 
-The driver also exposes a weakly linked symbol for cache invalidation called
-\ref ethosu_invalidate_dcache "ethosu_invalidate_dcache()", that must be overriden
-when the data cache is used. After an inference completes on the NPU, the driver
-will call this function to invalidate the data cache, to ensure cache coherency.
+- \ref ethosu_flush_dcache "ethosu_flush_dcache()" is called before the NPU
+  starts. It must clean cacheable base-address regions so that the NPU sees the data written by the CPU.
+- \ref ethosu_invalidate_dcache "ethosu_invalidate_dcache()" is called when the
+  driver finalizes the inference. It must invalidate cacheable base-address
+  regions so that the CPU sees NPU writes.
 
-Make sure that any base pointers used for flush/invalidation is aligned to the
-cache line size of your CPU, typically 32 bytes. Due to the uncertainty of
-tensor alignment, the driver only flushes/invalidates on base pointer level.
+The hooks receive the `base_addr` regions, but not the command stream. If the
+command stream is in cached memory written by the CPU, the application or ML
+runtime must clean it before invoking the inference. If the ML runtime already
+performs all required cache maintenance, the default weak no-op functions are
+sufficient.
 
-A simple example implementation for the weak functions, using CMSIS primitives
-could look like below:
+For example, a platform can use the driver cache functions as follows:
 
-```cpp
+```c
 void ethosu_flush_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr)
 {
     for (int i = 0; i < num_base_addr; i++)
+    {
         SCB_CleanDCache_by_Addr((uint32_t *)(uintptr_t)base_addr[i], base_addr_size[i]);
+    }
 }
 
 void ethosu_invalidate_dcache(const uint64_t *base_addr, const size_t *base_addr_size, int num_base_addr)
 {
     for (int i = 0; i < num_base_addr; i++)
+    {
         SCB_InvalidateDCache_by_Addr((uint32_t *)(uintptr_t)base_addr[i], base_addr_size[i]);
+    }
 }
 ```
 
-The NPU contain memory attributes that should be set to match the settings used
-in the MPU configuration for the memories used. See `NPU_MEM_ATTR_[0-3]` for
-Ethos-U85 and the `AXI_LIMIT[0-3]_MEM_TYPE` for Ethos-U55/Ethos-U65 in
-corresponding `src/ethosu_config_uX5.h` files.
-
-ToDo: verify this:
-
-It can be noted that enabling cache hooks approach is very conservative and will clean/invalidate potentially bigger than strictly required
-The only common CPU/NPU RW parts are edge IFM/OFM and clean / invalidate can be limited to these areas.
-Cleaning/Invalidating more than expected is safe for coherency but will have performance side effects for the application.
-
-If application is taking care of this, there is no need to enabling NPU drv hooks.
-
+> [!Note]
+>
+> - The example maintains every complete `base_addr` region. This is
+> conservative. A platform or ML runtime can reduce cache-maintenance overhead
+> by maintaining only the tensor ranges accessed by the NPU when it knows those
+> ranges and controls their ownership.
+> - The cache-maintenance ranges must meet the CPU's cache-line alignment
+> requirements. The CPU must not write an NPU-owned region between the clean
+> and invalidate operations.
+> - The NPU memory attributes must match the CPU MPU configuration. See
+> <a href="#command-stream-regions-and-base-pointers">Command stream regions
+> and base pointers</a>.
 
 ## Mutex and semaphores
 
-To ensure the correct functionality of the driver mutexes and semaphores are
-used internally. The default implementations of mutexes and semaphores are
-designed for a single-threaded baremetal environment. Hence for integration in
-environemnts where multi-threading is possible, e.g., RTOS, the user is
-responsible to provide implementation for mutexes and semaphores to be used by
-the driver.
+The driver uses the following synchronization objects to reserve an NPU instance
+and wait for inference completion:
 
-The mutex and semaphores are used as synchronisation mechanisms and unless
-specified, the timeout is required to be 'forever'.
+| Synchronization object | Used by | Purpose |
+| --- | --- | --- |
+| Global driver mutex | Driver registration, deregistration, reservation, and release | Protects the registered-driver list and each driver's `reserved` flag. It ensures that concurrent threads cannot reserve the same NPU instance. |
+| Global availability semaphore | Driver registration, deregistration, reservation, and release | Counts the number of driver instances currently available. `ethosu_reserve_driver()` waits on this semaphore when every NPU is reserved. |
+| Per-driver completion semaphore | `ethosu_wait()` and `ethosu_irq_handler()` | Blocks a thread while its NPU is running. The NPU interrupt gives the semaphore after recording successful completion or a fault. |
 
-ToDo: remove references to CMake, review RTOS interface
+> [!Note]
+> Reserving a driver grants exclusive use of that instance until
+> `ethosu_release_driver()` is called. Each instance supports one outstanding
+> inference.
 
-The driver allows for an RTOS to set a timeout for the NPU interrupt semaphore.
-The timeout can be set with the CMake variable `ETHOSU_INFERENCE_TIMEOUT`, which
-is then used as `timeout` argument for the interrupt semaphore take call. Note
-that the unit is implementation defined, the value is shipped as is to the
-\ref ethosu_semaphore_take "ethosu_semaphore_take()" function and an override
-implementation should cast it to the appropriate type and/or convert it to the
-unit desired.
-
-A macro `ETHOSU_SEMAPHORE_WAIT_FOREVER` is defined in the driver header file,
-and should be made sure to map to the RTOS' equivalent of
-'no timeout/wait forever'. Inference timeout value defaults to this if left
-unset. The macro is used internally in the driver for the available NPU's, thus
-the driver does NOT support setting a timeout other than forever when waiting
-for an NPU to become available (global ethosu_semaphore).
-
-The mutex and semaphore APIs are defined as weak linked functions that can be
-overridden by the user. The APIs are the usual ones and described below:
-
-```c
-// create a mutex by returning back a handle
-void *ethosu_mutex_create(void);
-// lock the given mutex
-int ethosu_mutex_lock(void *mutex);
-// unlock the given mutex
-int ethosu_mutex_unlock(void *mutex);
-
-// create a (binary) semaphore by returning back a handle
-void *ethosu_semaphore_create(void);
-// take from the given semaphore, accepting a timeout (unit impl. defined)
-int ethosu_semaphore_take(void *sem, uint64_t timeout);
-// give from the given semaphore
-int ethosu_semaphore_give(void *sem);
-```
+The default synchronization functions support a single-threaded bare-metal
+application. An RTOS or multicore application must provide the platform-specific
+mutex and semaphore functions. The pack provides code templates for CMSIS-RTOS2
+and native FreeRTOS implementations. See
+<a href="group__ethosu__callback__api.html">Platform-specific functions</a> for
+the hook signatures.
 
 ## Begin/End inference callbacks
 
-The driver provide weak linked functions as hooks to receive callbacks whenever
-an inference begins and ends. The user can override such functions when needed.
-To avoid memory leaks, any allocations done in
-\ref ethosu_inference_begin "ethosu_inference_begin()" must be balanced by a
-corresponding free of the memory in
-\ref ethosu_inference_end "ethosu_inference_end()" callback.
-
-The end callback will always be called if the begin callback has been called,
-including in the event of an interrupt semaphore take timeout.
+The driver provides weak hooks that applications can override to receive
+inference begin and end callbacks:
 
 ```c
 void ethosu_inference_begin(struct ethosu_driver *drv, void *user_arg);
 void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg);
 ```
 
-Note that the `void *user_arg` pointer passed to
+The `user_arg` passed to
 \ref ethosu_invoke_v3 "ethosu_invoke_v3()" or
-\ref ethosu_invoke_async "ethosu_invoke_async()" is the same pointer passed to
-the \ref ethosu_inference_begin "ethosu_inference_begin()" and
-\ref ethosu_inference_end "ethosu_inference_end()" callbacks. For example:
+\ref ethosu_invoke_async "ethosu_invoke_async()" is forwarded to both
+callbacks. For example:
 
 ```c
 void my_function() {
@@ -377,102 +679,16 @@ void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg) {
 }
 ```
 
-For a practical use of these callbacks, see the [PMU example](#pmu-example).
-
-## Driver Configuration
-
-The selected driver component supplies a target-specific configuration file:
-
-| Driver variant | Configuration file    |
-|:---------------|:----------------------|
-| Generic U55    | `ethosu_config_u55.h` |
-| Generic U65    | `ethosu_config_u65.h` |
-| Generic U85    | `ethosu_config_u85.h` |
-
-For CMSIS based projects, the configuration header file is copied to the RTE directory from the pack locally to the project where one may
-modify the configuration defines. Each configuration define provides annotations
-for CMSIS Configuration Wizard and is guarded by `#ifndef`, so it may be changed
-on solution level as well.
-
-The headers configure how the driver programs the NPU.
-
-### Configuration Options
-
-#### Command-stream and base-pointer routing
-
-All three driver variants use the define `NPU_QCONFIG` and `NPU_REGIONCFG_0` to `NPU_REGIONCFG_7`,
-but the selected value has target-specific meaning:
-
-| Define               | Configures Access     |
-| -------------------- | --------------------- |
-| `NPU_QCONFIG`        | command-stream        |
-| `NPU_REGIONCFG_0..7` | constants/arena/cache |
-
-On Ethos-U55 and Ethos-U65, the (?todo which value) value selects an AXI port, outstanding
-transaction counter, and AXI limit entry:
-
-| Value | AXI path        | Limit entry  |
-| ----- | --------------- | ------------ |
-| `0`   | AXI0, counter 0 | `AXI_LIMIT0` |
-| `1`   | AXI0, counter 1 | `AXI_LIMIT1` |
-| `2`   | AXI1, counter 2 | `AXI_LIMIT2` |
-| `3`   | AXI1, counter 3 | `AXI_LIMIT3` |
-
-On Ethos-U85, the value selects `MEM_ATTR0..3` which then specifies the AXI port,
-memory domain, and memory type.
-
-## Logging
-
-The driver logging interface is implemented by the private header
-`source/src/ethosu_log.h`. It is a compile-time facility used by the driver and
-device implementation, rather than a runtime callback API. See
-\ref ethosu_log_api "Logging" for the generated macro reference. The header
-provides the following `printf`-style macros:
-
-| Macro | Output |
-| --- | --- |
-| `LOG()` | An unprefixed message on `stdout`; no newline is added automatically. |
-| `LOG_ERR()` | An error on `stderr`, prefixed with `E:` and the source file and line. |
-| `LOG_WARN()` | A warning on `stdout`, prefixed with `W:`. |
-| `LOG_INFO()` | An informational message on `stdout`, prefixed with `I:`. |
-| `LOG_DEBUG()` | A debug message on `stdout`, prefixed with `D:` and the function name. |
-
-`ETHOSU_LOG_ENABLE` enables or disables all driver logging and defaults to `1`.
-`ETHOSU_LOG_SEVERITY` selects the most verbose severity that is compiled in:
-`ETHOSU_LOG_ERR`, `ETHOSU_LOG_WARN`, `ETHOSU_LOG_INFO`, or
-`ETHOSU_LOG_DEBUG`. The default is `ETHOSU_LOG_WARN`, which includes error and
-warning messages. `LOG()` is not filtered by severity, but is disabled by
-`ETHOSU_LOG_ENABLE`.
-
-The macros write through the C library `stdout` and `stderr` streams. An embedded
-target must therefore retarget these streams to an available output, such as a
-UART, semihosting, or an ITM channel. If no output is required, disable logging
-to avoid pulling the formatted I/O implementation into the application.
-
-For a CMake build, enable debug-level logging as follows:
-
-```bash
-cmake -S source -B build \
-    -DETHOSU_LOG_ENABLE=ON \
-    -DETHOSU_LOG_SEVERITY=debug
-```
-
-The accepted CMake severity values are `err`, `warning`, `info`, and `debug`.
-For other build systems, define the equivalent macros while compiling the driver
-sources, for example:
-
-```text
-ETHOSU_LOG_ENABLE=1
-ETHOSU_LOG_SEVERITY=ETHOSU_LOG_INFO
-```
+For a practical use of these callbacks, see the <a href="#pmu-example">PMU example</a>.
 
 ## Performance Monitoring Unit (PMU)
 
 The driver exposes the Ethos-U PMU through `pmu_ethosu.h`. The API supports a
 64-bit cycle counter and programmable event counters. Ethos-U55 and Ethos-U65
 builds provide four event counters; Ethos-U85 builds provide eight. Use
-\ref ETHOSU_PMU_Get_NumEventCounters "ETHOSU_PMU_Get_NumEventCounters()" when
-code must work with more than one Ethos-U target.
+\ref ETHOSU_PMU_Get_NumEventCountersForDrv
+"ETHOSU_PMU_Get_NumEventCountersForDrv()" when code must work with more than
+one Ethos-U target or with a multi-variant build.
 
 The target-specific `enum ethosu_pmu_event_type` lists the supported events.
 They include NPU and MAC activity or stalls, weight-decoder and activation-output
@@ -482,11 +698,23 @@ symbolic enum values with
 \ref ETHOSU_PMU_Set_EVTYPER "ETHOSU_PMU_Set_EVTYPER()"; do not program hardware
 event numbers directly.
 
+### Monitoring AXI transaction latency
+
+On Ethos-U55 and Ethos-U65, `PMCAXI_CHAN.AXI_CNT_SEL` selects one of the
+outstanding transaction counters listed under
+<a href="#ethos-u55-and-ethos-u65">Ethos-U55 and Ethos-U65</a>, and
+`PMCAXI_CHAN.CH_SEL` selects the AXI channel to monitor. The
+`ETHOSU_PMU_AXI_LATENCY_*` events count transactions matching both selections.
+Other AXI PMU events, such as accepted or completed transactions, data beats,
+and stalls, are reported per AXI port rather than per outstanding transaction
+counter.
+
 The main API groups are:
 
 | API Function | Description |
 |---|---|
 | \ref ETHOSU_PMU_Enable "ETHOSU_PMU_Enable()", \ref ETHOSU_PMU_Disable "ETHOSU_PMU_Disable()" | Enable or disable the PMU |
+| \ref ETHOSU_PMU_Get_NumEventCounters "ETHOSU_PMU_Get_NumEventCounters()", \ref ETHOSU_PMU_Get_NumEventCountersForDrv "ETHOSU_PMU_Get_NumEventCountersForDrv()" | Get the number of counters for the compile-time NPU or a specific driver |
 | \ref ETHOSU_PMU_Set_EVTYPER "ETHOSU_PMU_Set_EVTYPER()", \ref ETHOSU_PMU_Get_EVTYPER "ETHOSU_PMU_Get_EVTYPER()" | Select an event |
 | \ref ETHOSU_PMU_CYCCNT_Reset "ETHOSU_PMU_CYCCNT_Reset()", \ref ETHOSU_PMU_EVCNTR_ALL_Reset "ETHOSU_PMU_EVCNTR_ALL_Reset()" | Reset counters |
 | \ref ETHOSU_PMU_CNTR_Enable "ETHOSU_PMU_CNTR_Enable()", \ref ETHOSU_PMU_CNTR_Disable "ETHOSU_PMU_CNTR_Disable()" | Enable or disable counters |
@@ -544,9 +772,9 @@ The following example counts NPU-active and NPU-idle events and records the NPU
 cycle count for one inference. Pass a pointer to `struct pmu_results` as the
 `user_arg` to \ref ethosu_invoke_v3 "ethosu_invoke_v3()" or
 \ref ethosu_invoke_async "ethosu_invoke_async()". The callbacks use
-\ref ETHOSU_PMU_Get_NumEventCounters "ETHOSU_PMU_Get_NumEventCounters()" so the
-same pattern can be extended with additional events on targets that provide more
-counters.
+\ref ETHOSU_PMU_Get_NumEventCountersForDrv
+"ETHOSU_PMU_Get_NumEventCountersForDrv()" so the same pattern can be extended
+with additional events on targets that provide more counters.
 
 ```c
 #include "ethosu_driver.h"
@@ -568,7 +796,7 @@ struct pmu_results {
 void ethosu_inference_begin(struct ethosu_driver *drv, void *user_arg)
 {
     struct pmu_results *results = (struct pmu_results *)user_arg;
-    uint32_t num_events = ETHOSU_PMU_Get_NumEventCounters();
+    uint32_t num_events = ETHOSU_PMU_Get_NumEventCountersForDrv(drv);
 
     if (num_events > PMU_EXAMPLE_EVENT_COUNT) {
         num_events = PMU_EXAMPLE_EVENT_COUNT;
@@ -601,21 +829,3 @@ void ethosu_inference_end(struct ethosu_driver *drv, void *user_arg)
     ETHOSU_PMU_Disable(drv);
 }
 ```
-
-ToDo: does CMSIS-Debugger offer a dialog for Ethos_PMU?
-
-## Bring-up checklist
-
-- Confirm the NPU identity and MAC configuration match the Vela compiler target.
-- Confirm the command stream and every used base region are NPU-accessible.
-- Wire the interrupt to \ref ethosu_irq_handler "ethosu_irq_handler()" and
-  exercise a timeout path.
-- Verify cache clean/invalidate behavior with caches enabled, not only disabled.
-- Check address remapping for TCM or aliased memory windows.
-- Start with one known-good, fully supported model before testing a large graph.
-- Use PMU cycle, activity, stall, and memory events when validating performance
-  or investigating a difference from compiler estimates.
-- Capture driver fault information before resetting after an error.
-
-Continue with the end-to-end [Integration](../integration/index.html) checklist
-before treating driver bring-up as complete.
