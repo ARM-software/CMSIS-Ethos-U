@@ -1,0 +1,20 @@
+out/
+tmp/
+__pycache__/
+.cmsis/
+
+*.cbuild.yml
+*.cbuild-idx.yml
+*.cbuild-set.yml
+*.cbuild-pack.yml
+*.cbuild-mlops.yml
+*.cbuild-run.yml
+
+
+# Generated per build context (RTE_Components.h, Pre_Include_Global.h).
+# The RTE *config* files, and their .base@<version> siblings, stay tracked.
+RTE/_*
+
+# Vela scratch output and the operator-support report it drops in the CWD
+Model/hello_world/gen/build/
+SUPPORTED_OPS.md

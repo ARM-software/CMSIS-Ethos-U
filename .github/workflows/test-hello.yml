@@ -1,0 +1,98 @@
+# Copyright (c) 2026 Arm Limited (or its affiliates). All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+
+name: Test Hello-Ethos-U
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: ${{ matrix.target-type }} Debug on FVP
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # toolchain, solution, target-type, accelerator, system, memory, FVP, FVP config, image
+          - { tool: AC6, solution: Hello-Ethos-U55, target-type: SSE-300-U55, accelerator: ethos-u55-128, system: Ethos_U55_High_End_Embedded, memory: Shared_Sram, fvp: FVP_Corstone_SSE-300_Ethos-U55, fvp-config: Board/Corstone-300/fvp_config_u55.txt, image: out/Hello-Ethos-U/SSE-300-U55/Debug/Hello-Ethos-U.axf }
+          - { tool: AC6, solution: Hello-Ethos-U65, target-type: SSE-300-U65, accelerator: ethos-u65-256, system: Ethos_U65_Embedded,          memory: Shared_Sram, fvp: FVP_Corstone_SSE-300_Ethos-U65, fvp-config: Board/Corstone-300/fvp_config_u65.txt, image: out/Hello-Ethos-U/SSE-300-U65/Debug/Hello-Ethos-U.axf }
+          - { tool: AC6, solution: Hello-Ethos-U85, target-type: SSE-320-U85, accelerator: ethos-u85-256, system: Ethos_U85_SYS_DRAM_Mid,      memory: Shared_Sram, fvp: FVP_Corstone_SSE-320,           fvp-config: Board/Corstone-320/fvp_config_u85.txt, image: out/Hello-Ethos-U/SSE-320-U85/Debug/Hello-Ethos-U.axf }
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: examples/Hello-Ethos-U/Model/hello_world/gen/requirements.txt
+
+      - name: Install Vela
+        run: |
+          python -m pip install ethos-u-vela
+          vela --version
+
+      - name: Activate vcpkg environment
+        uses: ARM-software/cmsis-actions/vcpkg@v1
+        with:
+          config: examples/Hello-Ethos-U/vcpkg-configuration.json
+          cache: Hello-Ethos-U
+
+      - name: Activate Arm tool license
+        uses: ARM-software/cmsis-actions/armlm@v1
+
+      - name: Initialize CMSIS pack root
+        run: |
+          cpackget init https://www.keil.com/pack/index.pidx
+          cpackget update-index
+
+      - name: Register local CMSIS-Ethos-U pack
+        run: cpackget add ./ARM.CMSIS-Ethos-U.pdsc
+
+      - name: Compile models with Vela
+        run: |
+          python .github/scripts/compile_vela_models.py \
+            --accelerator-config "${{ matrix.accelerator }}" \
+            --config Arm/vela.ini \
+            --system-config "${{ matrix.system }}" \
+            --memory-mode "${{ matrix.memory }}"
+
+      - name: Build ${{ matrix.solution }} for ${{ matrix.target-type }}
+        working-directory: ./examples/Hello-Ethos-U
+        run: |
+          cbuild "${{ matrix.solution }}.csolution.yml" \
+            --active "${{ matrix.target-type }}" \
+            --toolchain "${{ matrix.tool }}" \
+            --packs
+
+      - name: Run ${{ matrix.target-type }} FVP
+        working-directory: ./examples/Hello-Ethos-U
+        run: |
+          set -o pipefail
+          "${{ matrix.fvp }}" \
+            -f "${{ matrix.fvp-config }}" \
+            -a "${{ matrix.image }}" \
+            --simlimit 120 2>&1 | tee fvp.log
+
+          grep -Fq "[PASS] hello_world" fvp.log
+          grep -Fq "[PASS] tiny_cnn" fvp.log
+          grep -Fq "TEST RESULT: PASS" fvp.log
+
+      - name: Upload build and FVP log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.solution }}
+          path: |
+            ./examples/Hello-Ethos-U/out/Hello-Ethos-U
+            ./examples/Hello-Ethos-U/fvp.log
+          if-no-files-found: warn

@@ -10,17 +10,18 @@
       <license name="LICENSE" title="Apache 2.0 open-source license" spdx="Apache-2.0"/>
     </licenseSet>
   </licenseSets>
-  <repository type="git">https://github.com/ARM-software/cmsis-ethos-u.git</repository>
+  <repository type="git">https://github.com/VladimirUmek/Ethos-U.git</repository>
 
   <releases>
     <release version="1.0.0-dev">
-      Active development...
+      Initial release
+      Ethos-U driver supports multi-variant Ethos-U systems
     </release>
   </releases>
 
   <components>
-    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U55" Cversion="1.26.2">
-      <description>Generic Driver for Ethos-U55</description>
+    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U55" Cversion="1.99.0">
+      <description>Generic single-variant driver for Ethos-U55</description>
       <RTE_Components_h>
         #define RTE_ETHOS_U_CORE_DRIVER
       </RTE_Components_h>
@@ -30,10 +31,11 @@
         #define ETHOSU_ARCH u55
       </Pre_Include_Global_h>
       <files>
-        <file category="header"  name="source/config/ethosu_config_u55.h" attr="config" version="1.0.0"/>
-        <file category="sourceC" name="source/src/ethosu_device_u55_u65.c"/>
+        <file category="header" name="source/src/ethosu_config_u55.h"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u55.c"/>
         <file category="sourceC" name="source/src/ethosu_driver.c"/>
         <file category="sourceC" name="source/src/ethosu_pmu.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u55.c"/>
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
@@ -41,8 +43,8 @@
         <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
       </files>
     </component>
-    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U65" Cversion="1.26.2">
-      <description>Generic Driver for Ethos-U65</description>
+    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U65" Cversion="1.99.0">
+      <description>Generic single-variant driver for Ethos-U65</description>
       <RTE_Components_h>
         #define RTE_ETHOS_U_CORE_DRIVER
       </RTE_Components_h>
@@ -52,10 +54,11 @@
         #define ETHOSU_ARCH u65
       </Pre_Include_Global_h>
       <files>
-        <file category="header"  name="source/config/ethosu_config_u65.h" attr="config" version="1.0.0"/>
-        <file category="sourceC" name="source/src/ethosu_device_u55_u65.c"/>
+        <file category="header" name="source/src/ethosu_config_u65.h"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u65.c"/>
         <file category="sourceC" name="source/src/ethosu_driver.c"/>
         <file category="sourceC" name="source/src/ethosu_pmu.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u65.c"/>
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
@@ -63,8 +66,8 @@
         <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
       </files>
     </component>
-    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U85" Cversion="1.26.2">
-      <description>Generic Driver for Ethos-U85</description>
+    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U85" Cversion="1.99.0">
+      <description>Generic single-variant driver for Ethos-U85</description>
       <RTE_Components_h>
         #define RTE_ETHOS_U_CORE_DRIVER
       </RTE_Components_h>
@@ -74,10 +77,39 @@
         #define ETHOSU_ARCH u85
       </Pre_Include_Global_h>
       <files>
-        <file category="header"  name="source/config/ethosu_config_u85.h" attr="config" version="1.0.0"/>
-        <file category="sourceC" name="source/src/ethosu_device_u85.c"/>
+        <file category="header" name="source/src/ethosu_config_u85.h"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u85.c"/>
         <file category="sourceC" name="source/src/ethosu_driver.c"/>
         <file category="sourceC" name="source/src/ethosu_pmu.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u85.c"/>
+        <file category="include" name="source/src/"/>
+        <file category="include" name="source/include/"/>
+
+        <file category="source" name="interface/ethosu_os_rtos2.c" attr="template" select="CMSIS-RTOS2 Interface"/>
+        <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
+      </files>
+    </component>
+    <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Multi-Variant" Cversion="1.99.0">
+      <description>Generic multi-variant driver for Ethos-U55, Ethos-U65, and Ethos-U85</description>
+      <RTE_Components_h>
+        #define RTE_ETHOS_U_CORE_DRIVER
+      </RTE_Components_h>
+      <Pre_Include_Global_h>
+        // enabling global pre includes
+        #define ETHOSU_MULTI_VARIANT
+      </Pre_Include_Global_h>
+      <files>
+        <file category="header" name="source/src/ethosu_config_u55.h"/>
+        <file category="header" name="source/src/ethosu_config_u65.h"/>
+        <file category="header" name="source/src/ethosu_config_u85.h"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u55.c"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u65.c"/>
+        <file category="sourceC" name="source/src/ethosu_backend_u85.c"/>
+        <file category="sourceC" name="source/src/ethosu_driver.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u55.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u65.c"/>
+        <file category="sourceC" name="source/src/ethosu_pmu_u85.c"/>
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
@@ -89,21 +121,19 @@
 
 
   <examples>
-<!--
-    <example name="Hello-Ethos-U55" doc="README.md" folder="examples/Hello-Ethos-U55">
+    <example name="Hello-Ethos-U55" doc="README.md" folder="examples/Hello-Ethos-U">
       <description>Get started template for Ethos-U55 targets</description>
       <project>
         <environment name="csolution" load="Hello-Ethos-U55.csolution.yml"/>
       </project>
     </example>
-    <example name="Hello-Ethos-U65" doc="README.md" folder="examples/Hello-Ethos-U65">
+    <example name="Hello-Ethos-U65" doc="README.md" folder="examples/Hello-Ethos-U">
       <description>Get started template for Ethos-U65 targets</description>
       <project>
         <environment name="csolution" load="Hello-Ethos-U65.csolution.yml"/>
       </project>
     </example>
--->
-    <example name="Hello-Ethos-U85" doc="README.md" folder="examples/Hello-Ethos-U85">
+    <example name="Hello-Ethos-U85" doc="README.md" folder="examples/Hello-Ethos-U">
       <description>Get started template for Ethos-U85 targets</description>
       <project>
         <environment name="csolution" load="Hello-Ethos-U85.csolution.yml"/>

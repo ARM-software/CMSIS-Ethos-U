@@ -1,0 +1,18 @@
+CompileFlags:
+  CompilationDatabase: c:\w\Ethos\Ethos-U\examples\Hello-Ethos-U\out\Hello-Ethos-U\SSE-300-U55\Debug
+
+---
+If:
+  PathMatch: .*\.(c|C|h)$
+CompileFlags:
+  Add:
+    - -include
+    - c:\w\Ethos\Ethos-U\examples\Hello-Ethos-U\out\Hello-Ethos-U\SSE-300-U55\Debug\compile_macros_c.h
+
+---
+If:
+  PathMatch: .*\.(cpp|c\+\+|C\+\+|cxx|cc|CC|hpp)$
+CompileFlags:
+  Add:
+    - -include
+    - c:\w\Ethos\Ethos-U\examples\Hello-Ethos-U\out\Hello-Ethos-U\SSE-300-U55\Debug\compile_macros_cxx.h

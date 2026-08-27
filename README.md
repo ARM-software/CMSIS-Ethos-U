@@ -4,21 +4,32 @@
 
 # Arm CMSIS Ethos-U
 
-This repository contains the source of the CMSIS software pack [`Arm::CMSIS-Ethos-U`](https://www.open-cmsis-pack.org/) containing the Arm Ethos-U NPU core driver and supporting documentation. The driver supplies the low-level interface between embedded software and Arm Ethos-U55, Ethos-U65, and Ethos-U85 NPUs.
+This repository contains the source of the CMSIS software pack [`ARM::CMSIS-Ethos-U`](https://www.open-cmsis-pack.org/) containing the Arm Ethos-U NPU core driver and supporting documentation. The driver supplies the low-level interface between embedded software and Arm Ethos-U55, Ethos-U65, and Ethos-U85 NPUs.
 
-The pack exposes a generic driver component for each supported NPU family. Applications can use the driver to initialize an NPU, invoke optimized neural-network command streams synchronously or asynchronously, handle interrupts, and collect performance-monitoring data.
+The pack provides a single-variant driver component for each supported NPU
+family and a multi-variant component containing support for all three families.
+A single-variant build selects the NPU at compile time. A multi-variant build
+selects the NPU product and MAC configuration for each driver instance at run
+time.
 
-Refer to the [CMSIS-Ethos-U documentation](https://https://arm-software.github.io/CMSIS-Ethos-U/main/index.html) for architecture concepts, Vela configuration, driver usage, and system-integration guidance.
+Applications can use the driver to initialize an NPU, configure memory access,
+invoke Vela-optimized ML models synchronously or asynchronously, handle
+interrupts, and collect performance-monitoring data.
+
+Refer to the [CMSIS-Ethos-U documentation](https://arm-software.github.io/CMSIS-Ethos-U/main/general/index.html) for architecture concepts, Vela configuration, driver usage, and system-integration guidance.
 
 ## Supported NPUs
 
-| NPU | Component variant | Device implementation |
+| NPU support | Component variant | Backend implementation |
 |---|---|---|
-| [Arm Ethos-U55](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55) | `Generic U55` | `source/src/ethosu_device_u55_u65.c` |
-| [Arm Ethos-U65](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u65) | `Generic U65` | `source/src/ethosu_device_u55_u65.c` |
-| [Arm Ethos-U85](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u85) | `Generic U85` | `source/src/ethosu_device_u85.c` |
+| [Arm Ethos-U55](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u55) | `Generic U55` | `source/src/ethosu_backend_u55.c` |
+| [Arm Ethos-U65](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u65) | `Generic U65` | `source/src/ethosu_backend_u65.c` |
+| [Arm Ethos-U85](https://www.arm.com/products/silicon-ip-cpu/ethos/ethos-u85) | `Generic U85` | `source/src/ethosu_backend_u85.c` |
+| Ethos-U55, Ethos-U65, and Ethos-U85 | `Multi-Variant` | All three backends |
 
-The selected pack component supplies the corresponding configuration header and preprocessor definitions.
+The selected single-variant component supplies the corresponding configuration
+header and NPU-family definition. The `Multi-Variant` component supplies all
+three backends and defines `ETHOSU_MULTI_VARIANT`.
 
 ## Documentation
 
@@ -26,7 +37,7 @@ The documentation is organized into five sections:
 
 - [General](https://arm-software.github.io/CMSIS-Ethos-U/main/general/index.html) introduces the architecture, terminology, memory modes, and deployment lifecycle.
 - [Vela](https://arm-software.github.io/CMSIS-Ethos-U/main/vela/index.html) covers compiler installation, model compilation, configuration, memory placement, and diagnostics.
-- [Driver](https://arm-software.github.io/CMSIS-Ethos-U/main/driver/index.html) describes the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
+- [Driver](https://arm-software.github.io/CMSIS-Ethos-U/main/driver/index.html) describes single-variant and multi-variant configuration, memory access, the core-driver API, execution contract, platform hooks, PMU, and bring-up checks.
 - [Integration](https://arm-software.github.io/CMSIS-Ethos-U/main/integration/index.html) connects Vela output to linker placement, memory attributes, cache policy, driver configuration, and system memory budgeting.
 - [Zephyr](https://arm-software.github.io/CMSIS-Ethos-U/main/zephyr/index.html) explains how to configure, build, and run Ethos-U-accelerated Zephyr applications.
 
@@ -36,17 +47,17 @@ This is a list of the relevant files and directories.
 
 | File or directory | Description |
 |---|---|
-| [`ARM.CMSIS-Ethos-U.pdsc`](./ARM.CMSIS-Ethos-U.pdsc) | Open-CMSIS-Pack description and Ethos-U driver component definitions. |
-| [`source`](./source/) | Core-driver source, public headers, NPU configuration headers, CMake build files, and Zephyr module metadata. |
-| [`source/README.md`](./source/README.md) | Driver build instructions, API usage, cache-coherency requirements, and platform hooks. |
-| [`documentation`](./documentation/) | Doxygen source, generated HTML documentation, styles, and authoring guidance. |
-| [`overview`](./overview/) | Overview content included in the generated software pack. |
-| [`gen_pack.sh`](./gen_pack.sh) | Script that generates and validates the CMSIS software pack. |
-| [`.github/workflows`](./.github/workflows/) | GitHub Actions for building the pack and publishing its documentation. |
+| [`source`](./source/) | Core-driver source, public headers, single- and multi-variant NPU support, CMake build files, and Zephyr module metadata. |
+| [`interface`](./interface/) | CMSIS-RTOS2 and data-cache interface templates supplied by the driver components. |
+| [`examples`](./examples/Hello-Ethos-U/) | CMSIS-Toolbox example solutions for Ethos-U55, Ethos-U65, and Ethos-U85, including Corstone targets, TFLM models, and self-checking tests. |
+| [`documentation`](./documentation/) | Doxygen sources for the general, Vela, driver, integration, and Zephyr guides, plus generated web content, styles, and authoring guidance. |
+| [`overview`](./overview/) | Pack overview content and images displayed by CMSIS tooling. |
+| [`.github`](./.github/) | Workflows that test the example, build the pack, and publish documentation. |
 
 ## Building the Driver using CMake
 
-Projects that build the driver directly with CMake select the target through `ETHOSU_TARGET_NPU_CONFIG`, for example `ethos-u55-128`.
+Projects that build a single-variant driver directly with CMake select the target
+through `ETHOSU_TARGET_NPU_CONFIG`, for example `ethos-u55-128`.
 
 The driver is intended to be cross-compiled for the Arm Cortex-M processor used by the target system. Configure the toolchain, processor, and Ethos-U configuration before building:
 
@@ -57,6 +68,11 @@ cmake -S source -B build \
   -DETHOSU_TARGET_NPU_CONFIG=ethos-u<nr>-<macs>
 cmake --build build
 ```
+
+For a multi-variant build, set `ETHOSU_MULTI_VARIANT=ON` instead of selecting
+`ETHOSU_TARGET_NPU_CONFIG`. The build includes support for all three NPU
+families. Applications use `ethosu_init_ex()` and `ethosu_reserve_driver_ex()`
+to select the product and MAC configuration at run time.
 
 When using a toolchain from the Ethos-U core platform, set `TARGET_CPU` instead of `CMAKE_SYSTEM_PROCESSOR`. See the [driver README](./source/README.md) for API examples and integration requirements.
 

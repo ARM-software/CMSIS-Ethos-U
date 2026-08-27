@@ -1,0 +1,56 @@
+solution:
+  description: TensorFlow Lite Micro on Ethos-U65, running as an integration test
+    on the Corstone-300 FVP
+  created-for: CMSIS-Toolbox@2.14.0
+  cdefault:
+
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+
+  compiler: AC6
+
+  packs:
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
+
+  target-types:
+    - type: SSE-300-U65
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      device: ARM::SSE-300-MPS3
+      variables:
+        - Board-Layer: ./Board/Corstone-300/Board-U65.clayer.yml
+      target-set:
+        - set:
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300_Ethos-U65
+            config-file: ./Board/Corstone-300/fvp_config_u65.txt
+            args: ""
+          images:
+            - project-context: Hello-Ethos-U.Debug
+
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  projects:
+    - project: ./Hello-Ethos-U.cproject.yml
+
+  mlops:
+    description: TinyCNN int8 image classifier for Ethos-U65
+    npu:
+      type: Ethos-U65
+      macs: 256
+    vela:
+      system: Ethos_U65_Embedded
+      memory: Shared_Sram
+    model:
+      clayer: ./Model/ML-MyModels.clayer.yml
+      name: TinyCNN
+#    simulator:
+#      target-type: SSE-300-U65

@@ -2,9 +2,15 @@
 \defgroup ethosu_driver_api Ethos-U Driver API
 \brief Driver definitions, types, and functions.
 \details
-The public driver interface is provided by two headers. This group contains the
-core driver types, functions, and platform-specific functions from
-\c ethosu_driver.h. Compile-time logging from the private \c ethosu_log.h header
-is documented in \ref ethosu_log_api. The Performance Monitoring Unit interface
-from \c pmu_ethosu.h is documented in \ref ethosu_pmu_api.
+The driver uses the following header files:
+
+| Header | Description |
+| --- | --- |
+| \c ethosu_driver.h | Driver lifecycle, inference, reservation, and platform-specific functions. |
+| \c ethosu_device.h | Device descriptors, run-time configuration, and per-driver user operations. |
+| \c ethosu_types.h | Shared driver and hardware types and constants. |
+| \c pmu_ethosu.h | Public umbrella header for the \ref ethosu_pmu_api. |
+| \c ethosu_pmu_funcs.h | \ref ethosu_pmu_api function declarations. |
+| \c ethosu_pmu_types.h | \ref ethosu_pmu_api types, event identifiers, and counter masks. |
+| \c ethosu_log.h | Private compile-time logging interface documented in \ref ethosu_log_api. |
 */

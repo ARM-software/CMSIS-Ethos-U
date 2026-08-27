@@ -29,7 +29,15 @@ See \ref pmu-example for a complete measurement example.
 
 /**
 \fn uint32_t ETHOSU_PMU_Get_NumEventCounters(void)
-\details Returns the number of event counters implemented by the configured NPU.
+\details Returns the number of event counters implemented by the compile-time
+selected NPU. This function is available only in a single-variant build.
+*/
+
+/**
+\fn uint32_t ETHOSU_PMU_Get_NumEventCountersForDrv(struct ethosu_driver *drv)
+\param drv Driver handle.
+\details Returns the number of event counters implemented by the NPU associated
+with the supplied driver. This function is available in both build modes.
 */
 
 /**
@@ -44,6 +52,7 @@ See \ref pmu-example for a complete measurement example.
 
 /**
 \fn void ETHOSU_PMU_EVCNTR_ALL_Reset(struct ethosu_driver *drv)
+\param drv Driver handle.
 \details Resets all programmable event counters to zero.
 */
 
