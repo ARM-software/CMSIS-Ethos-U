@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['memory_20modes_20at_20a_20glance_0',['System configuration and memory modes at a glance',['../index.html#system-configuration-and-memory-modes-at-a-glance',1,'']]],
-  ['modes_20at_20a_20glance_1',['System configuration and memory modes at a glance',['../index.html#system-configuration-and-memory-modes-at-a-glance',1,'']]]
+  ['inference_20runs_0',['How an Ethos-U inference runs',['../index.html#how-an-ethos-u-inference-runs',1,'']]],
+  ['is_20the_20command_20stream_1',['What is the command stream?',['../index.html#what-is-the-command-stream',1,'']]]
 ];

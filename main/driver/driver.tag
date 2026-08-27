@@ -1,9 +1,72 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
-<tagfile doxygen_version="1.17.0" doxygen_gitid="65a43c0aba45cc23b3ca11b6b5334d4eea931726">
+<tagfile doxygen_version="1.18.0" doxygen_gitid="8e760943e5d9581a444cf327f43a0b4d20d29482">
   <compound kind="struct">
     <name>ethosu_config</name>
     <filename>group__ethosu__driver__structs.html</filename>
     <anchor>structethosu__config</anchor>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>macs_per_cc</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>a8dda681b678222fd19ee74b426abddc8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>cmd_stream_version</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>a27698b004706670a88b442c438991843</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>custom_dma</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>ad1557eaf4f22bc8e02c6d4f189d38965</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__device</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device_caps</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__device__caps</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device_config</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__device__config</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device_desc</name>
+    <filename>structethosu__device__desc.html</filename>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device_ops</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__device__ops</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_device_user_ops</name>
+    <filename>structethosu__device__user__ops.html</filename>
+    <member kind="variable">
+      <type>uint64_t(*)</type>
+      <name>address_remap</name>
+      <anchorfile>structethosu__device__user__ops.html</anchorfile>
+      <anchor>a167e1d0dd49e7bc7b55d5fa24085f5d1</anchor>
+      <arglist>(uint64_t address, int index)</arglist>
+    </member>
+    <member kind="variable">
+      <type>unsigned int(*)</type>
+      <name>config_select</name>
+      <anchorfile>structethosu__device__user__ops.html</anchorfile>
+      <anchor>a175b2bedf3384fd298edc407bcdb42ab</anchor>
+      <arglist>(uint64_t address, int index)</arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>ethosu_driver</name>
@@ -24,11 +87,70 @@
     <name>ethosu_id</name>
     <filename>group__ethosu__driver__structs.html</filename>
     <anchor>structethosu__id</anchor>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>version_status</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>ab83e9ec3a92acc40bbf7f1313a743e79</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>version_minor</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>af8aaea86efd47147587131c90e22bf0e</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>version_major</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>ae6af13393bbb4dabcb65cc1d5f4e9cc8</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>product_major</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>a16172a7c18f4f087e9f80857f53a2b82</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>arch_patch_rev</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>ad26eee8751d4b809c0cbbf303232f079</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>arch_minor_rev</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>ac191149a058dad393339d78dc2523e69</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>uint32_t</type>
+      <name>arch_major_rev</name>
+      <anchorfile>group__ethosu__driver__structs.html</anchorfile>
+      <anchor>a33cb5b194353a78ba0561cde8854e0b1</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="struct">
     <name>ethosu_job</name>
     <filename>group__ethosu__driver__structs.html</filename>
     <anchor>structethosu__job</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_pmu_desc</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__pmu__desc</anchor>
+  </compound>
+  <compound kind="struct">
+    <name>ethosu_pmu_ops</name>
+    <filename>group__ethosu__driver__structs.html</filename>
+    <anchor>structethosu__pmu__ops</anchor>
   </compound>
   <compound kind="group">
     <name>ethosu_driver_api</name>
@@ -69,6 +191,12 @@
     <class kind="struct">ethosu_id</class>
     <class kind="struct">ethosu_config</class>
     <class kind="struct">ethosu_hw_info</class>
+    <class kind="struct">ethosu_pmu_ops</class>
+    <class kind="struct">ethosu_pmu_desc</class>
+    <class kind="struct">ethosu_device_ops</class>
+    <class kind="struct">ethosu_device_caps</class>
+    <class kind="struct">ethosu_device</class>
+    <class kind="struct">ethosu_device_config</class>
   </compound>
   <compound kind="group">
     <name>ethosu_public_api</name>
@@ -80,6 +208,13 @@
       <anchorfile>group__ethosu__public__api.html</anchorfile>
       <anchor>gae021e7e1e40a33303dcc17041a1f2911</anchor>
       <arglist>(struct ethosu_driver *drv, void *const base_address, const void *fast_memory, const size_t fast_memory_size, uint32_t secure_enable, uint32_t privilege_enable)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>ethosu_init_ex</name>
+      <anchorfile>group__ethosu__public__api.html</anchorfile>
+      <anchor>ga6fa5aa9f7aeb278d80a55cd7f5d9f69c</anchor>
+      <arglist>(struct ethosu_driver *drv, const struct ethosu_device_desc *dev_desc, struct ethosu_device_config *dev_config, struct ethosu_device_user_ops *dev_user_ops, void *const base_address, const void *fast_memory, const size_t fast_memory_size, uint32_t secure_enable, uint32_t privilege_enable)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -139,6 +274,20 @@
     </member>
     <member kind="function">
       <type>int</type>
+      <name>ethosu_invoke_auto</name>
+      <anchorfile>group__ethosu__public__api.html</anchorfile>
+      <anchor>ga426c40c0d95ee157b559234ef677068b</anchor>
+      <arglist>(const void *custom_data_ptr, const int custom_data_size, uint64_t *const base_addr, const size_t *base_addr_size, const int num_base_addr, void *user_arg)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>ethosu_get_product_config_from_cop_data</name>
+      <anchorfile>group__ethosu__public__api.html</anchorfile>
+      <anchor>gaadd6cc01ebbc92af25116ca97a3f14a2</anchor>
+      <arglist>(const void *custom_data_ptr, const int custom_data_size, uint32_t *product_out, uint32_t *log2_macs_out)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
       <name>ethosu_wait</name>
       <anchorfile>group__ethosu__public__api.html</anchorfile>
       <anchor>ga33e63dcf2625e5b10d07193490b6323b</anchor>
@@ -150,6 +299,13 @@
       <anchorfile>group__ethosu__public__api.html</anchorfile>
       <anchor>ga92c30eeceb5152d6f06ff9c5859a1381</anchor>
       <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>struct ethosu_driver *</type>
+      <name>ethosu_reserve_driver_ex</name>
+      <anchorfile>group__ethosu__public__api.html</anchorfile>
+      <anchor>ga26af2033e1825f8aefe5e25c8a5eb7ce</anchor>
+      <arglist>(uint32_t product, uint32_t log2_macs)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -382,6 +538,13 @@
       <anchorfile>group__ethosu__pmu__api.html</anchorfile>
       <anchor>ga6e52be0fc9b15f9351e83698bd9b5888</anchor>
       <arglist>(void)</arglist>
+    </member>
+    <member kind="function">
+      <type>uint32_t</type>
+      <name>ETHOSU_PMU_Get_NumEventCountersForDrv</name>
+      <anchorfile>group__ethosu__pmu__api.html</anchorfile>
+      <anchor>ga6f27ab539babbec56b72cdbc5a190f39</anchor>
+      <arglist>(struct ethosu_driver *drv)</arglist>
     </member>
     <member kind="function">
       <type>enum ethosu_pmu_event_type</type>

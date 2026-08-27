@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['semaphores_0',['Mutex and semaphores',['../index.html#mutex-and-semaphores',1,'']]],
-  ['software_20component_1',['CMSIS Software component',['../index.html#cmsis-software-component',1,'']]],
-  ['source_20code_2',['Ethos-U driver source code',['../index.html#ethos-u-driver-source-code',1,'']]],
-  ['specific_20functions_3',['Platform-specific functions',['../index.html#platform-specific-functions',1,'']]],
-  ['stream_20and_20base_20pointer_20routing_4',['Command-stream and base-pointer routing',['../index.html#command-stream-and-base-pointer-routing',1,'']]],
-  ['synchronous_20invocation_5',['Synchronous invocation',['../index.html#synchronous-invocation',1,'']]]
+  ['performance_20monitoring_20unit_20pmu_0',['Performance Monitoring Unit (PMU)',['../index.html#performance-monitoring-unit-pmu',1,'']]],
+  ['platform_20specific_20functions_1',['Platform-specific functions',['../index.html#platform-specific-functions',1,'']]],
+  ['pmu_2',['Performance Monitoring Unit (PMU)',['../index.html#performance-monitoring-unit-pmu',1,'']]],
+  ['pmu_20events_3',['Interpreting PMU events',['../index.html#interpreting-pmu-events',1,'']]],
+  ['pmu_20example_4',['PMU example',['../index.html#pmu-example',1,'']]],
+  ['pointers_5',['Command stream regions and base pointers',['../index.html#command-stream-regions-and-base-pointers',1,'']]]
 ];

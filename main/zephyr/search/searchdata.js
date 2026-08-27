@@ -3,8 +3,9 @@ var indexSectionsWithContent =
   0: "3abcdefhiklmnprstuvwz",
   1: "e",
   2: "e",
-  3: "adeflmpsu",
-  4: "3abcdefhiknprstvwz"
+  3: "acmpv",
+  4: "adeflmpsu",
+  5: "3abcdefhiknprstvwz"
 };
 
 var indexSectionNames =
@@ -12,8 +13,9 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "functions",
-  3: "groups",
-  4: "pages"
+  3: "variables",
+  4: "groups",
+  5: "pages"
 };
 
 var indexSectionLabels =
@@ -21,7 +23,8 @@ var indexSectionLabels =
   0: "All",
   1: "Data Structures",
   2: "Functions",
-  3: "Modules",
-  4: "Pages"
+  3: "Variables",
+  4: "Modules",
+  5: "Pages"
 };
 

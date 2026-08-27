@@ -28,27 +28,34 @@ var NAVTREE =
     [ "Starting point", "index.html#starting-point", [
       [ "Determine the memory budget", "index.html#determine-the-memory-budget", null ]
     ] ],
-    [ "Integration workflow", "index.html#integration-workflow", [
-      [ "General integration guidance", "index.html#general-integration-guidance", [
-        [ "Example: Move the tensor arena from SRAM to external DRAM", "index.html#example-move-the-tensor-arena-from-sram-to-external-dram", null ]
+    [ "Integration workflow", "index.html#integration-workflow", null ],
+    [ "Tutorial: Create an Ethos-U application", "index.html#tutorial-create-an-ethos-u-application", [
+      [ "Start with an example", "index.html#start-with-an-example", null ],
+      [ "Step 1: Select the MCU and create the project", "index.html#step-1-select-the-mcu-and-create-the-project", [
+        [ "Add a new target to the solution", "index.html#add-a-new-target-to-the-solution", null ],
+        [ "Update MLOps information", "index.html#update-mlops-information", [
+          [ "Stage 1: Update the Ethos-U configuration", "index.html#stage-1-update-the-ethos-u-configuration", null ],
+          [ "Stage 2: Verify and update the Vela configuration", "index.html#stage-2-verify-and-update-the-vela-configuration", null ]
+        ] ],
+        [ "Configure 256 MACs for FVP simulation", "index.html#configure-256-macs-for-fvp-simulation", null ]
       ] ],
-      [ "Add ML model and configuration to version control", "index.html#add-ml-model-and-configuration-to-version-control", null ]
+      [ "Step 2: Compile the ML model", "index.html#step-2-compile-the-ml-model", [
+        [ "Update ML models of the example", "index.html#update-ml-models-of-the-example", null ],
+        [ "Add application ML model", "index.html#add-application-ml-model", null ]
+      ] ],
+      [ "Step 3: Configure memory placement", "index.html#step-3-configure-memory-placement", [
+        [ "Linker placement", "index.html#linker-placement", null ],
+        [ "MPU/SAU and cache attributes", "index.html#mpusau-and-cache-attributes", null ],
+        [ "Driver region settings", "index.html#driver-region-settings", null ]
+      ] ],
+      [ "Step 4: Complete application integration", "index.html#step-4-complete-application-integration", null ],
+      [ "Step 5: Validate and tune", "index.html#step-5-validate-and-tune", null ]
     ] ],
-    [ "Create the <em>csolution project</em>", "index.html#create-the-csolution-project", [
-      [ "Use a project example and add device", "index.html#use-a-project-example-and-add-device", null ],
-      [ "Add MLOps information", "index.html#add-mlops-information", null ],
-      [ "Add ML model layer", "index.html#add-ml-model-layer", null ]
-    ] ],
-    [ "Compile the ML model for the device", "index.html#compile-the-ml-model-for-the-device", null ],
-    [ "Configure memory placement and the linker script", "index.html#configure-memory-placement-and-the-linker-script", null ],
-    [ "Complete application integration", "index.html#complete-application-integration", [
-      [ "Troubleshoot an inference that does not complete", "index.html#troubleshoot-an-inference-that-does-not-complete", null ]
-    ] ],
-    [ "Validate and tune", "index.html#validate-and-tune", null ],
-    [ "Ethos-U configuration", "index.html#ethos-u-configuration", null ],
-    [ "Linker configuration", "index.html#linker-configuration", null ],
-    [ "Driver weak hooks", "index.html#driver-weak-hooks", null ],
-    [ "Driver build configuration", "index.html#driver-build-configuration", null ]
+    [ "Troubleshooting an inference that does not complete", "index.html#troubleshooting-an-inference-that-does-not-complete", null ],
+    [ "Advanced topics", "index.html#advanced-topics", [
+      [ "Use separate scratch-fast memory on Ethos-U65 and Ethos-U85", "index.html#use-separate-scratch-fast-memory-on-ethos-u65-and-ethos-u85", null ],
+      [ "Move the tensor arena to external DRAM on Ethos-U65 and Ethos-U85", "index.html#move-the-tensor-arena-to-external-dram-on-ethos-u65-and-ethos-u85", null ]
+    ] ]
   ] ]
 ];
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['packs_0',['Device packs',['../index.html#device-packs',1,'']]]
+  ['lifecycle_0',['Deployment lifecycle',['../index.html#deployment-lifecycle',1,'']]]
 ];

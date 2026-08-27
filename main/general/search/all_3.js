@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['general_0',['General',['../index.html',1,'']]],
-  ['glance_1',['System configuration and memory modes at a glance',['../index.html#system-configuration-and-memory-modes-at-a-glance',1,'']]]
+  ['ethos_20u_20inference_20runs_0',['How an Ethos-U inference runs',['../index.html#how-an-ethos-u-inference-runs',1,'']]]
 ];

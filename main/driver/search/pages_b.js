@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['routing_0',['Command-stream and base-pointer routing',['../index.html#command-stream-and-base-pointer-routing',1,'']]]
+  ['other_20memory_20access_20setup_20methods_0',['Other memory-access setup methods',['../index.html#other-memory-access-setup-methods',1,'']]]
 ];

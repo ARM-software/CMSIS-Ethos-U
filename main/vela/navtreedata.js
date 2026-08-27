@@ -49,6 +49,8 @@ var NAVTREE =
       [ "Complete <span class=\"tt\">My_vela.ini</span> example", "index.html#complete-my_velaini-example", null ],
       [ "Publish Ethos-U configuration in a DFP", "index.html#publish-ethos-u-configuration-in-a-dfp", null ]
     ] ],
+    [ "Read the Vela reports", "index.html#read-the-vela-reports", null ],
+    [ "Compare Ethos-U configurations", "index.html#compare-ethos-u-configurations", null ],
     [ "Examples", "index.html#examples", [
       [ "Compile for an Ethos-U reference system", "index.html#compile-for-an-ethos-u-reference-system", null ],
       [ "Minimize peak SRAM", "index.html#minimize-peak-sram", null ],

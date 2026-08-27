@@ -1,14 +1,8 @@
 var searchData=
 [
-  ['memory_20budget_0',['Determine the memory budget',['../index.html#determine-the-memory-budget',1,'']]],
-  ['memory_20placement_20and_20the_20linker_20script_1',['Configure memory placement and the linker script',['../index.html#configure-memory-placement-and-the-linker-script',1,'']]],
-  ['ml_20model_20and_20configuration_20to_20version_20control_2',['Add ML model and configuration to version control',['../index.html#add-ml-model-and-configuration-to-version-control',1,'']]],
-  ['ml_20model_20for_20the_20device_3',['Compile the ML model for the device',['../index.html#compile-the-ml-model-for-the-device',1,'']]],
-  ['ml_20model_20layer_4',['Add ML model layer',['../index.html#add-ml-model-layer',1,'']]],
-  ['mlops_20information_5',['Add MLOps information',['../index.html#add-mlops-information',1,'']]],
-  ['model_20and_20configuration_20to_20version_20control_6',['Add ML model and configuration to version control',['../index.html#add-ml-model-and-configuration-to-version-control',1,'']]],
-  ['model_20for_20the_20device_7',['Compile the ML model for the device',['../index.html#compile-the-ml-model-for-the-device',1,'']]],
-  ['model_20layer_8',['Add ML model layer',['../index.html#add-ml-model-layer',1,'']]],
-  ['monitoring_20unit_20api_9',['Performance Monitoring Unit API',['../../driver/group__ethosu__pmu__api.html',1,'']]],
-  ['move_20the_20tensor_20arena_20from_20sram_20to_20external_20dram_10',['Example: Move the tensor arena from SRAM to external DRAM',['../index.html#example-move-the-tensor-arena-from-sram-to-external-dram',1,'']]]
+  ['fast_20memory_20on_20ethos_20u65_20and_20ethos_20u85_0',['Use separate scratch-fast memory on Ethos-U65 and Ethos-U85',['../index.html#use-separate-scratch-fast-memory-on-ethos-u65-and-ethos-u85',1,'']]],
+  ['for_20fvp_20simulation_1',['Configure 256 MACs for FVP simulation',['../index.html#configure-256-macs-for-fvp-simulation',1,'']]],
+  ['functions_2',['Functions',['../../driver/group__ethosu__public__api.html',1,'']]],
+  ['functions_3',['Platform-specific functions',['../../driver/group__ethosu__callback__api.html',1,'']]],
+  ['fvp_20simulation_4',['Configure 256 MACs for FVP simulation',['../index.html#configure-256-macs-for-fvp-simulation',1,'']]]
 ];

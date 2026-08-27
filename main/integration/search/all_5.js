@@ -1,7 +1,25 @@
 var searchData=
 [
-  ['for_20the_20device_0',['Compile the ML model for the device',['../index.html#compile-the-ml-model-for-the-device',1,'']]],
-  ['from_20sram_20to_20external_20dram_1',['Example: Move the tensor arena from SRAM to external DRAM',['../index.html#example-move-the-tensor-arena-from-sram-to-external-dram',1,'']]],
-  ['functions_2',['Functions',['../../driver/group__ethosu__public__api.html',1,'']]],
-  ['functions_3',['Platform-specific functions',['../../driver/group__ethosu__callback__api.html',1,'']]]
+  ['a_20new_20target_20to_20the_20solution_0',['Add a new target to the solution',['../index.html#add-a-new-target-to-the-solution',1,'']]],
+  ['add_20a_20new_20target_20to_20the_20solution_1',['Add a new target to the solution',['../index.html#add-a-new-target-to-the-solution',1,'']]],
+  ['add_20application_20ml_20model_2',['Add application ML model',['../index.html#add-application-ml-model',1,'']]],
+  ['address_5fremap_3',['address_remap',['../../driver/structethosu__device__user__ops.html#a167e1d0dd49e7bc7b55d5fa24085f5d1',1,'ethosu_device_user_ops']]],
+  ['advanced_20topics_4',['Advanced topics',['../index.html#advanced-topics',1,'']]],
+  ['an_20ethos_20u_20application_5',['Tutorial: Create an Ethos-U application',['../index.html#tutorial-create-an-ethos-u-application',1,'']]],
+  ['an_20example_6',['Start with an example',['../index.html#start-with-an-example',1,'']]],
+  ['an_20inference_20that_20does_20not_20complete_7',['Troubleshooting an inference that does not complete',['../index.html#troubleshooting-an-inference-that-does-not-complete',1,'']]],
+  ['and_20cache_20attributes_8',['MPU/SAU and cache attributes',['../index.html#mpusau-and-cache-attributes',1,'']]],
+  ['and_20create_20the_20project_9',['Step 1: Select the MCU and create the project',['../index.html#step-1-select-the-mcu-and-create-the-project',1,'']]],
+  ['and_20ethos_20u85_10',['and Ethos U85',['../index.html#move-the-tensor-arena-to-external-dram-on-ethos-u65-and-ethos-u85',1,'Move the tensor arena to external DRAM on Ethos-U65 and Ethos-U85'],['../index.html#use-separate-scratch-fast-memory-on-ethos-u65-and-ethos-u85',1,'Use separate scratch-fast memory on Ethos-U65 and Ethos-U85']]],
+  ['and_20tune_11',['Step 5: Validate and tune',['../index.html#step-5-validate-and-tune',1,'']]],
+  ['and_20update_20the_20vela_20configuration_12',['Stage 2: Verify and update the Vela configuration',['../index.html#stage-2-verify-and-update-the-vela-configuration',1,'']]],
+  ['api_13',['API',['../../driver/group__ethosu__driver__api.html',1,'Ethos-U Driver API'],['../../driver/group__ethosu__pmu__api.html',1,'Performance Monitoring Unit API']]],
+  ['application_14',['Tutorial: Create an Ethos-U application',['../index.html#tutorial-create-an-ethos-u-application',1,'']]],
+  ['application_20integration_15',['Step 4: Complete application integration',['../index.html#step-4-complete-application-integration',1,'']]],
+  ['application_20ml_20model_16',['Add application ML model',['../index.html#add-application-ml-model',1,'']]],
+  ['arch_5fmajor_5frev_17',['arch_major_rev',['../../driver/group__ethosu__driver__structs.html#a33cb5b194353a78ba0561cde8854e0b1',1,'ethosu_id']]],
+  ['arch_5fminor_5frev_18',['arch_minor_rev',['../../driver/group__ethosu__driver__structs.html#ac191149a058dad393339d78dc2523e69',1,'ethosu_id']]],
+  ['arch_5fpatch_5frev_19',['arch_patch_rev',['../../driver/group__ethosu__driver__structs.html#ad26eee8751d4b809c0cbbf303232f079',1,'ethosu_id']]],
+  ['arena_20to_20external_20dram_20on_20ethos_20u65_20and_20ethos_20u85_20',['Move the tensor arena to external DRAM on Ethos-U65 and Ethos-U85',['../index.html#move-the-tensor-arena-to-external-dram-on-ethos-u65-and-ethos-u85',1,'']]],
+  ['attributes_21',['MPU/SAU and cache attributes',['../index.html#mpusau-and-cache-attributes',1,'']]]
 ];

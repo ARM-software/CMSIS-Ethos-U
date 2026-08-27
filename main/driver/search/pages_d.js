@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['u_20driver_20source_20code_0',['Ethos-U driver source code',['../index.html#ethos-u-driver-source-code',1,'']]],
-  ['unit_20pmu_1',['Performance Monitoring Unit (PMU)',['../index.html#performance-monitoring-unit-pmu',1,'']]],
-  ['up_20checklist_2',['Bring-up checklist',['../index.html#bring-up-checklist',1,'']]],
-  ['usage_3',['Driver Usage',['../index.html#driver-usage',1,'']]]
+  ['region_20usage_20by_20the_20driver_0',['Memory region usage by the driver',['../index.html#memory-region-usage-by-the-driver',1,'']]],
+  ['regions_20and_20base_20pointers_1',['Command stream regions and base pointers',['../index.html#command-stream-regions-and-base-pointers',1,'']]],
+  ['regions_20used_20by_20vela_2',['Determine the memory regions used by Vela',['../index.html#determine-the-memory-regions-used-by-vela',1,'']]]
 ];

@@ -4,6 +4,7 @@ var group__ethosu__pmu__api =
     [ "ETHOSU_PMU_Disable", "group__ethosu__pmu__api.html#gaf976f4e4d18229593591bdf984645018", null ],
     [ "ETHOSU_PMU_Set_EVTYPER", "group__ethosu__pmu__api.html#ga73f8bf9079d47e1d6afe9bf7a49f6999", null ],
     [ "ETHOSU_PMU_Get_NumEventCounters", "group__ethosu__pmu__api.html#ga6e52be0fc9b15f9351e83698bd9b5888", null ],
+    [ "ETHOSU_PMU_Get_NumEventCountersForDrv", "group__ethosu__pmu__api.html#ga6f27ab539babbec56b72cdbc5a190f39", null ],
     [ "ETHOSU_PMU_Get_EVTYPER", "group__ethosu__pmu__api.html#ga2450c677d035e1e2dc51c31b1feb2df8", null ],
     [ "ETHOSU_PMU_CYCCNT_Reset", "group__ethosu__pmu__api.html#gabe2a2b4b99bf753d02b5683fab77988c", null ],
     [ "ETHOSU_PMU_EVCNTR_ALL_Reset", "group__ethosu__pmu__api.html#ga6bfb8e6dbb653f003fd4a196b895a79d", null ],
