@@ -193,11 +193,11 @@ Ethos-U85 AXI information:
 | 1024 | 2 | 64 | 32 |
 | 2048 | 2 | 64 | 32 |
 
-## EXPERIMENTAL - Multi variant
+## Multi variant
 
-Experimental support for using multiple NPU variants in one system. An NPU variant is
-the combination of product type (U55/U65/U85) and MAC configuration, for example ethos-u55-128,
-ethos-u65-256 or ethos-u85-1024.
+Support for using multiple NPU variants in one system. An NPU variant is the combination of
+product type (U55/U65/U85) and MAC configuration, for example ethos-u55-128, ethos-u65-256 or
+ethos-u85-1024.
 
 Set the CMake variable `ETHOSU_MULTI_VARIANT` to `ON` to enable the feature.
 With this feature enabled, the driver is no longer looking at the `ETHOSU_TARGET_NPU_CONFIG`
@@ -309,8 +309,8 @@ ETHOSU_MACS_2048
 
 ### New optional invoke (auto) method
 In addition to the invoke methods described in the following sections, with the multi variant
-experimental feature, a new function called `ethosu_invoke_auto()` has been added. This function
-omits the driver argument, hence the user should not reserve a driver before calling it. The
+feature, a new function called `ethosu_invoke_auto()` has been added. This function omits the
+driver argument, hence the user should not reserve a driver before calling it. The
 `ethosu_invoke_auto()` function automatically parses the provided data and tries to reserve a
 suitable driver internally. **Note** This function will block until a suitable driver is found.
 After the inference has been invoked, and before this function returns, it will release the driver.
@@ -616,6 +616,14 @@ repository. To do this you will need to sign-up at [gitlab.arm.com](https://gitl
 and add your SSH key under your settings.
 
 ## Security
+
+### Unrestricted NPU memory access
+
+The NPU does not come with any hardware to restrict what memory locations it
+can access. It is up to the user to provide and configure such hardware in the
+system to restrict memory access.
+
+### Report security related issues
 
 Please see [Security](SECURITY.md).
 

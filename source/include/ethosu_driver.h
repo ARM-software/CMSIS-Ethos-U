@@ -39,9 +39,9 @@ extern "C" {
  * Defines
  ******************************************************************************/
 
-#define ETHOSU_DRIVER_VERSION_MAJOR 1  ///< Driver major version
-#define ETHOSU_DRIVER_VERSION_MINOR 99 ///< Driver minor version
-#define ETHOSU_DRIVER_VERSION_PATCH 0  ///< Driver patch version
+#define ETHOSU_DRIVER_VERSION_MAJOR 2 ///< Driver major version
+#define ETHOSU_DRIVER_VERSION_MINOR 0 ///< Driver minor version
+#define ETHOSU_DRIVER_VERSION_PATCH 0 ///< Driver patch version
 
 #define ETHOSU_SEMAPHORE_WAIT_FOREVER (UINT64_MAX)
 
@@ -516,10 +516,12 @@ static inline int ethosu_invoke_v2(const void *custom_data_ptr,
                                    const int num_base_addr)
 {
     struct ethosu_driver *drv = ethosu_reserve_driver();
+#ifndef ETHOSU_MULTI_VARIANT
     if (!drv)
     {
         return -1;
     }
+#endif
     int result = ethosu_invoke_v3(drv, custom_data_ptr, custom_data_size, base_addr, base_addr_size, num_base_addr, 0);
     ethosu_release_driver(drv);
     return result;

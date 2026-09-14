@@ -17,7 +17,7 @@
 
 cmake_minimum_required(VERSION 3.21)
 
-project(ethosu_core_driver VERSION 1.99.0)
+project(ethosu_core_driver VERSION 2.0.0)
 
 #
 # Compile options
