@@ -32,6 +32,9 @@ layer:
   # TF_LITE_STATIC_MEMORY is set by the kernel component's Pre_Include_Global_h;
   # defining it again here would only produce a macro-redefinition warning.
 
+  define:
+    - ARM_MODEL_USE_PMU_COUNTERS
+
   add-path:
     - .
 
