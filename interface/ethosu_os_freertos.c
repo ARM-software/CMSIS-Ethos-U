@@ -131,13 +131,26 @@ int ethosu_semaphore_take(void *sem, uint64_t timeout) {
 int ethosu_semaphore_give(void *sem) {
   SemaphoreHandle_t hSemaphore = (SemaphoreHandle_t)sem;
   BaseType_t status;
+  BaseType_t yield;
   int rval;
 
-  status = xSemaphoreGive(hSemaphore);
-  if (status == pdTRUE) {
-    rval = 0;
-  } else {
-    rval = -1;
+  if (xPortIsInsideInterrupt()) {
+    yield = pdFALSE;
+
+    if (xSemaphoreGiveFromISR (hSemaphore, &yield) != pdTRUE) {
+      rval = -1;
+    } else {
+      portYIELD_FROM_ISR (yield);
+      rval = 0;
+    }
+  }
+  else {
+    status = xSemaphoreGive(hSemaphore);
+    if (status == pdTRUE) {
+      rval = 0;
+    } else {
+      rval = -1;
+    }
   }
   return rval;
 }
