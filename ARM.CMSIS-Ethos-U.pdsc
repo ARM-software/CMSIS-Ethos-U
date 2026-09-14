@@ -63,8 +63,9 @@
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
-        <file category="source" name="interface/ethosu_os_rtos2.c" attr="template" select="CMSIS-RTOS2 Interface"/>
-        <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
+        <file category="source" name="interface/ethosu_os_freertos.c" attr="template" select="RTOS Interface for FreeRTOS"/>
+        <file category="source" name="interface/ethosu_os_rtos2.c"    attr="template" select="RTOS Interface for CMSIS-RTOS2"/>
+        <file category="source" name="interface/ethosu_dcache.c"      attr="template" select="Cache Management Interface"/>
       </files>
     </component>
     <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U85" Cversion="2.0.0">
@@ -86,8 +87,9 @@
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
-        <file category="source" name="interface/ethosu_os_rtos2.c" attr="template" select="CMSIS-RTOS2 Interface"/>
-        <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
+        <file category="source" name="interface/ethosu_os_freertos.c" attr="template" select="RTOS Interface for FreeRTOS"/>
+        <file category="source" name="interface/ethosu_os_rtos2.c"    attr="template" select="RTOS Interface for CMSIS-RTOS2"/>
+        <file category="source" name="interface/ethosu_dcache.c"      attr="template" select="Cache Management Interface"/>
       </files>
     </component>
     <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Multi-Variant" Cversion="2.0.0">
@@ -114,8 +116,9 @@
         <file category="include" name="source/src/"/>
         <file category="include" name="source/include/"/>
 
-        <file category="source" name="interface/ethosu_os_rtos2.c" attr="template" select="CMSIS-RTOS2 Interface"/>
-        <file category="source" name="interface/ethosu_dcache.c"   attr="template" select="Cache Management Interface"/>
+        <file category="source" name="interface/ethosu_os_freertos.c" attr="template" select="RTOS Interface for FreeRTOS"/>
+        <file category="source" name="interface/ethosu_os_rtos2.c"    attr="template" select="RTOS Interface for CMSIS-RTOS2"/>
+        <file category="source" name="interface/ethosu_dcache.c"      attr="template" select="Cache Management Interface"/>
       </files>
     </component>
   </components>
