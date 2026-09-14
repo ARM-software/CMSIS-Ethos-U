@@ -12,18 +12,16 @@ layer:
         - STDIN
         - STDOUT
         - STDERR
-        - Heap: 786432
+        - Heap: 98304
 
   define:
     - CMSIS_target_header: \"Corstone-320.h\"
-    - ETHOSU85
     - ETHOSU_MACS: 256
-    - ARM_MODEL_USE_PMU_COUNTERS
     - UART0_BASE_S_TMP
 
   packs:
     - pack: ARM::CMSIS
-    - pack: ARM::CMSIS-Compiler@^2.1.0
+    - pack: ARM::CMSIS-Compiler@^2.2.0
     - pack: ARM::CMSIS-Ethos-U@^1.0.0-0
     - pack: ARM::SSE_320_BSP@1.1.0
 
@@ -34,9 +32,9 @@ layer:
     - component: CMSIS Driver:VIO
 
     - component: CMSIS-Compiler:CORE
-    - component: CMSIS-Compiler:STDERR:Custom
-    - component: CMSIS-Compiler:STDIN:Custom
-    - component: CMSIS-Compiler:STDOUT:Custom
+    - component: CMSIS-Compiler:STDERR:UART&CMSIS
+    - component: CMSIS-Compiler:STDIN:UART&CMSIS
+    - component: CMSIS-Compiler:STDOUT:UART&CMSIS
 
     - component: Device:Definition
     - component: Device:Startup&C Startup
@@ -54,7 +52,6 @@ layer:
         - file: ./main.c
         - file: ./main.h
         - file: ./ethos_setup.c
-        - file: ./retarget_stdio.c
 
   linker:
     - regions: ./regions_SSE-320.h
