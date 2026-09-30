@@ -189,7 +189,12 @@ that build. See
 [Work with Zephyr applications](https://mdk-packs.github.io/vscode-cmsis-solution-docs/zephyr.html)
 for the current extension setup and build/debug workflow.
 
-## Corstone-300 FVP example
+## Corstone-300 FVP examples
+
+[CMSIS-Ethos-Zephyr](https://github.com/Arm-Examples/CMSIS-Ethos-Zephyr)
+ports the `Test-Ethos-U55` example to Zephyr. It retains the example's ML
+models and CMSIS MLOps workflow while using Zephyr-native implementations for
+the application runtime and Ethos-U integration.
 
 The
 [Arm Ethos Zephyr Playground](https://github.com/Arm-Examples/Arm-Ethos-Zephyr-Playground)

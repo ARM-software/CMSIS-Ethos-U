@@ -44,27 +44,58 @@ measurements.
 
 ```mermaid
 flowchart TD
-    setup["Select MCU and DFP<br/>Check DFP resources<br/>Create CMSIS-Toolbox project"] --> compile["Compile ML model<br/>for device"]
-    compile --> configure["Configure memory placement and linker script"]
-    configure --> integrate["Complete application integration"]
-    integrate --> validate["Validate and tune"]
-    validate -. Iterate .-> compile
+    hardware["Characterize target hardware<br/>and create the project"] --> vela["Select and verify<br/>the Vela configuration"]
+    vela --> compile["Compile and inspect<br/>the ML model"]
+    compile --> configure["Configure linker, driver,<br/>memory attributes, and platform integration"]
+    configure --> validate["Validate and tune<br/>on target hardware"]
+    validate -. Iterate .-> vela
 ```
 
-1. <a href="#step-1-select-the-mcu-and-create-the-project"><strong>Select the MCU and create the project.</strong></a>
-   Install its [DFP](https://www.keil.arm.com/packs), check that it supplies the
-   required Vela and linker resources, and select the system configuration and
-   memory mode. Contact the device vendor if these resources are missing.
-2. <a href="#step-2-compile-the-ml-model"><strong>Compile the ML model.</strong></a>
-   Run Vela with the device-specific settings and check its memory and
-   performance estimates against the application requirements.
-3. <a href="#step-3-configure-memory-placement"><strong>Configure memory placement.</strong></a>
-   Keep the Vela memory mode, linker placement, and driver regions consistent.
-   Build the system and confirm the allocations in the linker map.
-4. <a href="#step-4-complete-application-integration"><strong>Complete application integration.</strong></a>
-   Add the required RTOS, power, timeout, cache, and fault handling.
+1. <a href="#step-1-characterize-the-target-hardware-and-create-the-project"><strong>Characterize the target hardware and create the project.</strong></a>
+   Identify the NPU configuration, NPU-accessible memories, access constraints,
+   and device resources before choosing a software configuration.
+2. <a href="#step-2-select-and-verify-the-vela-configuration"><strong>Select and verify the Vela configuration.</strong></a>
+   Confirm that the device-specific system configuration and memory mode model
+   the intended physical memories and match the NPU variant and MAC count.
+3. <a href="#step-3-compile-and-inspect-the-ml-model"><strong>Compile and inspect the ML model.</strong></a>
+   Run Vela with the verified settings and check its operator placement, memory
+   use, and performance estimates against the application requirements.
+4. <a href="#step-4-configure-the-platform-integration"><strong>Configure the platform integration.</strong></a>
+   Keep the linker placement, driver regions, MPU/SAU attributes, cache policy,
+   address mapping, and runtime integration consistent with the Vela configuration.
 5. <a href="#step-5-validate-and-tune"><strong>Validate and tune.</strong></a> Verify
    correctness, memory use, and performance on the target hardware.
+
+For the supported Corstone FVP configurations and their corresponding Vela,
+driver, and linker settings, see
+\ref fvp-ethos-setup "Configure Ethos-U for FVP Simulation Models".
+
+### Configuration consistency checklist
+
+An Ethos-U application describes the same memory system in several places.
+Vela uses a performance model and logical memory areas when it creates the
+command stream, while the linker, driver, and platform configuration implement
+those choices on physical hardware. A mismatch can produce inaccurate Vela
+estimates, inaccessible data, cache-coherency failures, or an inference that
+does not complete. Use this checklist whenever selecting a target, changing a
+memory mode, or replacing the ML model.
+
+| Check | Configuration source | Why and what to verify |
+|---|---|---|
+| <a href="#step-1-characterize-the-target-hardware-and-create-the-project">Target hardware</a> | Device documentation and DFP | Establish the NPU variant and MAC count, NPU-accessible memories and capacities, read/write restrictions, security attribution, and CPU cacheability before selecting compiler settings. |
+| <a href="../vela/index.html#create-device-specific-velaini-file">Vela system and memory configuration</a> | `System_Config` and `Memory_Mode` in the device-specific `vela.ini` | Confirm that the logical areas model the intended physical memories and their performance, and that constants, the writable arena, and optional fast scratch are assigned to suitable access paths. |
+| <a href="#step-3-compile-and-inspect-the-ml-model">Model compilation</a> | Generated `*.cbuild-mlops.yml` and Vela invocation | Confirm the accelerator, MAC count, `vela.ini`, system configuration, memory mode, and model input before treating the generated model as target-compatible. |
+| <a href="../vela/index.html#read-the-vela-reports">Vela report</a> | Vela summary and CSV reports | Check that allocations fit the available memories, the expected operators run on the NPU, and estimated bandwidth and performance are suitable for the application. |
+| <a href="#linker-placement">Linker placement</a> | Linker script and link map | Confirm that the compiled model, tensor arena, and optional fast-scratch buffer occupy the physical memories modeled by Vela, with sufficient size and alignment. |
+| <a href="../driver/index.html#configure-memory-access-with-npuqconfig-and-npuregioncfgx">Driver memory access</a> | `NPU_QCONFIG` and `NPU_REGIONCFG_x` | Ensure that command-stream and base-region accesses use the NPU paths and attributes that reach the linked physical memories. |
+| <a href="#mpusau-and-cache-attributes">Platform memory attributes</a> | MPU/SAU, cache policy, and address mapping | Ensure that the CPU and NPU have compatible security and access permissions, and provide address translation and cache maintenance where required. |
+| <a href="#step-5-validate-and-tune">Target validation</a> | Link map, functional tests, driver diagnostics, and PMU measurements | Verify correct results and stable execution, then compare actual memory use and performance with the compiler estimates. |
+
+> [!IMPORTANT]
+>
+> The Vela configuration, linker placement, driver memory-access selectors, and
+> MPU/SAU and cache attributes must all describe the same physical-memory
+> arrangement.
 
 ## Tutorial: Create an Ethos-U application
 
@@ -74,7 +105,7 @@ available from the VS Code Marketplace. Command-line users may use the  [CMSIS-T
 
 ### Start with an example
 
-This tutorial applies the five-step workflow to the `Hello-Ethos-U` examples in
+This tutorial applies the five-step workflow to the `Test-Ethos-U` examples in
 the `ARM::CMSIS-Ethos-U` pack. The three examples have the same application
 structure and uses the same ML models. Each example targets a different Ethos-U
 variant.
@@ -90,19 +121,23 @@ in the
 Keil Studio automatically downloads and installs the required tools and
 software packs. The initial setup may take some time.
 
-Target board                 | Example                         | NPU/MACs      | FVP simulation model
-:----------------------------|:--------------------------------|:--------------|:-------------------
-V2M-MPS3-SSE-300-FVP         | `Hello-Ethos-U55.csolution.yml` | Ethos-U55-128 | Corstone-300
-V2M-MPS3-SSE-300-FVP         | `Hello-Ethos-U65.csolution.yml` | Ethos-U65-256 | Corstone-300
-SSE-320                      | `Hello-Ethos-U85.csolution.yml` | Ethos-U85-256 | Corstone-320
+Target board                 | Example                        | NPU/MACs      | FVP simulation model
+:----------------------------|:-------------------------------|:--------------|:-------------------
+V2M-MPS3-SSE-300-FVP         | `Test-Ethos-U55.csolution.yml` | Ethos-U55-128 | Corstone-300
+V2M-MPS3-SSE-300-FVP         | `Test-Ethos-U65.csolution.yml` | Ethos-U65-256 | Corstone-300
+SSE-320                      | `Test-Ethos-U85.csolution.yml` | Ethos-U85-256 | Corstone-320
 
-Each example includes the `Hello-Ethos-U.cproject.yml` file and the
+For a complete implementation on physical hardware, see
+[CMSIS-Ethos-Integration](https://github.com/Arm-Examples/CMSIS-Ethos-Integration).
+It applies this integration workflow to a real-world device.
+
+Each example includes the `Test-Ethos-U.cproject.yml` file and the
 software layers shown in this diagram:
 
 ```mermaid
 flowchart TD
-    solution["NPU-specific solution<br/>Hello-Ethos-Uxx.csolution.yml"] --> target["Target configuration<br/>device, FVP, and Board-Uxx.clayer.yml"]
-    solution --> project["Application project<br/>Hello-Ethos-U.cproject.yml"]
+    solution["NPU-specific solution<br/>Test-Ethos-Uxx.csolution.yml"] --> target["Target configuration<br/>device, FVP, and Board-Uxx.clayer.yml"]
+    solution --> project["Application project<br/>Test-Ethos-U.cproject.yml"]
     project --> sources["Application sources<br/>Source/test_main.cpp"]
     project --> model["Model layer<br/>ML-MyModels.clayer.yml"]
 ```
@@ -135,18 +170,18 @@ application-specific ML model.
 >   consistent in the solution MLOps information, Board layer, Vela command, and
 >   FVP configuration.
 
-### Step 1: Select the MCU and create the project
+### Step 1: Characterize the target hardware and create the project
 
 For our application, we selected the Alif Semiconductor
 [Ensemble E7 (`AE722F80F55D5LS`)](https://www.keil.arm.com/devices/alif-semiconductor-ae722f80f55d5ls/)
 device and the related
 [AppKit-E7-AIML](https://www.keil.arm.com/boards/alif-semiconductor-appkit-e7-aiml-d1-34b5d51/)
 board. We target the Ethos-U55 NPU on this device and therefore start with
-`Hello-Ethos-U55.csolution.yml`.
+`Test-Ethos-U55.csolution.yml`.
 
 #### Add a new target to the solution
 
-Open `Hello-Ethos-U55.csolution.yml` and add the DFP and BSP packs required by
+Open `Test-Ethos-U55.csolution.yml` and add the DFP and BSP packs required by
 the selected device and board. Use the information in the
 [CMSIS-Pack catalog](https://www.keil.arm.com/packs/) to identify these packs.
 Then add a hardware target to the `target-types:` node before the existing FVP
@@ -185,6 +220,8 @@ This example uses the `Board/AppKit-E7_M55_HP` layer.
 > [Board Layers](https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#board-layer)
 > in the CMSIS-Toolbox documentation.
 
+### Step 2: Select and verify the Vela configuration
+
 #### Update MLOps information
 
 The [`mlops:` information in the `*.csolution.yml` file](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information)
@@ -195,7 +232,7 @@ MLOps system. Update this information in two stages.
 
 First select the NPU independently of its memory configuration. The Alif E7
 `M55_HP` processor integrates an Ethos-U55 with 256 MACs, so change `macs:` from
-`128` to `256` in `Hello-Ethos-U55.csolution.yml`:
+`128` to `256` in `Test-Ethos-U55.csolution.yml`:
 
 ```yml
   mlops:
@@ -209,7 +246,7 @@ First select the NPU independently of its memory configuration. The Alif E7
 > For the complete syntax of the `mlops:` node, see [MLOps Management](https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#mlops-management) in the CMSIS-Toolbox manual.
 
 In Keil Studio, saving the solution runs `cbuild setup` and regenerates
-`Hello-Ethos-U55.cbuild-mlops.yml`. CMSIS-Toolbox combines the MLOps settings
+`Test-Ethos-U55.cbuild-mlops.yml`. CMSIS-Toolbox combines the MLOps settings
 with the NPU and processor information published by the selected device and DFP.
 
 ##### Stage 2: Verify and update the Vela configuration
@@ -289,16 +326,45 @@ configuration as follows:
    ethosu.num_macs=256
    ```
 
-### Step 2: Compile the ML model
+### Step 3: Compile and inspect the ML model
 
 #### Update ML models of the example
 
 The example contains the original quantized TensorFlow Lite models and Vela
 output compiled for the original Ethos-U55-128 configuration. Recompile each
 quantized model for the Ethos-U55-256 configuration and the device-specific
-system and memory mode that is reported in the generated `Hello-Ethos-U55.cbuild-mlops.yml` file.
+system and memory mode that is reported in the generated `Test-Ethos-U55.cbuild-mlops.yml` file.
 
-These values can be directly applied to Vela. See [MLOps Information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
+The generated `*.cbuild-mlops.yml` file is the handoff point between
+CMSIS-Toolbox and the ML model compilation step. It contains the device-specific
+`vela.ini`, accelerator selection, system configuration, memory mode, optional
+Vela arguments, and model selection.
+
+#### Compile with an MLOps conversion script
+
+The `Test-Ethos-U` example provides one conversion script that consumes the
+generated MLOps file:
+
+```console
+python script/model-converter.py Test-Ethos-U55.cbuild-mlops.yml
+```
+
+The script reads the generated MLOps file, runs Vela for each selected model,
+emits the Vela-compiled `_vela.tflite` file, regenerates the C array
+used by the application, and writes `VELA_SUMMARY.md`.
+
+This script is example integration code, not the only supported MLOps flow.
+Projects may replace it with their own training, quantization, validation,
+artifact signing, packaging, or CI pipeline, provided that the pipeline consumes
+the same generated Vela settings and produces the model artifacts expected by
+the application.
+
+#### Compile manually with Vela
+
+For debugging, CI bring-up, or custom MLOps integrations, the same values can be
+applied directly to Vela. Inspect `Test-Ethos-U55.cbuild-mlops.yml` and use its
+`vela.ini`, `vela.options`, and model path when constructing the command. See
+[MLOps Information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
 
 ```console
 vela Model/tiny_cnn/tiny_cnn_int8.tflite \
@@ -315,12 +381,13 @@ See <a href="../vela/index.html">Vela</a> for details about command-line options
 Options such as `--optimise Size` can be added with the `mlops.vela.misc:`
 control in the `*.csolution.yml` file.
 
-Repeat the command for every quantized model in the model layer. Replace the
-previous Vela output used by the application and regenerate its embedded C data
-if the project stores the model as a C array. Keep the original quantized
-`.tflite` file as the portable input; the `_vela.tflite` output is specific to
-the selected Ethos-U and memory configuration. For more information about this
-handoff, see [MLOps Information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
+Whether using the example script or a custom/manual flow, repeat compilation for
+every quantized model in the model layer. Replace the previous Vela output used
+by the application and regenerate its embedded C data if the project stores the
+model as a C array. Keep the original quantized `.tflite` file as the portable
+input; the `_vela.tflite` output is specific to the selected Ethos-U and memory
+configuration. For more information about this handoff, see
+[MLOps Information](https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information).
 
 #### Add application ML model
 
@@ -338,7 +405,7 @@ To use an application-specific model, copy or modify this layer, add the new
 model files to its `groups:` node, and set `model.clayer` in the solution's
 `mlops:` node to the resulting layer.
 
-### Step 3: Configure memory placement
+### Step 4: Configure the platform integration
 
 Keep the Vela memory mode, linker placement, and driver regions consistent,
 then build the system and confirm the allocations in the linker map. The diagram
@@ -377,7 +444,7 @@ the related `<board>.clayer.yml` file so that the driver access paths match
 <a href="../vela/index.html#match-the-driver-configuration">Match the driver configuration</a>
 for the mapping.
 
-### Step 4: Complete application integration
+#### Complete application integration
 
 Review the driver's weak callbacks described in
 <a href="../driver/index.html#platform-specific-functions">Platform-specific functions</a>

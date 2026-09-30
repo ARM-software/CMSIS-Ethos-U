@@ -10,7 +10,7 @@
       <license name="LICENSE" title="Apache 2.0 open-source license" spdx="Apache-2.0"/>
     </licenseSet>
   </licenseSets>
-  <repository type="git">https://github.com/ARM-software/CMSIS-Ethos-U.git</repository>
+  <repository type="git">https://github.com/VladimirUmek/Ethos-U.git</repository>
 
   <releases>
     <release version="1.0.0-dev">
@@ -18,6 +18,19 @@
       Ethos-U driver supports multi-variant Ethos-U systems
     </release>
   </releases>
+
+  <conditions>
+    <condition id="Corstone-300">
+      <description>Requirements for Corstone-300 FVP</description>
+      <accept Dvendor="ARM:82" Dname="SSE-300-MPS3"/>
+      <accept Bvendor="ARM" Bname="V2M-MPS3-SSE-300-FVP"/>
+    </condition>
+    <condition id="Corstone-320">
+      <description>Requirements for Corstone-320 FVP</description>
+      <accept Dvendor="ARM:82" Dname="SSE-320-FVP"/>
+      <accept Bvendor="ARM" Bname="SSE-320"/>
+    </condition>
+  </conditions>
 
   <components>
     <component Cclass="Machine Learning" Cgroup="NPU Support" Csub="Ethos-U Driver" Cvariant="Generic U55" Cversion="2.0.0">
@@ -125,24 +138,32 @@
 
 
   <examples>
-    <example name="Hello-Ethos-U55" doc="README.md" folder="examples/Hello-Ethos-U">
-      <description>Get started template for Ethos-U55 targets</description>
+    <example name="Test-Ethos-U55" doc="README.md" folder="examples/Test-Ethos-U">
+      <description>Integration test for Ethos-U55 targets</description>
       <project>
-        <environment name="csolution" load="Hello-Ethos-U55.csolution.yml"/>
+        <environment name="csolution" load="Test-Ethos-U55.csolution.yml"/>
       </project>
     </example>
-    <example name="Hello-Ethos-U65" doc="README.md" folder="examples/Hello-Ethos-U">
-      <description>Get started template for Ethos-U65 targets</description>
+    <example name="Test-Ethos-U65" doc="README.md" folder="examples/Test-Ethos-U">
+      <description>Integration test for Ethos-U65 targets</description>
       <project>
-        <environment name="csolution" load="Hello-Ethos-U65.csolution.yml"/>
+        <environment name="csolution" load="Test-Ethos-U65.csolution.yml"/>
       </project>
     </example>
-    <example name="Hello-Ethos-U85" doc="README.md" folder="examples/Hello-Ethos-U">
-      <description>Get started template for Ethos-U85 targets</description>
+    <example name="Test-Ethos-U85" doc="README.md" folder="examples/Test-Ethos-U">
+      <description>Integration test for Ethos-U85 targets</description>
       <project>
-        <environment name="csolution" load="Hello-Ethos-U85.csolution.yml"/>
+        <environment name="csolution" load="Test-Ethos-U85.csolution.yml"/>
       </project>
     </example>
   </examples>
+
+  <csolution>
+    <clayer type="Board" path="examples/Test-Ethos-U/Board/Corstone-300" file="Board.clayer.yml" copy-to="Board/Corstone-300" condition="Corstone-300"/>
+    <clayer type="Board" path="examples/Test-Ethos-U/Board/Corstone-300" file="Board-U55.clayer.yml" copy-to="Board/Corstone-300" condition="Corstone-300"/>
+    <clayer type="Board" path="examples/Test-Ethos-U/Board/Corstone-300" file="Board-U65.clayer.yml" copy-to="Board/Corstone-300" condition="Corstone-300"/>
+    <clayer type="Board" path="examples/Test-Ethos-U/Board/Corstone-320" file="Board.clayer.yml" copy-to="Board/Corstone-320" condition="Corstone-320"/>
+    <clayer type="Board" path="examples/Test-Ethos-U/Board/Corstone-320" file="Board-U85.clayer.yml" copy-to="Board/Corstone-320" condition="Corstone-320"/>
+  </csolution>
 
 </package>

@@ -1,0 +1,68 @@
+# A solution is a collection of related projects that share same base configuration.
+solution:
+  description: Integration test of LiteRT model execution on Arm Ethos-U65
+  created-for: CMSIS-Toolbox@2.15.0
+  cdefault:
+
+  # Compilers that can be selected.
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+
+  # List the packs that define the device and/or board.
+  packs:
+    - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0
+
+  # List different hardware targets that are used to deploy the solution.
+  target-types:
+    - type: SSE-300-U65
+      board: ARM::V2M-MPS3-SSE-300-FVP
+      device: ARM::SSE-300-MPS3
+      variables:
+        - Board-Layer: ./Board/Corstone-300/Board-U65.clayer.yml
+      target-set:
+        - set:
+          debugger:
+            name: Arm-FVP
+            model: FVP_Corstone_SSE-300_Ethos-U65
+            config-file: ./Board/Corstone-300/fvp_config_u65.txt
+            args: ""
+          images:
+            - project-context: Test-Ethos-U.Debug
+
+  # List of different build configurations.
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: debug
+      misc:
+        - for-compiler: AC6
+          C:
+            - -funwind-tables
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  # List related projects.
+  projects:
+    - project: ./Test-Ethos-U.cproject.yml
+
+  # MLOps information for converting the LiteRT models with Vela.
+  # https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-integration
+  mlops:
+    description: LiteRT example models for Ethos-U65
+    npu:
+      type: Ethos-U65
+      macs: 256
+    vela:
+      ini: Model/vela.ini
+      system: Ethos_U65_Embedded
+      memory: Shared_Sram
+    model:
+      dir: ./Model
+      name:
+        - hello_world/hello_world_int8.tflite
+        - tiny_cnn/tiny_cnn_int8.tflite
+    simulator:
+      target: SSE-300-U65

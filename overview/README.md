@@ -45,16 +45,21 @@ Ethos-U NPU. It shows how to obtain the resolved MLOps and Vela settings,
 generate an NPU-optimized model, build the application, and extend the solution
 with a board layer and configuration for the physical target hardware.
 
-The pack includes three `Hello-Ethos-U` CMSIS solution examples. Each includes
+The pack includes three `Test-Ethos-U` CMSIS integration-test solutions. Each includes
 an ML model and FVP simulator configuration for initial validation. You can extend an
 example with other ML models and a configuration for the target hardware to
 validate the system integration. Select the example that matches the target NPU:
 
 | Example | NPU | FVP Simulation Model |
 |---|---|---|
-| `Hello-Ethos-U55` | Ethos-U55 | V2M-MPS3-SSE-300 FVP |
-| `Hello-Ethos-U65` | Ethos-U65 | V2M-MPS3-SSE-300 FVP |
-| `Hello-Ethos-U85` | Ethos-U85 | SSE-320 FVP |
+| `Test-Ethos-U55` | Ethos-U55 | V2M-MPS3-SSE-300 FVP |
+| `Test-Ethos-U65` | Ethos-U65 | V2M-MPS3-SSE-300 FVP |
+| `Test-Ethos-U85` | Ethos-U85 | SSE-320 FVP |
+
+### Related examples
+
+- [CMSIS-Ethos-Integration](https://github.com/Arm-Examples/CMSIS-Ethos-Integration) applies the integration workflow to a real-world device.
+- [CMSIS-Ethos-Zephyr](https://github.com/Arm-Examples/CMSIS-Ethos-Zephyr) is the `Test-Ethos-U55` example ported to Zephyr.
 
 ## Zephyr
 

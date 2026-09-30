@@ -105,3 +105,5 @@ documentation/Doxygen/**/*.dxy
 /build/
 /output/
 **/linkchecker-out.csv
+/documentation/temp
+/.cmsis/tools-environment.yml

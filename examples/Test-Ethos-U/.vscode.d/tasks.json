@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Convert LiteRT models",
+      "detail": "Run Vela for every model with options from *.cbuild-mlops.yml file",
+      "type": "shell",
+      "command": "python3",
+      "args": [
+        "script/model-converter.py",
+        {
+          "value": "${command:cmsis-csolution.getSolutionDir}/${command:cmsis-csolution.getSolutionName}.cbuild-mlops.yml",
+          "quoting": "strong"
+        }
+      ],
+      "windows": {
+        "command": "python"
+      },
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

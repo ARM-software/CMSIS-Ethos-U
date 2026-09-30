@@ -1,6 +1,7 @@
 [![License](https://img.shields.io/github/license/ARM-software/CMSIS-Ethos-U?label=License)](./LICENSE)
 [![Pack](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/pack.yml?logo=arm&logoColor=0091bd&label=Build%20pack)](./.github/workflows/pack.yml)
 [![GH Pages](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/gh-pages.yml?logo=arm&logoColor=0091bd&label=Deploy%20content)](./.github/workflows/gh-pages.yml)
+[![Test Ethos-U](https://img.shields.io/github/actions/workflow/status/ARM-software/CMSIS-Ethos-U/test-ethos-u.yml?logo=arm&logoColor=0091bd&label=Test%20Ethos-U)](./.github/workflows/test-ethos-u.yml)
 
 # Arm CMSIS Ethos-U
 
@@ -49,7 +50,7 @@ This is a list of the relevant files and directories.
 |---|---|
 | [`source`](./source/) | Core-driver source, public headers, single- and multi-variant NPU support, CMake build files, and Zephyr module metadata. |
 | [`interface`](./interface/) | CMSIS-RTOS2 and data-cache interface templates supplied by the driver components. |
-| [`examples`](./examples/Hello-Ethos-U/) | CMSIS-Toolbox example solutions for Ethos-U55, Ethos-U65, and Ethos-U85, including Corstone targets, TFLM models, and self-checking tests. |
+| [`examples`](./examples/Test-Ethos-U/) | CMSIS-Toolbox integration-test solutions for Ethos-U55, Ethos-U65, and Ethos-U85, including Corstone targets, TFLM models, and self-checking tests. |
 | [`documentation`](./documentation/) | Doxygen sources for the general, Vela, driver, integration, and Zephyr guides, plus generated web content, styles, and authoring guidance. |
 | [`overview`](./overview/) | Pack overview content and images displayed by CMSIS tooling. |
 | [`.github`](./.github/) | Workflows that test the example, build the pack, and publish documentation. |
@@ -98,6 +99,14 @@ The pack script builds the documentation as a preprocessing step and writes the 
 |---|---|
 | [`pack`](./.github/workflows/pack.yml) | Generates the documentation and software pack for pull requests, pushes to `main`, and published releases. |
 | [`gh-pages`](./.github/workflows/gh-pages.yml) | Deploys the generated content from the `gh-pages` branch to GitHub Pages. |
+| [`test-ethos-u`](./.github/workflows/test-ethos-u.yml) | Builds and runs the Ethos-U55, Ethos-U65, and Ethos-U85 integration tests with Arm Compiler 6 and GCC. |
+
+The Test Ethos-U workflow pins Arm GNU Toolchain 14.2.1 in
+[`vcpkg-configuration.json`](./examples/Test-Ethos-U/vcpkg-configuration.json).
+TensorFlow Lite Micro 1.26.5 is built as C++17 with exceptions and RTTI disabled,
+matching the compiler settings supplied by the TensorFlow Lite Micro pack. Newer
+GCC versions diagnose the pack's private class-specific `operator delete` when
+exceptions are enabled.
 
 ## License
 
