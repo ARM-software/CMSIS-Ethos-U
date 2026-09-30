@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['linker_20placement_0',['Linker placement',['../index.html#linker-placement',1,'']]],
-  ['log_1',['LOG',['../../driver/group__ethosu__log__api.html#ga684cbf16ece7e6e25cd49fdef621a475',1,]]],
-  ['log_5fdebug_2',['LOG_DEBUG',['../../driver/group__ethosu__log__api.html#ga4cfe278bc804bda9db3a59830b6fbfb8',1,]]],
-  ['log_5ferr_3',['LOG_ERR',['../../driver/group__ethosu__log__api.html#ga531b8a1a22e3fdd27811bfab52217e13',1,]]],
-  ['log_5finfo_4',['LOG_INFO',['../../driver/group__ethosu__log__api.html#ga0346634c15a318e68d86de21729d51c9',1,]]],
-  ['log_5fwarn_5',['LOG_WARN',['../../driver/group__ethosu__log__api.html#ga0ac9ed4ee5b005ba22993796a63fe4d5',1,]]],
-  ['logging_6',['Logging',['../../driver/group__ethosu__log__api.html',1,'']]]
+  ['inference_20that_20does_20not_20complete_0',['Troubleshooting an inference that does not complete',['../index.html#troubleshooting-an-inference-that-does-not-complete',1,'']]],
+  ['information_1',['Update MLOps information',['../index.html#update-mlops-information',1,'']]],
+  ['inspect_20the_20ml_20model_2',['Step 3: Compile and inspect the ML model',['../index.html#step-3-compile-and-inspect-the-ml-model',1,'']]],
+  ['integration_3',['Integration',['../index.html',1,'']]],
+  ['integration_4',['integration',['../index.html#complete-application-integration',1,'Complete application integration'],['../index.html#step-4-configure-the-platform-integration',1,'Step 4: Configure the platform integration']]],
+  ['integration_20workflow_5',['Integration workflow',['../index.html#integration-workflow',1,'']]]
 ];

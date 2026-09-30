@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['4_3a_20complete_20application_20integration_0',['Step 4: Complete application integration',['../index.html#step-4-complete-application-integration',1,'']]]
+  ['4_3a_20configure_20the_20platform_20integration_0',['Step 4: Configure the platform integration',['../index.html#step-4-configure-the-platform-integration',1,'']]]
 ];

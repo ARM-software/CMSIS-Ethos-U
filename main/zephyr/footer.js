@@ -1,7 +1,7 @@
 function writeHeader() {
-    document.write('Version PROJECT_NUMBER         =');
+    document.write('Version 1.0.0-dev16');
 };
 
 function writeFooter()  {
-    document.write('Generated on Mon Sep 14 2026 14:03:47 for PROJECT_NAME           = Zephyr PROJECT_NUMBER         =. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
+    document.write('Generated on Wed Sep 30 2026 17:00:48 for Ethos-U Integration for Cortex-M 1.0.0-dev16+gabd00c2. Copyright &copy; 2026 Arm Limited (or its affiliates). All rights reserved.');
 };

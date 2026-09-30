@@ -79,5 +79,5 @@ var searchData=
   ['ethosu_5fsemaphore_5fwait_5finference_76',['ETHOSU_SEMAPHORE_WAIT_INFERENCE',['../../driver/group__ethosu__driver__defines.html#ga506814742e046dc5d5f27584dfe3eec6',1,]]],
   ['ethosu_5fsoft_5freset_77',['ethosu_soft_reset',['../../driver/group__ethosu__public__api.html#ga480a7f7b324b3be61c1a9ffc92be9f3a',1,]]],
   ['ethosu_5fwait_78',['ethosu_wait',['../../driver/group__ethosu__public__api.html#ga33e63dcf2625e5b10d07193490b6323b',1,]]],
-  ['example_79',['Corstone-300 FVP example',['../index.html#corstone-300-fvp-example',1,'']]]
+  ['examples_79',['Corstone-300 FVP examples',['../index.html#corstone-300-fvp-examples',1,'']]]
 ];
