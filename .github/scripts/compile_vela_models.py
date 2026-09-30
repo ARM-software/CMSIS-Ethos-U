@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (c) 2026 Arm Limited (or its affiliates). All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
-"""Compile the Hello-Ethos-U models for one Vela configuration."""
+"""Compile the Test-Ethos-U models for one Vela configuration."""
 
 import argparse
 import re
@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MODEL_DIR = ROOT / "examples" / "Hello-Ethos-U" / "Model"
+MODEL_DIR = ROOT / "examples" / "Test-Ethos-U" / "Model"
 MODELS = ("hello_world", "tiny_cnn")
 
 

@@ -1,20 +1,26 @@
 #!/usr/bin/env bash
-# Version: 2.1
-# Date: 2023-04-19
-# This bash script generates Ethos-U documentation:
+# Version: 3.1
+# Date: 2026-09-21
+# This bash script generates Ethos-U documentation
 #
 # Pre-requisites:
 # - bash shell (for Windows: install git for Windows)
-# - doxygen 1.17.0
+# - doxygen 1.18.0
+# - linkchecker (can be skipped with -s)
 
 set -o pipefail
 
 # Set version of gen pack library
-REQUIRED_GEN_PACK_LIB="0.14.0"
+# For available versions see https://github.com/Open-CMSIS-Pack/gen-pack/tags.
+# Use the tag name without the prefix "v", e.g., 0.7.0
+REQUIRED_GEN_PACK_LIB="0.13.0"
 
-DIRNAME=$(dirname $(readlink -f $0))
+DIRNAME=$(dirname "$(readlink -f "$0")")
 GENDIR=../html
 REQ_DXY_VERSION="1.18.0"
+
+RUN_LINKCHECKER=1
+COMPONENTS=()
 
 function usage() {
   echo "Usage: $(basename "$0") [-h] [-s] [-c <comp>]"
@@ -58,7 +64,6 @@ fi
 
 find_git
 find_doxygen "${REQ_DXY_VERSION}"
-find_utility "mscgen" "-l | grep 'Mscgen version' | sed -r -e 's/Mscgen version ([^,]+),.*/\1/'" "${REQ_MSCGEN_VERSION}"
 [[ ${RUN_LINKCHECKER} != 0 ]] && find_linkchecker
 
 if [ -z "${VERSION_FULL}" ]; then
@@ -67,58 +72,120 @@ fi
 
 pushd "${DIRNAME}" > /dev/null || exit 1
 
-echo_log "Generating documentation ..."
-
+# Generate documentation for one component.
+#
+# Arguments:
+#   $1  Component name and Doxyfile basename.
+#   $2  Directory containing the component Doxyfile template.
+#   $3  Directory for the generated HTML documentation.
+#   $4  Full project version. When empty, use PROJECT_NUMBER from the component
+#       Doxyfile template, then fall back to the short Git commit hash.
+#   $5  Revision history mode: "none", "release", or "development".
+#
+# Components excluded by the --component option are skipped.
 function generate() {
-  if [[ ! (${#COMPONENTS[@]} == 0 || ${COMPONENTS[*]} =~ $1) ]]; then
-    return
+  local component="$1"
+  local sourceDir="$2"
+  local outputDir="$3"
+  local projectNumberFull="$4"
+  local historyMode="$5"
+  local requestedComponent
+  local componentSelected=false
+
+  # Honor the optional component selection made on the command line.
+  if [[ ${#COMPONENTS[@]} == 0 ]]; then
+    componentSelected=true
+  else
+    for requestedComponent in "${COMPONENTS[@]}"; do
+      if [[ "${requestedComponent}" == "${component}" ]]; then
+        componentSelected=true
+        break
+      fi
+    done
+  fi
+  if [[ "${componentSelected}" != "true" ]]; then
+    return 0
   fi
 
-  pushd "$1" > /dev/null || exit 1
-  
-  projectName=$(grep -E "PROJECT_NAME\s+=" "$1.dxy.in" | sed -r -e 's/[^"]*"([^"]+)".*/\1/')
-  projectNumberFull="$2"
+  pushd "${sourceDir}" > /dev/null || return 1
+
+  # Extract the project name from the Doxyfile template.
+  local projectName
+  projectName=$(grep -E "PROJECT_NAME\s+=" "${component}.dxy.in" | sed -r -e 's/[^"]*"([^"]+)".*/\1/')
+
   if [ -z "${projectNumberFull}" ]; then
-    projectNumberFull=$(grep -E "PROJECT_NUMBER\s+=" "$1.dxy.in" | sed -r -e 's/[^"]*"[^0-9]*(([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)?)".*/\1/')
+    # No project version was provided, try to extract it from the Doxyfile template.
+    projectNumberFull=$(grep -E "PROJECT_NUMBER\s+=" "${component}.dxy.in" | sed -r -e 's/[^"]*"[^0-9]*(([0-9]+\.[0-9]+(\.[0-9]+)?(-.+)?)?)".*/\1/')
   fi
   if [ -z "${projectNumberFull}" ]; then
+    # No project version in the Doxyfile template, fall back to the short Git commit hash.
     projectNumberFull="$(git rev-parse --short HEAD)"
   fi
+  # Extract the short project version (without any build metadata).
+  local projectNumber
   projectNumber="${projectNumberFull%+*}"
+
+  # Get the current date and year for the documentation footer.
+  local datetime
+  local year
   datetime=$(date -u +'%a %b %e %Y %H:%M:%S')
   year=$(date -u +'%Y')
 
-  sed -e "s/{projectNumber}/${projectNumber}/" "$1.dxy.in" > "$1.dxy"
+  # Instantiate the component Doxyfile.
+  sed -e "s/{projectNumber}/${projectNumber}/" "${component}.dxy.in" > "${component}.dxy"
 
-  mkdir -p "${DIRNAME}/${GENDIR}/$1/"
-  # git_changelog -f html -p "v" > src/history.txt
+  # Ensure the component output directory exists.
+  mkdir -p "${outputDir}"
 
-  echo_log "\"${UTILITY_DOXYGEN}\" \"$1.dxy\""
-  "${UTILITY_DOXYGEN}" "$1.dxy"
+  # Generate the requested revision history, if any.
+  case "${historyMode}" in
+    'none')
+      ;;
+    'release')
+      git_changelog -f html -p "v" > src/revision_history.txt
+      ;;
+    'development')
+      git_changelog -f html -p "v" -d > src/revision_history.txt
+      ;;
+    *)
+      echo "Invalid revision history mode for ${component}: ${historyMode}" >&2
+      popd > /dev/null || return 1
+      return 1
+      ;;
+  esac
 
-  mkdir -p "${DIRNAME}/${GENDIR}/$1/search/"
-  cp -f "${DIRNAME}/style_template/search.css" "${DIRNAME}/${GENDIR}/$1/search/"
+  # Generate the component HTML documentation.
+  echo_log "\"${UTILITY_DOXYGEN}\" \"${component}.dxy\""
+  if ! "${UTILITY_DOXYGEN}" "${component}.dxy"; then
+    popd > /dev/null || return 1
+    return 1
+  fi
 
+  # Instantiate the footer metadata after Doxygen creates the HTML output.
   sed -e "s/{datetime}/${datetime}/" "${DIRNAME}/style_template/footer.js.in" \
     | sed -e "s/{year}/${year}/" \
     | sed -e "s/{projectName}/${projectName}/" \
     | sed -e "s/{projectNumber}/${projectNumber}/" \
     | sed -e "s/{projectNumberFull}/${projectNumberFull}/" \
-    > "${DIRNAME}/${GENDIR}/$1/footer.js"
+    > "${outputDir}/footer.js"
 
-  popd > /dev/null || exit 1
+  popd > /dev/null || return 1
 }
 
-echo "Generating documentation ..."
-generate "general" "${VERSION_FULL}"
-generate "vela"
-generate "driver"
-generate "integration"
-generate "zephyr"
+# Generate all components, or only those selected with --component.
+echo_log "Generating documentation ..."
+generate "general"     "general"     "${DIRNAME}/${GENDIR}/general"     "${VERSION_FULL}" "development" || exit 1
+generate "vela"        "vela"        "${DIRNAME}/${GENDIR}/vela"        "${VERSION_FULL}" "none" || exit 1
+generate "driver"      "driver"      "${DIRNAME}/${GENDIR}/driver"      "${VERSION_FULL}" "none" || exit 1
+generate "integration" "integration" "${DIRNAME}/${GENDIR}/integration" "${VERSION_FULL}" "none" || exit 1
+generate "zephyr"      "zephyr"      "${DIRNAME}/${GENDIR}/zephyr"      "${VERSION_FULL}" "none" || exit 1
 
 
+# Copy files shared by all component documentation to the HTML root.
 cp -f "${DIRNAME}/index.html" "${DIRNAME}/../html/"
+cp -f "${DIRNAME}/../version.js" "${DIRNAME}/../html/"
 
+# Validate generated links unless link checking was disabled.
 [[ ${RUN_LINKCHECKER} != 0 ]] && check_links --timeout 120 "${DIRNAME}/../html/index.html" "${DIRNAME}"
 
 popd > /dev/null || exit 1
