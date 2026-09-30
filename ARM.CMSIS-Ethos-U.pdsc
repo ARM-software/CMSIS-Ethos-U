@@ -10,7 +10,7 @@
       <license name="LICENSE" title="Apache 2.0 open-source license" spdx="Apache-2.0"/>
     </licenseSet>
   </licenseSets>
-  <repository type="git">https://github.com/VladimirUmek/Ethos-U.git</repository>
+  <repository type="git">https://github.com/ARM-software/CMSIS-Ethos-U.git</repository>
 
   <releases>
     <release version="1.0.0-dev">
