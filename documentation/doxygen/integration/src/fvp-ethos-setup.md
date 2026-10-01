@@ -3,7 +3,7 @@
 Each column describes one supported combination of Corstone system, Ethos-U
 accelerator, and Vela memory mode for the `Test-Ethos-U` examples. For the
 complete process of adapting these settings to physical hardware, see the
-[Ethos-U integration workflow](index.html).
+<a href="index.html">Ethos-U integration workflow</a>.
 
 ## Ethos-U55
 
