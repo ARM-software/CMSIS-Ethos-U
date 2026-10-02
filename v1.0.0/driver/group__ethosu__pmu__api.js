@@ -1,0 +1,28 @@
+var group__ethosu__pmu__api =
+[
+    [ "ETHOSU_PMU_Enable", "group__ethosu__pmu__api.html#gac4ed0239a963456a74e18ec7a06fd086", null ],
+    [ "ETHOSU_PMU_Disable", "group__ethosu__pmu__api.html#gaf976f4e4d18229593591bdf984645018", null ],
+    [ "ETHOSU_PMU_Set_EVTYPER", "group__ethosu__pmu__api.html#ga73f8bf9079d47e1d6afe9bf7a49f6999", null ],
+    [ "ETHOSU_PMU_Get_NumEventCounters", "group__ethosu__pmu__api.html#ga6e52be0fc9b15f9351e83698bd9b5888", null ],
+    [ "ETHOSU_PMU_Get_NumEventCountersForDrv", "group__ethosu__pmu__api.html#ga6f27ab539babbec56b72cdbc5a190f39", null ],
+    [ "ETHOSU_PMU_Get_EVTYPER", "group__ethosu__pmu__api.html#ga2450c677d035e1e2dc51c31b1feb2df8", null ],
+    [ "ETHOSU_PMU_CYCCNT_Reset", "group__ethosu__pmu__api.html#gabe2a2b4b99bf753d02b5683fab77988c", null ],
+    [ "ETHOSU_PMU_EVCNTR_ALL_Reset", "group__ethosu__pmu__api.html#ga6bfb8e6dbb653f003fd4a196b895a79d", null ],
+    [ "ETHOSU_PMU_CNTR_Enable", "group__ethosu__pmu__api.html#ga100f5c40ed0cfda7fd0f6dae35c51da2", null ],
+    [ "ETHOSU_PMU_CNTR_Disable", "group__ethosu__pmu__api.html#gae13ce2d6a114658e6bf2d9d70135eeb8", null ],
+    [ "ETHOSU_PMU_CNTR_Status", "group__ethosu__pmu__api.html#ga285ba30593341536860b81151ec202f7", null ],
+    [ "ETHOSU_PMU_Get_CCNTR", "group__ethosu__pmu__api.html#ga99ab8589f4909184d0a1038887f1228d", null ],
+    [ "ETHOSU_PMU_Set_CCNTR", "group__ethosu__pmu__api.html#ga598367d9920c99b08d062b0684593e9a", null ],
+    [ "ETHOSU_PMU_Get_EVCNTR", "group__ethosu__pmu__api.html#ga61c678210a7d508e9436c144964246ff", null ],
+    [ "ETHOSU_PMU_Set_EVCNTR", "group__ethosu__pmu__api.html#ga9e64f737eaffba38af803a91696f1f19", null ],
+    [ "ETHOSU_PMU_Get_CNTR_OVS", "group__ethosu__pmu__api.html#ga8bd68f0c49c74fe81bf91867fff71c43", null ],
+    [ "ETHOSU_PMU_Set_CNTR_OVS", "group__ethosu__pmu__api.html#gab6656b95629a2b087f7e47dc5d0cc897", null ],
+    [ "ETHOSU_PMU_Set_CNTR_IRQ_Enable", "group__ethosu__pmu__api.html#ga25620215f065e2e192299d7cca9c3c39", null ],
+    [ "ETHOSU_PMU_Set_CNTR_IRQ_Disable", "group__ethosu__pmu__api.html#ga55731dad7fd178f52f3f17bf9e696187", null ],
+    [ "ETHOSU_PMU_Get_IRQ_Enable", "group__ethosu__pmu__api.html#gabcfa90c7c1a1078a13c608986f65a893", null ],
+    [ "ETHOSU_PMU_CNTR_Increment", "group__ethosu__pmu__api.html#gaab2e8591bd63f87dffb38e1cfa6df5e9", null ],
+    [ "ETHOSU_PMU_PMCCNTR_CFG_Set_Start_Event", "group__ethosu__pmu__api.html#gaebaab4ed38f8dee05ad50b1eac8a73b3", null ],
+    [ "ETHOSU_PMU_PMCCNTR_CFG_Set_Stop_Event", "group__ethosu__pmu__api.html#ga8cd24678c33e3d238ec0866e61150bb4", null ],
+    [ "ETHOSU_PMU_Get_QREAD", "group__ethosu__pmu__api.html#ga2530cb39de40e314b7a19e42f220ab2f", null ],
+    [ "ETHOSU_PMU_Get_STATUS", "group__ethosu__pmu__api.html#ga511b1edd27d2afb94205976f5da84281", null ]
+];

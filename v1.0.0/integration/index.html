@@ -1,0 +1,456 @@
+<!-- HTML header for Doxygen 1.18.0 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Ethos-U Integration for Cortex-M: Integration</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<script id="doxygen-config" type="application/json">
+{
+  "serverBasedSearch": false,
+  "disableIndex": true,
+  "dynamicMenus": false,
+  "fullSidebar": false
+}
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="component_tabs.js"></script>
+<script type="text/javascript" src="navtree_customization.js"></script>
+<script type="text/javascript" src="footer.js"></script>
+<script type="text/javascript" src="../version.js"></script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by Doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo-arm.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Ethos-U Integration for Cortex-M<span id="projectnumber"><script type="text/javascript">
+     writeHeader();
+     writeVersionDropdown("Ethos-U Integration for Cortex-M");
+    </script></span>
+   </div>
+   <div id="projectbrief">Integrate ML model</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">writeComponentTabs();</script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Integration </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_src_2main"></a></p>
+<p>This chapter explains how to integrate a pretrained, quantized ML model into an Edge AI MCU based on Cortex-M and Ethos-U. Model training, quantization, and functional accuracy validation are outside the scope of this integration flow.</p>
+<h1 class="doxsection"><a class="anchor" id="starting-point"></a>
+Starting point</h1>
+<p>The starting point is a pretrained, quantized ML model that meets the application's functional requirements. Before selecting a specific Edge AI MCU, compile the model with Vela for one or more Ethos-U reference systems as described in <a href="../vela/index.html#compare-ethos-u-configurations">Compare Ethos-U configurations</a>.</p>
+<p>Vela reports operator placement and estimates memory use, bandwidth, and NPU cycles. See <a href="../vela/index.html#read-the-vela-reports">Read the Vela reports</a>. Use these results for device selection, then validate with a device-specific compile and measurements on the target hardware.</p>
+<p>Some model zoos may provide corresponding performance and memory data for Ethos-U-based systems. Confirm that the published configuration is relevant to the candidate device before using those results.</p>
+<h2 class="doxsection"><a class="anchor" id="determine-the-memory-budget"></a>
+Determine the memory budget</h2>
+<p>Estimate the application's memory needs before selecting a device:</p>
+<ul>
+<li>Compile the ML model with the optimization strategy that matches the application requirements, and record the reported memory areas. Use <span class="tt">--optimise Size</span> to minimize memory use or <span class="tt">--optimise Performance</span> when performance is the priority and sufficient memory is available. See <a href="../vela/index.html#memory-mode-parameters">Vela memory mode parameters</a>.</li>
+<li>Add runtime and application data, stacks, heaps, alignment, padding, and a safety margin.</li>
+</ul>
+<p>After the application runs on the target, the remaining memory can be used to tune performance. See <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a>.</p>
+<h1 class="doxsection"><a class="anchor" id="integration-workflow"></a>
+Integration workflow</h1>
+<p>The diagram summarizes the integration workflow and its iteration loop. Follow the detailed steps in order because later steps depend on earlier decisions and measurements.</p>
+<div class="mermaidgraph">
+<pre class="mermaid">
+flowchart TD
+    hardware[&quot;Characterize target hardware&lt;br/&gt;and create the project&quot;] --&gt; vela[&quot;Select and verify&lt;br/&gt;the Vela configuration&quot;]
+    vela --&gt; compile[&quot;Compile and inspect&lt;br/&gt;the ML model&quot;]
+    compile --&gt; configure[&quot;Configure linker, driver,&lt;br/&gt;memory attributes, and platform integration&quot;]
+    configure --&gt; validate[&quot;Validate and tune&lt;br/&gt;on target hardware&quot;]
+    validate -. Iterate .-&gt; vela</pre>
+</div>
+<ol type="1">
+<li><a href="#step-1-characterize-the-target-hardware-and-create-the-project"><b>Characterize the target hardware and create the project.</b></a> Identify the NPU configuration, NPU-accessible memories, access constraints, and device resources before choosing a software configuration.</li>
+<li><a href="#step-2-select-and-verify-the-vela-configuration"><b>Select and verify the Vela configuration.</b></a> Confirm that the device-specific system configuration and memory mode model the intended physical memories and match the NPU variant and MAC count.</li>
+<li><a href="#step-3-compile-and-inspect-the-ml-model"><b>Compile and inspect the ML model.</b></a> Run Vela with the verified settings and check its operator placement, memory use, and performance estimates against the application requirements.</li>
+<li><a href="#step-4-configure-the-platform-integration"><b>Configure the platform integration.</b></a> Keep the linker placement, driver regions, MPU/SAU attributes, cache policy, address mapping, and runtime integration consistent with the Vela configuration.</li>
+<li><a href="#step-5-validate-and-tune"><b>Validate and tune.</b></a> Verify correctness, memory use, and performance on the target hardware.</li>
+</ol>
+<p>For the supported Corstone FVP configurations and their corresponding Vela, driver, and linker settings, see <a class="el" href="fvp-ethos-setup.html" title="Configure Ethos-U for FVP Simulation Models">Configure Ethos-U for FVP Simulation Models</a>.</p>
+<h2 class="doxsection"><a class="anchor" id="configuration-consistency-checklist"></a>
+Configuration consistency checklist</h2>
+<p>An Ethos-U application describes the same memory system in several places. Vela uses a performance model and logical memory areas when it creates the command stream, while the linker, driver, and platform configuration implement those choices on physical hardware. A mismatch can produce inaccurate Vela estimates, inaccessible data, cache-coherency failures, or an inference that does not complete. Use this checklist whenever selecting a target, changing a memory mode, or replacing the ML model.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Check  </th><th class="markdownTableHeadNone">Configuration source  </th><th class="markdownTableHeadNone">Why and what to verify  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="#step-1-characterize-the-target-hardware-and-create-the-project">Target hardware</a>  </td><td class="markdownTableBodyNone">Device documentation and DFP  </td><td class="markdownTableBodyNone">Establish the NPU variant and MAC count, NPU-accessible memories and capacities, read/write restrictions, security attribution, and CPU cacheability before selecting compiler settings.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="../vela/index.html#create-device-specific-velaini-file">Vela system and memory configuration</a>  </td><td class="markdownTableBodyNone"><span class="tt">System_Config</span> and <span class="tt">Memory_Mode</span> in the device-specific <span class="tt">vela.ini</span>  </td><td class="markdownTableBodyNone">Confirm that the logical areas model the intended physical memories and their performance, and that constants, the writable arena, and optional fast scratch are assigned to suitable access paths.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="#step-3-compile-and-inspect-the-ml-model">Model compilation</a>  </td><td class="markdownTableBodyNone">Generated <span class="tt">*.cbuild-mlops.yml</span> and Vela invocation  </td><td class="markdownTableBodyNone">Confirm the accelerator, MAC count, <span class="tt">vela.ini</span>, system configuration, memory mode, and model input before treating the generated model as target-compatible.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="../vela/index.html#read-the-vela-reports">Vela report</a>  </td><td class="markdownTableBodyNone">Vela summary and CSV reports  </td><td class="markdownTableBodyNone">Check that allocations fit the available memories, the expected operators run on the NPU, and estimated bandwidth and performance are suitable for the application.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="#linker-placement">Linker placement</a>  </td><td class="markdownTableBodyNone">Linker script and link map  </td><td class="markdownTableBodyNone">Confirm that the compiled model, tensor arena, and optional fast-scratch buffer occupy the physical memories modeled by Vela, with sufficient size and alignment.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="../driver/index.html#configure-memory-access-with-npuqconfig-and-npuregioncfgx">Driver memory access</a>  </td><td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span> and <span class="tt">NPU_REGIONCFG_x</span>  </td><td class="markdownTableBodyNone">Ensure that command-stream and base-region accesses use the NPU paths and attributes that reach the linked physical memories.  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><a href="#mpusau-and-cache-attributes">Platform memory attributes</a>  </td><td class="markdownTableBodyNone">MPU/SAU, cache policy, and address mapping  </td><td class="markdownTableBodyNone">Ensure that the CPU and NPU have compatible security and access permissions, and provide address translation and cache maintenance where required.  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><a href="#step-5-validate-and-tune">Target validation</a>  </td><td class="markdownTableBodyNone">Link map, functional tests, driver diagnostics, and PMU measurements  </td><td class="markdownTableBodyNone">Verify correct results and stable execution, then compare actual memory use and performance with the compiler estimates.  </td></tr>
+</table>
+<dl class="section important"><dt>Important</dt><dd><br  />
+ The Vela configuration, linker placement, driver memory-access selectors, and MPU/SAU and cache attributes must all describe the same physical-memory arrangement.</dd></dl>
+<h1 class="doxsection"><a class="anchor" id="tutorial-create-an-ethos-u-application"></a>
+Tutorial: Create an Ethos-U application</h1>
+<p>This tutorial uses <a href="https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack">Keil Studio for VS Code</a>, available from the VS Code Marketplace. Command-line users may use the <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/">CMSIS-Toolbox</a> with a similar workflow.</p>
+<h2 class="doxsection"><a class="anchor" id="start-with-an-example"></a>
+Start with an example</h2>
+<p>This tutorial applies the five-step workflow to the <span class="tt">Test-Ethos-U</span> examples in the <span class="tt">ARM::CMSIS-Ethos-U</span> pack. The three examples have the same application structure and uses the same ML models. Each example targets a different Ethos-U variant.</p>
+<p>In Keil Studio, use <b>Create a New Solution</b> as described in <a href="https://mdk-packs.github.io/vscode-cmsis-solution-docs/create_app.html">Work with CMSIS solutions</a>. From the table, select the target board and corresponding example that matches the Ethos-U variant in the target hardware. After creating the example, you can compile it and run it directly on the FVP simulation with the <a href="https://github.com/Open-CMSIS-Pack/vscode-cmsis-solution#action-buttons">action buttons</a> in the <a href="https://mdk-packs.github.io/vscode-cmsis-solution-docs/userinterface.html#2-main-area-of-the-cmsis-view">CMSIS view</a>. Keil Studio automatically downloads and installs the required tools and software packs. The initial setup may take some time.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Target board  </th><th class="markdownTableHeadLeft">Example  </th><th class="markdownTableHeadLeft">NPU/MACs  </th><th class="markdownTableHeadLeft">FVP simulation model  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP  </td><td class="markdownTableBodyLeft"><span class="tt">Test-Ethos-U55.csolution.yml</span>  </td><td class="markdownTableBodyLeft">Ethos-U55-128  </td><td class="markdownTableBodyLeft">Corstone-300  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">V2M-MPS3-SSE-300-FVP  </td><td class="markdownTableBodyLeft"><span class="tt">Test-Ethos-U65.csolution.yml</span>  </td><td class="markdownTableBodyLeft">Ethos-U65-256  </td><td class="markdownTableBodyLeft">Corstone-300  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">SSE-320  </td><td class="markdownTableBodyLeft"><span class="tt">Test-Ethos-U85.csolution.yml</span>  </td><td class="markdownTableBodyLeft">Ethos-U85-256  </td><td class="markdownTableBodyLeft">Corstone-320  </td></tr>
+</table>
+<p>For a complete implementation on physical hardware, see <a href="https://github.com/Arm-Examples/CMSIS-Ethos-Integration">CMSIS-Ethos-Integration</a>. It applies this integration workflow to a real-world device.</p>
+<p>Each example includes the <span class="tt">Test-Ethos-U.cproject.yml</span> file and the software layers shown in this diagram:</p>
+<div class="mermaidgraph">
+<pre class="mermaid">
+flowchart TD
+    solution[&quot;NPU-specific solution&lt;br/&gt;Test-Ethos-Uxx.csolution.yml&quot;] --&gt; target[&quot;Target configuration&lt;br/&gt;device, FVP, and Board-Uxx.clayer.yml&quot;]
+    solution --&gt; project[&quot;Application project&lt;br/&gt;Test-Ethos-U.cproject.yml&quot;]
+    project --&gt; sources[&quot;Application sources&lt;br/&gt;Source/test_main.cpp&quot;]
+    project --&gt; model[&quot;Model layer&lt;br/&gt;ML-MyModels.clayer.yml&quot;]</pre>
+</div>
+<p>The model layer supplies two quantized TensorFlow Lite (<span class="tt">int8</span>) models: <span class="tt">hello_world</span>, a dense network that approximates <span class="tt">sin(x)</span>, and <span class="tt">tiny_cnn</span>, an image classifier that exercises convolution and pooling operations. The application runs one test input through each model on the selected NPU and checks both results against embedded reference output.</p>
+<p>When both model checks pass, the FVP simulation model outputs:</p>
+<div class="fragment"><div class="line">2 of 2 checks passed</div>
+<div class="line">TEST RESULT: PASS</div>
+</div><!-- fragment --><p>This confirms that the example and tool setup work correctly.</p>
+<p>Use the supplied layer as a known-good baseline to verify the system integration and tool setup. Once verified, replace it with a layer containing the application-specific ML model.</p>
+<dl class="section note"><dt>Note</dt><dd><br  />
+<ul>
+<li>The committed ML model artifacts are precompiled for Ethos-U55-128. Follow Step 2 to compile them for the NPU configuration of the selected target.</li>
+<li>The Corstone examples can also test Ethos-U65 and Ethos-U85 targets with the corresponding FVP models. Keep the accelerator and MAC configuration consistent in the solution MLOps information, Board layer, Vela command, and FVP configuration.</li>
+</ul>
+</dd></dl>
+<h2 class="doxsection"><a class="anchor" id="step-1-characterize-the-target-hardware-and-create-the-project"></a>
+Step 1: Characterize the target hardware and create the project</h2>
+<p>For our application, we selected the Alif Semiconductor <a href="https://www.keil.arm.com/devices/alif-semiconductor-ae722f80f55d5ls/">Ensemble E7 (<span class="tt">AE722F80F55D5LS</span>)</a> device and the related <a href="https://www.keil.arm.com/boards/alif-semiconductor-appkit-e7-aiml-d1-34b5d51/">AppKit-E7-AIML</a> board. We target the Ethos-U55 NPU on this device and therefore start with <span class="tt">Test-Ethos-U55.csolution.yml</span>.</p>
+<h3 class="doxsection"><a class="anchor" id="add-a-new-target-to-the-solution"></a>
+Add a new target to the solution</h3>
+<p>Open <span class="tt">Test-Ethos-U55.csolution.yml</span> and add the DFP and BSP packs required by the selected device and board. Use the information in the <a href="https://www.keil.arm.com/packs/">CMSIS-Pack catalog</a> to identify these packs. Then add a hardware target to the <span class="tt">target-types:</span> node before the existing FVP target. For the E7 device and AppKit, the relevant parts of the solution are:</p>
+<div class="fragment"><div class="line">packs:</div>
+<div class="line">  - pack: AlifSemiconductor::Ensemble</div>
+<div class="line">  # Keep the existing packs</div>
+<div class="line">  - pack: ARM::V2M_MPS3_SSE_300_BSP@1.5.0</div>
+<div class="line"> </div>
+<div class="line">target-types:</div>
+<div class="line">  - type: AppKit-E7</div>
+<div class="line">    board: Alif Semiconductor::AppKit-E7-AIML</div>
+<div class="line">    device: Alif Semiconductor::AE722F80F55D5LS</div>
+<div class="line"> </div>
+<div class="line">  # Keep the existing target for validating with FVP simulation model.</div>
+<div class="line">  - type: SSE-300-U55</div>
+<div class="line">    board: ARM::V2M-MPS3-SSE-300-FVP</div>
+<div class="line">    device: ARM::SSE-300-MPS3</div>
+</div><!-- fragment --><p>Save the solution. Keil Studio discovers compatible board layers in the installed packs and prompts you to select one. The Alif E7 pack provides two layers for the AppKit-E7-AIML board:</p>
+<ul>
+<li><span class="tt">Board/AppKit-E7_M55_HE</span> configures the <span class="tt">M55_HE</span> processor.</li>
+<li><span class="tt">Board/AppKit-E7_M55_HP</span> configures the <span class="tt">M55_HP</span> processor.</li>
+</ul>
+<p>This example uses the <span class="tt">Board/AppKit-E7_M55_HP</span> layer.</p>
+<dl class="section remark"><dt>Remarks</dt><dd>When no compatible board layer exists, create one based on the supplied FVP board layer. This example requires standard output and the Ethos-U driver. See <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/ReferenceApplications/#board-layer">Board Layers</a> in the CMSIS-Toolbox documentation.</dd></dl>
+<h2 class="doxsection"><a class="anchor" id="step-2-select-and-verify-the-vela-configuration"></a>
+Step 2: Select and verify the Vela configuration</h2>
+<h3 class="doxsection"><a class="anchor" id="update-mlops-information"></a>
+Update MLOps information</h3>
+<p>The <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information"><span class="tt">mlops:</span> information in the <span class="tt">*.csolution.yml</span> file</a> describes the NPU, Vela configuration, model layer, and test targets used by an MLOps system. Update this information in two stages.</p>
+<h4 class="doxsection"><a class="anchor" id="stage-1-update-the-ethos-u-configuration"></a>
+Stage 1: Update the Ethos-U configuration</h4>
+<p>First select the NPU independently of its memory configuration. The Alif E7 <span class="tt">M55_HP</span> processor integrates an Ethos-U55 with 256 MACs, so change <span class="tt">macs:</span> from <span class="tt">128</span> to <span class="tt">256</span> in <span class="tt">Test-Ethos-U55.csolution.yml</span>:</p>
+<div class="fragment"><div class="line">mlops:</div>
+<div class="line">  description: TinyCNN int8 image classifier for Ethos-U55</div>
+<div class="line">  npu:</div>
+<div class="line">    type: Ethos-U55</div>
+<div class="line">    macs: 256      # Must match the hardware target</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>For the complete syntax of the <span class="tt">mlops:</span> node, see <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/YML-Input-Format/#mlops-management">MLOps Management</a> in the CMSIS-Toolbox manual.</dd></dl>
+<p>In Keil Studio, saving the solution runs <span class="tt">cbuild setup</span> and regenerates <span class="tt">Test-Ethos-U55.cbuild-mlops.yml</span>. CMSIS-Toolbox combines the MLOps settings with the NPU and processor information published by the selected device and DFP.</p>
+<h4 class="doxsection"><a class="anchor" id="stage-2-verify-and-update-the-vela-configuration"></a>
+Stage 2: Verify and update the Vela configuration</h4>
+<p>Inspect the <span class="tt">vela:</span> section of the generated <span class="tt">*.cbuild-mlops.yml</span> file. Its <span class="tt">ini:</span> entry identifies the device-specific <span class="tt">vela.ini</span> supplied by the DFP. For example:</p>
+<div class="fragment"><div class="line">cbuild-mlops:</div>
+<div class="line">  generated-by: csolution version 2.14.1+p55-g119b477e</div>
+<div class="line">  description: TinyCNN int8 image classifier for Ethos-U55</div>
+<div class="line">  processor:</div>
+<div class="line">    type: Cortex-M55</div>
+<div class="line">  npu:</div>
+<div class="line">    type: Ethos-U55</div>
+<div class="line">    macs: 256</div>
+<div class="line">  vela:</div>
+<div class="line">    ini: .cmsis/ensemble_vela.ini    # Device-specific vela.ini file</div>
+<div class="line">    options: --accelerator-config ethos-u55-256 --system-config Ethos_U55_High_End_Embedded --memory-mode Shared_Sram</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If the <span class="tt">vela:</span> section does not contain an <span class="tt">ini:</span> entry, check the DFP documentation or contact the silicon vendor for a configuration that describes the device.</dd></dl>
+<p>The generated <span class="tt">options:</span> entry might initially contain a system configuration or memory mode inherited from the original example. List the configurations and memory modes that the device-specific <span class="tt">vela.ini</span> actually provides:</p>
+<div class="fragment"><div class="line">vela --list-configs .cmsis/ensemble_vela.ini</div>
+</div><!-- fragment --><p>Choose from the reported values by comparing the memory types, bandwidths, clock frequency, and AXI mappings with the target hardware and intended model placement. In the <span class="tt">*.csolution.yml</span> file, update the <span class="tt">vela:</span> node under <span class="tt">mlops:</span> with selectors that are present in the device-specific <span class="tt">vela.ini</span>:</p>
+<div class="fragment"><div class="line">  mlops:</div>
+<div class="line">    description: TinyCNN int8 image classifier for Ethos-U55</div>
+<div class="line">    npu:</div>
+<div class="line">      type: Ethos-U55</div>
+<div class="line">      macs: 256</div>
+<div class="line">    vela:</div>
+<div class="line">      system: RTSS_HP_SRAM_MRAM # System configuration from the device-specific vela.ini</div>
+<div class="line">      memory: Shared_Sram       # Memory mode from the device-specific vela.ini</div>
+<div class="line">      misc: --optimise Performance --verbose-config # Additional Vela options</div>
+<div class="line">    model:</div>
+<div class="line">      clayer: ./Model/ML-MyModels.clayer.yml</div>
+<div class="line">      name: tiny_cnn_int8</div>
+<div class="line">#     path: Model/tiny_cnn      # feature to be added in CMSIS-Toolbox 2.15</div>
+</div><!-- fragment --><p>Save the solution again. In the regenerated <span class="tt">*.cbuild-mlops.yml</span>, verify that the <span class="tt">ini:</span> and <span class="tt">options:</span> entries under <span class="tt">vela:</span> contain the intended configuration.</p>
+<h3 class="doxsection"><a class="anchor" id="configure-256-macs-for-fvp-simulation"></a>
+Configure 256 MACs for FVP simulation</h3>
+<p>The supplied Corstone-300 simulator target uses Ethos-U55-128 by default. To test the same Ethos-U55-256 model that runs on the Alif E7, update the simulator configuration as follows:</p>
+<ul>
+<li><p class="startli">In <span class="tt">Board/Corstone-300/Board-U55.clayer.yml</span>, set the compile-time driver configuration to:</p>
+<div class="fragment"><div class="line">- ETHOSU_MACS: 256</div>
+</div><!-- fragment --></li>
+<li><p class="startli">In <span class="tt">Board/Corstone-300/fvp_config_u55.txt</span>, configure the simulated NPU:</p>
+<div class="fragment"><div class="line">ethosu.num_macs=256</div>
+</div><!-- fragment --></li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="step-3-compile-and-inspect-the-ml-model"></a>
+Step 3: Compile and inspect the ML model</h2>
+<h3 class="doxsection"><a class="anchor" id="update-ml-models-of-the-example"></a>
+Update ML models of the example</h3>
+<p>The example contains the original quantized TensorFlow Lite models and Vela output compiled for the original Ethos-U55-128 configuration. Recompile each quantized model for the Ethos-U55-256 configuration and the device-specific system and memory mode that is reported in the generated <span class="tt">Test-Ethos-U55.cbuild-mlops.yml</span> file.</p>
+<p>The generated <span class="tt">*.cbuild-mlops.yml</span> file is the handoff point between CMSIS-Toolbox and the ML model compilation step. It contains the device-specific <span class="tt">vela.ini</span>, accelerator selection, system configuration, memory mode, optional Vela arguments, and model selection.</p>
+<h3 class="doxsection"><a class="anchor" id="compile-with-an-mlops-conversion-script"></a>
+Compile with an MLOps conversion script</h3>
+<p>The <span class="tt">Test-Ethos-U</span> example provides one conversion script that consumes the generated MLOps file:</p>
+<div class="fragment"><div class="line">python script/model-converter.py Test-Ethos-U55.cbuild-mlops.yml</div>
+</div><!-- fragment --><p>The script reads the generated MLOps file, runs Vela for each selected model, emits the Vela-compiled <span class="tt">_vela.tflite</span> file, regenerates the C array used by the application, and writes <span class="tt">VELA_SUMMARY.md</span>.</p>
+<p>This script is example integration code, not the only supported MLOps flow. Projects may replace it with their own training, quantization, validation, artifact signing, packaging, or CI pipeline, provided that the pipeline consumes the same generated Vela settings and produces the model artifacts expected by the application.</p>
+<h3 class="doxsection"><a class="anchor" id="compile-manually-with-vela"></a>
+Compile manually with Vela</h3>
+<p>For debugging, CI bring-up, or custom MLOps integrations, the same values can be applied directly to Vela. Inspect <span class="tt">Test-Ethos-U55.cbuild-mlops.yml</span> and use its <span class="tt">vela.ini</span>, <span class="tt">vela.options</span>, and model path when constructing the command. See <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps Information</a>.</p>
+<div class="fragment"><div class="line">vela Model/tiny_cnn/tiny_cnn_int8.tflite \</div>
+<div class="line">  --accelerator-config ethos-u55-256 \</div>
+<div class="line">  --config .cmsis/ensemble_vela.ini \</div>
+<div class="line">  --system-config RTSS_HP_SRAM_MRAM \</div>
+<div class="line">  --memory-mode Shared_Sram \</div>
+<div class="line">  --optimise Performance \</div>
+<div class="line">  --output-dir Model/tiny_cnn \</div>
+<div class="line">  --verbose-config</div>
+</div><!-- fragment --><p>See <a href="../vela/index.html">Vela</a> for details about command-line options. Options such as <span class="tt">--optimise Size</span> can be added with the <span class="tt">mlops.vela.misc:</span> control in the <span class="tt">*.csolution.yml</span> file.</p>
+<p>Whether using the example script or a custom/manual flow, repeat compilation for every quantized model in the model layer. Replace the previous Vela output used by the application and regenerate its embedded C data if the project stores the model as a C array. Keep the original quantized <span class="tt">.tflite</span> file as the portable input; the <span class="tt">_vela.tflite</span> output is specific to the selected Ethos-U and memory configuration. For more information about this handoff, see <a href="https://open-cmsis-pack.github.io/cmsis-toolbox/build-overview/#mlops-information">MLOps Information</a>.</p>
+<h3 class="doxsection"><a class="anchor" id="add-application-ml-model"></a>
+Add application ML model</h3>
+<p>The supplied <span class="tt">ML-MyModels.clayer.yml</span> has the layer type <span class="tt">ML-Model</span>. It selects the TensorFlow Lite Micro and Ethos-U kernel components and adds the model files to the application. The layer contains:</p>
+<ul>
+<li><span class="tt">model_data.h</span>, which declares the embedded models;</li>
+<li><span class="tt">arena.c</span>, which reserves the shared tensor arena; and</li>
+<li>one directory per model with the original quantized <span class="tt">.tflite</span> file, the Vela-compiled <span class="tt">_vela.tflite</span> file, and the generated C array used by the application.</li>
+</ul>
+<p>To use an application-specific model, copy or modify this layer, add the new model files to its <span class="tt">groups:</span> node, and set <span class="tt">model.clayer</span> in the solution's <span class="tt">mlops:</span> node to the resulting layer.</p>
+<h2 class="doxsection"><a class="anchor" id="step-4-configure-the-platform-integration"></a>
+Step 4: Configure the platform integration</h2>
+<p>Keep the Vela memory mode, linker placement, and driver regions consistent, then build the system and confirm the allocations in the linker map. The diagram summarizes the required settings.</p>
+<div class="mermaidgraph">
+<pre class="mermaid">
+flowchart LR
+    mode[&quot;Vela memory mode&quot;] --&gt; regions[&quot;Command-stream&lt;br/&gt;regions&quot;]
+    regions --&gt; linker[&quot;Linker placement&quot;]
+    linker --&gt; memory[&quot;Physical memory&quot;]
+    attributes[&quot;MPU/SAU and&lt;br/&gt;cache attributes&quot;] --&gt; memory
+    driver[&quot;Driver&lt;br/&gt;region settings&quot;] --&gt; memory</pre>
+</div>
+<h3 class="doxsection"><a class="anchor" id="linker-placement"></a>
+Linker placement</h3>
+<p>The examples place compiled model constants in the <span class="tt">ethos_model</span> section, the tensor arena in <span class="tt">ethos_arena</span>, and an optional cache buffer in <span class="tt">ethos_cache</span>. Map these sections to the physical memories selected by the Vela memory mode. Preserve their alignment requirements and use the linker map to confirm their addresses and sizes. See <a href="../vela/index.html#create-the-linker-script">Create the linker script</a> for the detailed mapping between Vela memory areas and linker sections.</p>
+<h3 class="doxsection"><a class="anchor" id="mpusau-and-cache-attributes"></a>
+MPU/SAU and cache attributes</h3>
+<p>Configure each memory region so that the CPU and NPU have the required security and access permissions. If a CPU mapping is cacheable and is not coherent with the NPU, provide the required cache clean and invalidate operations.</p>
+<h3 class="doxsection"><a class="anchor" id="driver-region-settings"></a>
+Driver region settings</h3>
+<p>Set <span class="tt">NPU_REGIONCFG_0</span>, <span class="tt">NPU_REGIONCFG_1</span>, and <span class="tt">NPU_REGIONCFG_2</span> as defines in the related <span class="tt">&lt;board&gt;.clayer.yml</span> file so that the driver access paths match <span class="tt">const_mem_area</span>, <span class="tt">arena_mem_area</span>, and <span class="tt">cache_mem_area</span>. See <a href="../vela/index.html#match-the-driver-configuration">Match the driver configuration</a> for the mapping.</p>
+<h3 class="doxsection"><a class="anchor" id="complete-application-integration"></a>
+Complete application integration</h3>
+<p>Review the driver's weak callbacks described in <a href="../driver/index.html#platform-specific-functions">Platform-specific functions</a> and override those required by the target. These callbacks provide cache maintenance, CPU-to-NPU address remapping, run-time region selection, RTOS synchronization, and begin/end inference hooks for power control or tracing.</p>
+<p>Follow the related guidance for <a href="../driver/index.html#data-caching">data caching</a>, <a href="../driver/index.html#mutex-and-semaphores">mutexes and semaphores</a>, and <a href="../driver/index.html#beginend-inference-callbacks">begin/end inference callbacks</a>. Configure a finite inference timeout where appropriate, report NPU faults, and complete the <a href="../driver/index.html#driver-bring-up-checklist">driver bring-up checklist</a> before relying on the integration in an application.</p>
+<h2 class="doxsection"><a class="anchor" id="step-5-validate-and-tune"></a>
+Step 5: Validate and tune</h2>
+<p>Verify correctness, memory use, and performance on the target hardware.</p>
+<ul>
+<li>Run representative inputs and compare every output with known-good reference data. Check that Vela placed the expected operators on the NPU.</li>
+<li>Inspect the linker map and exercise the maximum expected tensor-arena, stack, and heap usage. Confirm that no region overlaps or exceeds its allocation.</li>
+<li>Measure several inference iterations on hardware, including warm-up behavior, and use the driver <a href="../driver/index.html#performance-monitoring-unit-pmu">PMU</a> to investigate NPU activity and stalls.</li>
+<li>Repeat inference under the intended RTOS, cache, and power conditions. Verify that timeout and fault paths terminate cleanly and report useful diagnostics.</li>
+</ul>
+<p>When tuning, change one parameter at a time, such as the Vela memory mode, <span class="tt">arena_cache_size</span>, or optimization strategy, then recompile and repeat the checks. Use <a href="../vela/index.html#read-the-vela-reports">Read the Vela reports</a> and <a href="../vela/index.html#compare-ethos-u-configurations">Compare Ethos-U configurations</a> to record and compare the results.</p>
+<h1 class="doxsection"><a class="anchor" id="troubleshooting-an-inference-that-does-not-complete"></a>
+Troubleshooting an inference that does not complete</h1>
+<p>During bring-up, provide a watchdog or RTOS timeout so that a missing completion interrupt does not block the application indefinitely. If an inference times out, capture the driver logs and NPU state before resetting the NPU. Check the following areas:</p>
+<ul>
+<li><b>Interrupt delivery:</b> Verify the NPU interrupt number, enable state, priority, security routing, and vector-table entry. Confirm that the ISR calls <a class="elRef" href="../driver/group__ethosu__public__api.html#ga55fec2a7ca5b5b51dc7c3d18914a3f03" title="ethosu_irq_handler">ethosu_irq_handler()</a> with the correct driver instance. If the NPU <span class="tt">STATUS</span> register reports command completion or a fault while the application remains blocked, inspect the interrupt path and the RTOS semaphore implementation.</li>
+<li><b>NPU status and progress:</b> Enable driver logging and record <span class="tt">STATUS</span> and <span class="tt">QREAD</span>. Fault status indicates a command-stream, memory-access, security, or hardware error. If <span class="tt">QREAD</span> does not advance, check the NPU clock and power, command-stream address and size, address remapping, and command-stream cache cleaning.</li>
+<li><b>Memory access:</b> If <span class="tt">QREAD</span> advances and then stops, verify all base-pointer addresses and sizes, <span class="tt">NPU_REGIONCFG_x</span> values, physical memory placement, MPU/SAU and interconnect permissions, and cache maintenance. Confirm that the command stream, constants, tensor arena, and any scratch-fast buffer are all accessible to the NPU.</li>
+<li><b>Synchronization:</b> For asynchronous invocation, call <span class="tt"><a class="elRef" href="../driver/group__ethosu__public__api.html#ga33e63dcf2625e5b10d07193490b6323b">ethosu_wait()</a></span> only after <span class="tt"><a class="elRef" href="../driver/group__ethosu__public__api.html#ga7a052a3c7ea0c14992b3dc2cd6e20d0b">ethosu_invoke_async()</a></span> succeeds. For an RTOS integration, verify that the semaphore hooks wake the waiting task and that timeout units have the expected meaning.</li>
+<li><b>Recovery and isolation:</b> Preserve fault information, then use <a class="elRef" href="../driver/group__ethosu__public__api.html#ga480a7f7b324b3be61c1a9ffc92be9f3a" title="ethosu_soft_reset">ethosu_soft_reset()</a> before another submission. Retry with a minimal known-good model to separate platform integration faults from model-specific failures.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="advanced-topics"></a>
+Advanced topics</h1>
+<h2 class="doxsection"><a class="anchor" id="use-separate-scratch-fast-memory-on-ethos-u65-and-ethos-u85"></a>
+Use separate scratch-fast memory on Ethos-U65 and Ethos-U85</h2>
+<p>Ethos-U65 and Ethos-U85 can use a memory mode in which <span class="tt">arena_mem_area</span> and <span class="tt">cache_mem_area</span> resolve to different memory types. The tensor arena can reside in external writable memory while a faster SRAM region is used for staging. This arrangement is not applicable to Ethos-U55 because its AXI1 interface is read-only.</p>
+<p>Select a compatible memory mode and set <span class="tt">arena_cache_size</span> to the available scratch-fast capacity. Reserve the <span class="tt">cache_mem_area</span> in the linker script and configure its MPU/SAU, cache, and driver region settings consistently. See <a href="../vela/index.html#understand-arena-cache-and-spilling">Understand arena cache and spilling</a> and <a href="../vela/index.html#create-the-linker-script">Create the linker script</a>.</p>
+<h2 class="doxsection"><a class="anchor" id="move-the-tensor-arena-to-external-dram-on-ethos-u65-and-ethos-u85"></a>
+Move the tensor arena to external DRAM on Ethos-U65 and Ethos-U85</h2>
+<p>Assume that the selected target provides NPU-accessible external DRAM and that the tensor arena currently resides in SRAM. Moving it to DRAM requires these coordinated changes:</p>
+<ul>
+<li><b>Vela:</b> Select a compatible <span class="tt">Memory_Mode</span> in which <span class="tt">arena_mem_area</span> resolves to the target's external DRAM access path. Keep the target's <span class="tt">System_Config</span> fixed.</li>
+<li><b>Linker:</b> Move the <span class="tt">ethos_arena</span> section to the DRAM memory region, preserve its required alignment, and use the linker map to confirm that it fits.</li>
+<li><b>MPU/SAU and cache policy:</b> Configure the DRAM attributes so that the runtime and NPU have the required access and the CPU cache policy is explicit.</li>
+<li><b>Driver:</b> Set <span class="tt">NPU_REGIONCFG_1</span>, which represents <span class="tt">arena_mem_area</span>, to the target-specific external-memory access path. Override <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#gaada1c421a052cbdcfd5f1c8c31cd8c4a">ethosu_address_remap()</a></span> if the CPU and NPU use different DRAM addresses.</li>
+<li><b>Cache hooks:</b> If the CPU mapping is cacheable and is not coherent with the NPU, implement <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#gae23e3120197768bbd1b21fd03823183a">ethosu_flush_dcache()</a></span> before NPU reads and <span class="tt"><a class="elRef" href="../driver/group__ethosu__callback__api.html#ga608e58ae2673e286df81660936889f66">ethosu_invalidate_dcache()</a></span> after NPU writes. Cache maintenance is not needed for a non-cacheable or hardware-coherent mapping.</li>
+<li><b>Validation:</b> Rebuild and verify the linker-map placement, NPU access, model correctness, memory use, and performance on the target. </li>
+</ul>
+</div></div><!-- PageDoc -->
+<a href="doxygen_crawl.html"></a>
+</div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- HTML footer for Doxygen 1.18.0 -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer"><script type="text/javascript">writeFooter();</script></li>
+  </ul>
+</div>
+</body>
+</html>

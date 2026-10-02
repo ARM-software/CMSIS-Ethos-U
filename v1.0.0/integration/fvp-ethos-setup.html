@@ -1,0 +1,301 @@
+<!-- HTML header for Doxygen 1.18.0 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Ethos-U Integration for Cortex-M: Configure Ethos-U for FVP Simulation Models</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<script id="doxygen-config" type="application/json">
+{
+  "serverBasedSearch": false,
+  "disableIndex": true,
+  "dynamicMenus": false,
+  "fullSidebar": false
+}
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="component_tabs.js"></script>
+<script type="text/javascript" src="navtree_customization.js"></script>
+<script type="text/javascript" src="footer.js"></script>
+<script type="text/javascript" src="../version.js"></script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by Doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo-arm.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Ethos-U Integration for Cortex-M<span id="projectnumber"><script type="text/javascript">
+     writeHeader();
+     writeVersionDropdown("Ethos-U Integration for Cortex-M");
+    </script></span>
+   </div>
+   <div id="projectbrief">Integrate ML model</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">writeComponentTabs();</script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('fvp-ethos-setup.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Configure Ethos-U for FVP Simulation Models </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md_src_2fvp-ethos-setup"></a></p>
+<p>Each column describes one supported combination of Corstone system, Ethos-U accelerator, and Vela memory mode for the <span class="tt">Test-Ethos-U</span> examples. For the complete process of adapting these settings to physical hardware, see the <a href="index.html">Ethos-U integration workflow</a>.</p>
+<h1 class="doxsection"><a class="anchor" id="ethos-u55"></a>
+Ethos-U55</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Setting  </th><th class="markdownTableHeadNone">SRAM only  </th><th class="markdownTableHeadNone">Shared SRAM  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Target type  </td><td class="markdownTableBodyNone"><span class="tt">SSE-300-U55</span>  </td><td class="markdownTableBodyNone"><span class="tt">SSE-300-U55</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Solution  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U55</span>  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U55</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">NPU  </td><td class="markdownTableBodyNone">U55, 128 MACs  </td><td class="markdownTableBodyNone">U55, 128 MACs  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela INI  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Vela <span class="tt">system</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U55_High_End_Embedded</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U55_High_End_Embedded</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela <span class="tt">memory</span>  </td><td class="markdownTableBodyNone"><span class="tt">Sram_Only</span>  </td><td class="markdownTableBodyNone"><span class="tt">Shared_Sram</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">2</span> (default)  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_0</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">3</span> (default)  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_1</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span> (default)  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_2</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ETHOS_CACHE_SIZE</span>  </td><td class="markdownTableBodyNone">Not used  </td><td class="markdownTableBodyNone">Not used  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_model</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td><td class="markdownTableBodyNone">DDR4_3 / ROM2 via <span class="tt">AXI1</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ethos_arena</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_cache</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="ethos-u65"></a>
+Ethos-U65</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Setting  </th><th class="markdownTableHeadNone">SRAM only  </th><th class="markdownTableHeadNone">Shared SRAM  </th><th class="markdownTableHeadNone">Dedicated SRAM  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Target type  </td><td class="markdownTableBodyNone"><span class="tt">SSE-300-U65</span>  </td><td class="markdownTableBodyNone"><span class="tt">SSE-300-U65</span>  </td><td class="markdownTableBodyNone"><span class="tt">SSE-300-U65</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Solution  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U65</span>  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U65</span>  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U65</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">NPU  </td><td class="markdownTableBodyNone">U65, 256 MACs  </td><td class="markdownTableBodyNone">U65, 256 MACs  </td><td class="markdownTableBodyNone">U65, 256 MACs  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela INI  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Vela <span class="tt">system</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U65_Embedded</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U65_Embedded</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U65_Mid_End</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela <span class="tt">memory</span>  </td><td class="markdownTableBodyNone"><span class="tt">Sram_Only</span>  </td><td class="markdownTableBodyNone"><span class="tt">Shared_Sram</span>  </td><td class="markdownTableBodyNone"><span class="tt">Dedicated_Sram_384KB</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">2</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">2</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_0</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">3</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">3</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_1</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">2</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_2</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ETHOS_CACHE_SIZE</span>  </td><td class="markdownTableBodyNone">Not used  </td><td class="markdownTableBodyNone">Not used  </td><td class="markdownTableBodyNone"><span class="tt">393216</span> bytes  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_model</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td><td class="markdownTableBodyNone">DDR4_3 / ROM2 via <span class="tt">AXI1</span>  </td><td class="markdownTableBodyNone">DDR4_3 / ROM2 via <span class="tt">AXI1</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ethos_arena</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td><td class="markdownTableBodyNone">DDR4_1 / RAM0 via <span class="tt">AXI1</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_cache</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI0</span>  </td></tr>
+</table>
+<h1 class="doxsection"><a class="anchor" id="ethos-u85"></a>
+Ethos-U85</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Setting  </th><th class="markdownTableHeadNone">SRAM only  </th><th class="markdownTableHeadNone">Shared SRAM  </th><th class="markdownTableHeadNone">Dedicated SRAM  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Target type  </td><td class="markdownTableBodyNone"><span class="tt">SSE-320-U85</span>  </td><td class="markdownTableBodyNone"><span class="tt">SSE-320-U85</span>  </td><td class="markdownTableBodyNone"><span class="tt">SSE-320-U85</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Solution  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U85</span>  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U85</span>  </td><td class="markdownTableBodyNone"><span class="tt">Test-Ethos-U85</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">NPU  </td><td class="markdownTableBodyNone">U85, 256 MACs  </td><td class="markdownTableBodyNone">U85, 256 MACs  </td><td class="markdownTableBodyNone">U85, 256 MACs  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela INI  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td><td class="markdownTableBodyNone"><span class="tt">Model/vela.ini</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Vela <span class="tt">system</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U85_SYS_DRAM_Mid</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U85_SYS_DRAM_Mid</span>  </td><td class="markdownTableBodyNone"><span class="tt">Ethos_U85_SYS_DRAM_Mid</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Vela <span class="tt">memory</span>  </td><td class="markdownTableBodyNone"><span class="tt">Sram_Only</span>  </td><td class="markdownTableBodyNone"><span class="tt">Shared_Sram</span>  </td><td class="markdownTableBodyNone"><span class="tt">Dedicated_Sram_384KB</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_QCONFIG</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">2</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">2</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_0</span>  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td><td class="markdownTableBodyNone"><span class="tt">3</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">3</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_1</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span>  </td><td class="markdownTableBodyNone"><span class="tt">0</span> (default)  </td><td class="markdownTableBodyNone"><span class="tt">2</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">NPU_REGIONCFG_2</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone"><span class="tt">1</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ETHOS_CACHE_SIZE</span>  </td><td class="markdownTableBodyNone">Not used  </td><td class="markdownTableBodyNone">Not used  </td><td class="markdownTableBodyNone"><span class="tt">393216</span> bytes  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_model</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI_SRAM</span>  </td><td class="markdownTableBodyNone">DDR4_3 / ROM2 via <span class="tt">AXI_EXT</span>  </td><td class="markdownTableBodyNone">DDR4_3 / ROM2 via <span class="tt">AXI_EXT</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">ethos_arena</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI_SRAM</span>  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI_SRAM</span>  </td><td class="markdownTableBodyNone">DDR4_1 / RAM0 via <span class="tt">AXI_EXT</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">ethos_cache</span>  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">Unused  </td><td class="markdownTableBodyNone">SRAM_VM0 / RAM1 via <span class="tt">AXI_SRAM</span>  </td></tr>
+</table>
+<p>The values marked <b>default</b> are supplied by the selected Generic Ethos-U driver configuration when the board layer does not override them. The SRAM-only U55 configuration must override the shared-SRAM defaults.</p>
+<p>After selecting a column, regenerate the solution's <span class="tt">*.cbuild-mlops.yml</span> file and convert both models before building:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">NPU  </th><th class="markdownTableHeadNone">Conversion command  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">U55  </td><td class="markdownTableBodyNone"><span class="tt">python script/model-converter.py Test-Ethos-U55.cbuild-mlops.yml</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">U65  </td><td class="markdownTableBodyNone"><span class="tt">python script/model-converter.py Test-Ethos-U65.cbuild-mlops.yml</span>  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">U85  </td><td class="markdownTableBodyNone"><span class="tt">python script/model-converter.py Test-Ethos-U85.cbuild-mlops.yml</span>  </td></tr>
+</table>
+<blockquote class="doxtable">
+<p>NOTES</p>
+<ul>
+<li>The generated files under <span class="tt">Model/</span> are shared by all solutions. Always reconvert them after changing the target or Vela configuration.</li>
+<li><span class="tt">ROM2</span> is a read-only linker execution region backed by DDR4_3; it is not physical ROM.</li>
+<li><span class="tt">Shared_Sram</span> places the command stream and constants in external memory and the writable tensor arena in SRAM. It does not use a dedicated Vela arena cache.</li>
+<li><span class="tt">Dedicated_Sram_384KB</span> places the model and writable arena in external DDR4 and reserves 384 KiB of SRAM as the Vela arena cache. <span class="tt">ETHOS_CACHE_SIZE</span> must equal Vela's <span class="tt">arena_cache_size</span> of 393216 bytes.</li>
+<li>Ethos-U55 does not use <span class="tt">Dedicated_Sram</span> because its AXI1 interface is read-only, while that mode requires a writable arena on Axi1. </li>
+</ul>
+</blockquote>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- HTML footer for Doxygen 1.18.0 -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer"><script type="text/javascript">writeFooter();</script></li>
+  </ul>
+</div>
+</body>
+</html>

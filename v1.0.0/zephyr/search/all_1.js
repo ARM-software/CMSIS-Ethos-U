@@ -1,0 +1,10 @@
+var searchData=
+[
+  ['address_5fremap_0',['address_remap',['../../driver/structethosu__device__user__ops.html#a167e1d0dd49e7bc7b55d5fa24085f5d1',1,'ethosu_device_user_ops']]],
+  ['api_1',['API',['../../driver/group__ethosu__driver__api.html',1,'Ethos-U Driver API'],['../../driver/group__ethosu__pmu__api.html',1,'Performance Monitoring Unit API']]],
+  ['application_2',['Configure the application',['../index.html#configure-the-application',1,'']]],
+  ['arch_5fmajor_5frev_3',['arch_major_rev',['../../driver/group__ethosu__driver__structs.html#a33cb5b194353a78ba0561cde8854e0b1',1,'ethosu_id']]],
+  ['arch_5fminor_5frev_4',['arch_minor_rev',['../../driver/group__ethosu__driver__structs.html#ac191149a058dad393339d78dc2523e69',1,'ethosu_id']]],
+  ['arch_5fpatch_5frev_5',['arch_patch_rev',['../../driver/group__ethosu__driver__structs.html#ad26eee8751d4b809c0cbbf303232f079',1,'ethosu_id']]],
+  ['arm_20keil_20studio_20for_20vs_20code_6',['Build in Arm Keil Studio for VS Code',['../index.html#build-in-arm-keil-studio-for-vs-code',1,'']]]
+];

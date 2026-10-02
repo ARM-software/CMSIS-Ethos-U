@@ -1,0 +1,496 @@
+<!-- HTML header for Doxygen 1.18.0 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.18.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Ethos-U Integration for Cortex-M: Structures</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="codefolding.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<script id="doxygen-config" type="application/json">
+{
+  "serverBasedSearch": false,
+  "disableIndex": true,
+  "dynamicMenus": false,
+  "fullSidebar": false
+}
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript" src="darkmode_toggle.js"></script>
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+const theme = DarkModeToggle.darkModeEnabled ? 'dark' : 'default'
+mermaid.initialize({ startOnLoad: true, theme: theme });
+(function() {
+  const elementCode = '.mermaid';
+  const loadMermaid = function(theme) {
+    mermaid.initialize({theme})
+    mermaid.init({theme}, document.querySelectorAll(elementCode))
+  }
+  const saveOriginalData = function() {
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          element.setAttribute('data-original-code', element.innerHTML)
+          count--
+          if (count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  const resetProcessed = function(){
+    return new Promise((resolve, reject) => {
+      try {
+        var els = document.querySelectorAll(elementCode), count = els.length;
+        els.forEach(element => {
+          if (element.getAttribute('data-original-code') != null) {
+              element.removeAttribute('data-processed')
+              element.innerHTML = element.getAttribute('data-original-code')
+          }
+          count--
+          if(count == 0) { resolve() }
+        });
+      } catch (error) { reject(error) }
+    })
+  }
+  saveOriginalData()
+  const original = DarkModeToggle.enableDarkMode.bind(DarkModeToggle);
+  DarkModeToggle.enableDarkMode = function(enable) {
+      original(enable);
+      resetProcessed().then(loadMermaid(enable ? 'dark' : 'default')).catch(console.error)
+  };
+})();
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="extra_stylesheet.css" rel="stylesheet" type="text/css"/>
+<link href="extra_navtree.css" rel="stylesheet" type="text/css"/>
+<link href="extra_search.css" rel="stylesheet" type="text/css"/>
+<link href="extra_tabs.css" rel="stylesheet" type="text/css"/>
+<link href="version.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="component_tabs.js"></script>
+<script type="text/javascript" src="navtree_customization.js"></script>
+<script type="text/javascript" src="footer.js"></script>
+<script type="text/javascript" src="../version.js"></script>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by Doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo-arm.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Ethos-U Integration for Cortex-M<span id="projectnumber"><script type="text/javascript">
+     writeHeader();
+     writeVersionDropdown("Ethos-U Integration for Cortex-M");
+    </script></span>
+   </div>
+   <div id="projectbrief">Ethos-U Driver</div>
+  </td>
+    <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<div id="Compnav" class="tabs1">
+  <ul class="tablist">
+    <script type="text/javascript">writeComponentTabs();</script>
+  </ul>
+</div>
+<!-- Generated by Doxygen 1.18.0 -->
+<script type="text/javascript">
+let searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', codefold.init);
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded',() => { initNavTree('group__ethosu__driver__structs.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Data Structures</a>  </div>
+  <div class="headertitle"><div class="title">Structures <div class="ingroups"><a class="el" href="group__ethosu__driver__api.html">Ethos-U Driver API</a></div></div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>struct definitions in <code>ethosu_driver.h</code>  
+<a href="#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:ethosu_5Fdriver_5Fstructethosu_5F_5Fdriver" id="r_ethosu_5Fdriver_5Fstructethosu_5F_5Fdriver"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__driver">ethosu_driver</a></td></tr>
+<tr class="memdesc:structethosu__driver"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver handle.  <a href="#structethosu__driver">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fdriver_5Fversion_5Fstructethosu_5F_5Fdriver_5F_5Fversion" id="r_ethosu_5Fdriver_5Fversion_5Fstructethosu_5F_5Fdriver_5F_5Fversion"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__driver__version">ethosu_driver_version</a></td></tr>
+<tr class="memdesc:structethosu__driver__version"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver version.  <a href="#structethosu__driver__version">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fjob_5Fstructethosu_5F_5Fjob" id="r_ethosu_5Fjob_5Fstructethosu_5F_5Fjob"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__job">ethosu_job</a></td></tr>
+<tr class="memdesc:structethosu__job"><td class="mdescLeft">&#160;</td><td class="mdescRight">Driver job state.  <a href="#structethosu__job">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fid_5Fstructethosu_5F_5Fid" id="r_ethosu_5Fid_5Fstructethosu_5F_5Fid"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__id">ethosu_id</a></td></tr>
+<tr class="memdesc:structethosu__id"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware Identification Information.  <a href="#structethosu__id">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fconfig_5Fstructethosu_5F_5Fconfig" id="r_ethosu_5Fconfig_5Fstructethosu_5F_5Fconfig"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__config">ethosu_config</a></td></tr>
+<tr class="memdesc:structethosu__config"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware Configuration Information.  <a href="#structethosu__config">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fhw_5Finfo_5Fstructethosu_5F_5Fhw_5F_5Finfo" id="r_ethosu_5Fhw_5Finfo_5Fstructethosu_5F_5Fhw_5F_5Finfo"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__hw__info">ethosu_hw_info</a></td></tr>
+<tr class="memdesc:structethosu__hw__info"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware Information.  <a href="#structethosu__hw__info">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fpmu_5Fops_5Fstructethosu_5F_5Fpmu_5F_5Fops" id="r_ethosu_5Fpmu_5Fops_5Fstructethosu_5F_5Fpmu_5F_5Fops"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__pmu__ops">ethosu_pmu_ops</a></td></tr>
+<tr class="memdesc:structethosu__pmu__ops"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant-specific PMU operations.  <a href="#structethosu__pmu__ops">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fpmu_5Fdesc_5Fstructethosu_5F_5Fpmu_5F_5Fdesc" id="r_ethosu_5Fpmu_5Fdesc_5Fstructethosu_5F_5Fpmu_5F_5Fdesc"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__pmu__desc">ethosu_pmu_desc</a></td></tr>
+<tr class="memdesc:structethosu__pmu__desc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant-specific PMU descriptor.  <a href="#structethosu__pmu__desc">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fdevice_5Fops_5Fstructethosu_5F_5Fdevice_5F_5Fops" id="r_ethosu_5Fdevice_5Fops_5Fstructethosu_5F_5Fdevice_5F_5Fops"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__device__ops">ethosu_device_ops</a></td></tr>
+<tr class="memdesc:structethosu__device__ops"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant-specific device operations.  <a href="#structethosu__device__ops">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fdevice_5Fcaps_5Fstructethosu_5F_5Fdevice_5F_5Fcaps" id="r_ethosu_5Fdevice_5Fcaps_5Fstructethosu_5F_5Fdevice_5F_5Fcaps"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__device__caps">ethosu_device_caps</a></td></tr>
+<tr class="memdesc:structethosu__device__caps"><td class="mdescLeft">&#160;</td><td class="mdescRight">NPU product capabilities.  <a href="#structethosu__device__caps">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fdevice_5Fstructethosu_5F_5Fdevice" id="r_ethosu_5Fdevice_5Fstructethosu_5F_5Fdevice"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__device">ethosu_device</a></td></tr>
+<tr class="memdesc:structethosu__device"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device state owned by a driver instance.  <a href="#structethosu__device">More...</a><br /></td></tr>
+<tr class="memitem:ethosu_5Fdevice_5Fconfig_5Fstructethosu_5F_5Fdevice_5F_5Fconfig" id="r_ethosu_5Fdevice_5Fconfig_5Fstructethosu_5F_5Fdevice_5F_5Fconfig"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="#structethosu__device__config">ethosu_device_config</a></td></tr>
+<tr class="memdesc:structethosu__device__config"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variant-specific device configuration wrapper.  <a href="#structethosu__device__config">More...</a><br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Description</h2>
+<div class="textblock"><p>struct definitions in <code>ethosu_driver.h</code> </p>
+</div><hr/><h2 id="header-inline_5Fclasses" class="groupheader">Data Structure Documentation</h2>
+<a name="structethosu__driver" id="structethosu__driver"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__driver">&#9670;&#160;</a></span>ethosu_driver</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_driver</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Driver handle. </p>
+<p>Caller-allocated driver handle. Initialize it to zero before first use and do not modify its members. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__driver__version" id="structethosu__driver__version"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__driver__version">&#9670;&#160;</a></span>ethosu_driver_version</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_driver_version</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Driver version. </p>
+<p>This structure holds Ethos-U driver implementation version:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__driver__version" title="Driver version.">ethosu_driver_version</a></div>
+<div class="line">{</div>
+<div class="line">  uint8_t major;</div>
+<div class="line">  uint8_t minor;</div>
+<div class="line">  uint8_t patch;</div>
+<div class="line">};</div>
+</div><!-- fragment --> </div>
+</div>
+</div>
+<a name="structethosu__job" id="structethosu__job"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__job">&#9670;&#160;</a></span>ethosu_job</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_job</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Driver job state. </p>
+<p>Internal job state. Applications must not modify it. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__id" id="structethosu__id"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__id">&#9670;&#160;</a></span>ethosu_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_id</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Hardware Identification Information. </p>
+<p>This structure holds hardware ID:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__id" title="Hardware Identification Information.">ethosu_id</a></div>
+<div class="line">{</div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#ab83e9ec3a92acc40bbf7f1313a743e79" title="Version status.">version_status</a>; <span class="comment">///&lt; Version status</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#af8aaea86efd47147587131c90e22bf0e" title="Version minor.">version_minor</a>;  <span class="comment">///&lt; Version minor</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#ae6af13393bbb4dabcb65cc1d5f4e9cc8" title="Version major.">version_major</a>;  <span class="comment">///&lt; Version major</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#a16172a7c18f4f087e9f80857f53a2b82" title="Product major.">product_major</a>;  <span class="comment">///&lt; Product major</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#ad26eee8751d4b809c0cbbf303232f079" title="Architecture version patch.">arch_patch_rev</a>; <span class="comment">///&lt; Architecture version patch</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#ac191149a058dad393339d78dc2523e69" title="Architecture version minor.">arch_minor_rev</a>; <span class="comment">///&lt; Architecture version minor</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#a33cb5b194353a78ba0561cde8854e0b1" title="Architecture version major.">arch_major_rev</a>; <span class="comment">///&lt; Architecture version major</span></div>
+<div class="line">};</div>
+</div><!-- fragment --> </div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="ab83e9ec3a92acc40bbf7f1313a743e79" name="ab83e9ec3a92acc40bbf7f1313a743e79"></a>uint32_t</td>
+<td class="fieldname">
+version_status</td>
+<td class="fielddoc">
+Version status. </td></tr>
+<tr><td class="fieldtype">
+<a id="af8aaea86efd47147587131c90e22bf0e" name="af8aaea86efd47147587131c90e22bf0e"></a>uint32_t</td>
+<td class="fieldname">
+version_minor</td>
+<td class="fielddoc">
+Version minor. </td></tr>
+<tr><td class="fieldtype">
+<a id="ae6af13393bbb4dabcb65cc1d5f4e9cc8" name="ae6af13393bbb4dabcb65cc1d5f4e9cc8"></a>uint32_t</td>
+<td class="fieldname">
+version_major</td>
+<td class="fielddoc">
+Version major. </td></tr>
+<tr><td class="fieldtype">
+<a id="a16172a7c18f4f087e9f80857f53a2b82" name="a16172a7c18f4f087e9f80857f53a2b82"></a>uint32_t</td>
+<td class="fieldname">
+product_major</td>
+<td class="fielddoc">
+Product major. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad26eee8751d4b809c0cbbf303232f079" name="ad26eee8751d4b809c0cbbf303232f079"></a>uint32_t</td>
+<td class="fieldname">
+arch_patch_rev</td>
+<td class="fielddoc">
+Architecture version patch. </td></tr>
+<tr><td class="fieldtype">
+<a id="ac191149a058dad393339d78dc2523e69" name="ac191149a058dad393339d78dc2523e69"></a>uint32_t</td>
+<td class="fieldname">
+arch_minor_rev</td>
+<td class="fielddoc">
+Architecture version minor. </td></tr>
+<tr><td class="fieldtype">
+<a id="a33cb5b194353a78ba0561cde8854e0b1" name="a33cb5b194353a78ba0561cde8854e0b1"></a>uint32_t</td>
+<td class="fieldname">
+arch_major_rev</td>
+<td class="fielddoc">
+Architecture version major. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structethosu__config" id="structethosu__config"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__config">&#9670;&#160;</a></span>ethosu_config</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Hardware Configuration Information. </p>
+<p>This structure holds configuration information:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__config" title="Hardware Configuration Information.">ethosu_config</a></div>
+<div class="line">{</div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#a8dda681b678222fd19ee74b426abddc8" title="MACs per clock cycle.">macs_per_cc</a>;        <span class="comment">///&lt; MACs per clock cycle</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#a27698b004706670a88b442c438991843" title="NPU command stream version.">cmd_stream_version</a>; <span class="comment">///&lt; NPU command stream version</span></div>
+<div class="line">  uint32_t <a class="code hl_variable" href="#ad1557eaf4f22bc8e02c6d4f189d38965" title="Custom DMA enabled.">custom_dma</a>;         <span class="comment">///&lt; Custom DMA enabled</span></div>
+<div class="line">};</div>
+</div><!-- fragment --><p>The <code>macs_per_cc</code> member contains the encoded hardware field, not the literal number of MACs. The number of MACs per clock cycle is (<code>1U</code> <code>&lt;&lt;</code> <code>macs_per_cc</code>). </p>
+</div><table class="fieldtable">
+<tr><th colspan="3">Data Fields</th></tr>
+<tr><td class="fieldtype">
+<a id="a8dda681b678222fd19ee74b426abddc8" name="a8dda681b678222fd19ee74b426abddc8"></a>uint32_t</td>
+<td class="fieldname">
+macs_per_cc</td>
+<td class="fielddoc">
+MACs per clock cycle. </td></tr>
+<tr><td class="fieldtype">
+<a id="a27698b004706670a88b442c438991843" name="a27698b004706670a88b442c438991843"></a>uint32_t</td>
+<td class="fieldname">
+cmd_stream_version</td>
+<td class="fielddoc">
+NPU command stream version. </td></tr>
+<tr><td class="fieldtype">
+<a id="ad1557eaf4f22bc8e02c6d4f189d38965" name="ad1557eaf4f22bc8e02c6d4f189d38965"></a>uint32_t</td>
+<td class="fieldname">
+custom_dma</td>
+<td class="fielddoc">
+Custom DMA enabled. </td></tr>
+</table>
+
+</div>
+</div>
+<a name="structethosu__hw__info" id="structethosu__hw__info"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__hw__info">&#9670;&#160;</a></span>ethosu_hw_info</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_hw_info</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Hardware Information. </p>
+<p>This structure holds Ethos-U hardware information:</p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__hw__info" title="Hardware Information.">ethosu_hw_info</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__id" title="Hardware Identification Information.">ethosu_id</a> version;</div>
+<div class="line">  <span class="keyword">struct </span><a class="code hl_struct" href="#structethosu__config" title="Hardware Configuration Information.">ethosu_config</a> cfg;</div>
+<div class="line">};</div>
+</div><!-- fragment --> </div>
+</div>
+</div>
+<a name="structethosu__pmu__ops" id="structethosu__pmu__ops"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__pmu__ops">&#9670;&#160;</a></span>ethosu_pmu_ops</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_pmu_ops</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Variant-specific PMU operations. </p>
+<p>Internal operation table selected for the NPU family associated with a driver instance. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__pmu__desc" id="structethosu__pmu__desc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__pmu__desc">&#9670;&#160;</a></span>ethosu_pmu_desc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_pmu_desc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Variant-specific PMU descriptor. </p>
+<p>Associates a driver instance with its PMU operation table. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__device__ops" id="structethosu__device__ops"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__device__ops">&#9670;&#160;</a></span>ethosu_device_ops</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_device_ops</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Variant-specific device operations. </p>
+<p>Internal operation table implemented by each Ethos-U family backend. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__device__caps" id="structethosu__device__caps"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__device__caps">&#9670;&#160;</a></span>ethosu_device_caps</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_device_caps</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>NPU product capabilities. </p>
+<p>Identifies the Ethos-U product, its encoded MAC configuration, and optional feature bits. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__device" id="structethosu__device"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__device">&#9670;&#160;</a></span>ethosu_device</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_device</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Device state owned by a driver instance. </p>
+<p>Holds the selected backend, register base, capabilities, configuration, and optional per-driver user operations. Applications must not modify it. </p>
+</div>
+</div>
+</div>
+<a name="structethosu__device__config" id="structethosu__device__config"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#structethosu__device__config">&#9670;&#160;</a></span>ethosu_device_config</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct ethosu_device_config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<div class="textblock"><p>Variant-specific device configuration wrapper. </p>
+<p>Points to the configuration structure expected by the selected device backend. </p>
+</div>
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- HTML footer for Doxygen 1.18.0 -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer"><script type="text/javascript">writeFooter();</script></li>
+  </ul>
+</div>
+</body>
+</html>
