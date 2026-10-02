@@ -66,9 +66,10 @@ PACK_DELETE_FILES="
 # Specify additional dependencies for packchk
 # Default: empty
 #
-# PACKCHK_DEPS="
-#   <list pdsc files here>
-# "
+PACKCHK_DEPS="
+  ARM.V2M_MPS3_SSE_300_BSP.pdsc
+  ARM.SSE_320_BSP.pdsc
+"
 
 # Optional: restrict fallback modes for changelog generation
 # Default: full
