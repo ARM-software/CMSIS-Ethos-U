@@ -20,6 +20,9 @@ project:
     - component: CMSIS:OS Tick:SysTick
     - component: CMSIS:RTOS2:Keil RTX5&Source
 
+  add-path:
+    - ./Source
+
   # List of source groups and files added to a project or a layer.
   groups:
     - group: Documentation
@@ -28,12 +31,16 @@ project:
 
     - group: Test
       files:
-        - file: ./Source/test_main.cpp
+        - file: ./Source/app_main.cpp
+        - file: ./Source/model_test.cpp
+        - file: ./Source/model_test.h
 
   # List of layers used in a project.
   layers:
+    # TensorFlow Lite (LiteRT) framework layer + ML models
     - layer: $SolutionDir()$/Model/ML-MyModels.clayer.yml
 
+    # Board-specific layer
     - layer: $Board-Layer$
       type: Board
 
